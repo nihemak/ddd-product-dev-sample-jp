@@ -1,0 +1,9 @@
+[package]
+name = "ddd_sample_jp"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+thiserror = "1.0" # エラーハンドリングを容易にするため
+uuid = { version = "1.4", features = ["v4"] } # 一意なID生成のため
+anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため 

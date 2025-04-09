@@ -1,0 +1,14 @@
+# Rust build artifacts
+/target/
+
+# Cargo lock file (optional, depends on team policy)
+# Cargo.lock
+
+# Editor configuration files
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+._*
+Thumbs.db 
