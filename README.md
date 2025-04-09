@@ -102,7 +102,7 @@ graph TD
 
 ## テスト
 
-このプロジェクトにはユニットテストが含まれています。`src/main.rs` 内の各モジュール (`domain`, `application`) にテストコードが記述されています。
+このプロジェクトにはユニットテストが含まれています。各モジュールファイル (`src/domain.rs`, `src/application.rs`) 内にテストコード (`#[cfg(test)] mod tests { ... }`) が記述されています。
 
 テストの実行は以下のコマンドで行います。
 
@@ -117,12 +117,16 @@ cargo test
 
 ```
 .
-├── Cargo.toml      # プロジェクト定義と依存関係
-├── Cargo.lock      # 依存関係のロックファイル
-├── .gitignore      # Gitで無視するファイル
+├── Cargo.toml          # プロジェクト定義と依存関係
+├── Cargo.lock          # 依存関係のロックファイル
+├── .gitignore          # Gitで無視するファイル
 ├── src/
-│   └── main.rs     # アプリケーションのエントリーポイントと全モジュール定義
-└── target/         # (Git無視) ビルド成果物
+│   ├── main.rs         # アプリケーションのエントリーポイント (バイナリクレート)
+│   ├── lib.rs          # ライブラリクレートのエントリーポイント、モジュール宣言
+│   ├── domain.rs       # Domain層のコードとテスト
+│   ├── application.rs  # Application層のコードとテスト
+│   └── infrastructure.rs # Infrastructure層のコード
+└── target/             # (Git無視) ビルド成果物
 ```
 
 ## 目的
