@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use thiserror::Error;
 use crate::domain::{
-    create_order, mark_as_preparing, mark_as_shipped, 注文, 注文ID, 注文Repository,
+    注文作成, 発送準備中へ変更, 発送済みへ変更, 注文, 注文ID, 注文Repository,
     注文状態, 商品, 商品ID, 商品Repository, DomainError,
 };
 
@@ -34,7 +34,7 @@ impl 注文サービス {
         Self { order_repo, item_repo }
     }
 
-    pub fn place_order(&self, item_ids: Vec<商品ID>) -> AppResult<注文ID> {
+    pub fn 注文受付(&self, item_ids: Vec<商品ID>) -> AppResult<注文ID> {
         let item_repo_clone = Arc::clone(&self.item_repo);
         let get_item_price = move |id: &商品ID| -> Option<u32> {
             match item_repo_clone.find_by_id(id) {
@@ -43,7 +43,7 @@ impl 注文サービス {
             }
         };
 
-        let order_result = create_order(item_ids, get_item_price);
+        let order_result = 注文作成(item_ids, get_item_price);
 
         order_result
             .map_err(ApplicationError::Domain)
@@ -56,12 +56,12 @@ impl 注文サービス {
             })
     }
 
-    pub fn prepare_order(&self, order_id: &注文ID) -> AppResult<()> {
+    pub fn 注文発送準備(&self, order_id: &注文ID) -> AppResult<()> {
         self.order_repo
             .find_by_id(order_id)
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
             .ok_or_else(|| ApplicationError::Domain(DomainError::注文NotFound(*order_id)))
-            .and_then(|order| mark_as_preparing(order).map_err(ApplicationError::Domain))
+            .and_then(|order| 発送準備中へ変更(order).map_err(ApplicationError::Domain))
             .and_then(|updated_order| {
                 self.order_repo
                     .save(&updated_order)
@@ -69,12 +69,12 @@ impl 注文サービス {
             })
     }
 
-    pub fn ship_order(&self, order_id: &注文ID) -> AppResult<()> {
+    pub fn 注文発送(&self, order_id: &注文ID) -> AppResult<()> {
         self.order_repo
             .find_by_id(order_id)
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
             .ok_or_else(|| ApplicationError::Domain(DomainError::注文NotFound(*order_id)))
-            .and_then(|order| mark_as_shipped(order).map_err(ApplicationError::Domain))
+            .and_then(|order| 発送済みへ変更(order).map_err(ApplicationError::Domain))
             .and_then(|updated_order| {
                 self.order_repo
                     .save(&updated_order)
@@ -82,7 +82,7 @@ impl 注文サービス {
             })
     }
 
-    pub fn get_order_details(&self, order_id: &注文ID) -> AppResult<Option<注文>> {
+    pub fn 注文詳細取得(&self, order_id: &注文ID) -> AppResult<Option<注文>> {
         self.order_repo
             .find_by_id(order_id)
             .map_err(|e| ApplicationError::Repository(e.to_string()))
@@ -132,7 +132,7 @@ mod tests {
 
 
         let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
-        let result = service.place_order(vec![item_id]);
+        let result = service.注文受付(vec![item_id]);
 
         assert!(result.is_ok());
     }
@@ -151,7 +151,7 @@ mod tests {
             .returning(|_| Ok(None));
 
         let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
-        let result = service.place_order(vec![item_id]);
+        let result = service.注文受付(vec![item_id]);
 
         assert!(matches!(result, Err(ApplicationError::Domain(DomainError::商品NotFound(id))) if id == item_id));
     }
@@ -162,7 +162,7 @@ mod tests {
          let mock_order_repo = Mock注文Repository::new();
 
          let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
-         let result = service.place_order(vec![]);
+         let result = service.注文受付(vec![]);
 
          assert!(matches!(result, Err(ApplicationError::Domain(DomainError::注文商品空エラー))));
     }
@@ -186,7 +186,7 @@ mod tests {
              .returning(|_| Err(DomainError::注文NotFound(注文ID::new())));
 
         let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
-        let result = service.place_order(vec![item_id]);
+        let result = service.注文受付(vec![item_id]);
 
         assert!(matches!(result, Err(ApplicationError::Repository(_))));
     }
@@ -215,7 +215,7 @@ mod tests {
             .returning(|_| Ok(()));
 
         let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-        let result = service.prepare_order(&order_id);
+        let result = service.注文発送準備(&order_id);
 
         assert!(result.is_ok());
     }
@@ -233,7 +233,7 @@ mod tests {
         mock_order_repo.expect_save().times(0);
 
          let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-         let result = service.prepare_order(&order_id);
+         let result = service.注文発送準備(&order_id);
 
          assert_eq!(result, Err(ApplicationError::Domain(DomainError::注文NotFound(order_id))));
     }
@@ -257,7 +257,7 @@ mod tests {
          mock_order_repo.expect_save().times(0);
 
          let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-         let result = service.prepare_order(&order_id);
+         let result = service.注文発送準備(&order_id);
 
          assert_eq!(result, Err(ApplicationError::Domain(DomainError::不正な状態遷移エラー {
              current: current_state,
@@ -286,7 +286,7 @@ mod tests {
             .returning(|_| Ok(()));
 
         let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-        let result = service.ship_order(&order_id);
+        let result = service.注文発送(&order_id);
 
         assert!(result.is_ok());
     }
@@ -310,7 +310,7 @@ mod tests {
          mock_order_repo.expect_save().times(0);
 
          let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-         let result = service.ship_order(&order_id);
+         let result = service.注文発送(&order_id);
 
         assert_eq!(result, Err(ApplicationError::Domain(DomainError::不正な状態遷移エラー {
             current: current_state,
@@ -333,7 +333,7 @@ mod tests {
              .returning(move |_| Ok(Some(expected_order_clone.clone())));
 
          let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-         let result = service.get_order_details(&order_id);
+         let result = service.注文詳細取得(&order_id);
 
          assert!(result.is_ok());
          assert_eq!(result.unwrap(), Some(expected_order));
@@ -349,7 +349,7 @@ mod tests {
              .returning(|_| Ok(None));
 
          let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-         let result = service.get_order_details(&order_id);
+         let result = service.注文詳細取得(&order_id);
 
          assert!(result.is_ok());
          assert_eq!(result.unwrap(), None);
@@ -365,7 +365,7 @@ mod tests {
             .returning(move |_| Err(DomainError::注文NotFound(order_id)));
 
         let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
-        let result = service.get_order_details(&order_id);
+        let result = service.注文詳細取得(&order_id);
 
         assert!(matches!(result, Err(ApplicationError::Repository(_))));
     }

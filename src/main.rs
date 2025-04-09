@@ -25,31 +25,31 @@ fn main() -> Result<()> {
 
     // --- ユースケースの実行 ---
     println!("\n1. 商品を注文します: {:?}", items_to_order);
-    match order_service.place_order(items_to_order) {
+    match order_service.注文受付(items_to_order) {
         Ok(order_id) => {
             println!("注文成功！ 注文ID: {:?}", order_id);
 
             println!("\n2. 注文詳細を取得します");
-            match order_service.get_order_details(&order_id) {
+            match order_service.注文詳細取得(&order_id) {
                  Ok(Some(order)) => println!("取得した注文: {:?}", order),
                  Ok(None) => println!("注文が見つかりませんでした。"),
                  Err(e) => println!("注文取得エラー: {}", e),
             }
 
             println!("\n3. 注文を発送準備中にします");
-            match order_service.prepare_order(&order_id) {
+            match order_service.注文発送準備(&order_id) {
                  Ok(_) => {
                      println!("発送準備中に状態変更成功！");
-                     match order_service.get_order_details(&order_id) {
+                     match order_service.注文詳細取得(&order_id) {
                          Ok(Some(order)) => println!("現在の注文状態: {:?}", order.状態),
                          _ => println!("注文再取得エラー"),
                      }
 
                      println!("\n4. 注文を発送済みにします");
-                     match order_service.ship_order(&order_id) {
+                     match order_service.注文発送(&order_id) {
                          Ok(_) => {
                               println!("発送済みに状態変更成功！");
-                             match order_service.get_order_details(&order_id) {
+                             match order_service.注文詳細取得(&order_id) {
                                  Ok(Some(order)) => println!("現在の注文状態: {:?}", order.状態),
                                  _ => println!("注文再取得エラー"),
                              }
@@ -69,9 +69,9 @@ fn main() -> Result<()> {
      println!("\n5. 受付済みの注文を直接発送済みにしようとしてみる（エラーになるはず）");
      if !sample_item_ids.is_empty() {
         let items_to_order_2 = vec![sample_item_ids[0]];
-        if let Ok(order_id_2) = order_service.place_order(items_to_order_2) {
+        if let Ok(order_id_2) = order_service.注文受付(items_to_order_2) {
             println!("新しい注文ID: {:?}", order_id_2);
-            match order_service.ship_order(&order_id_2) {
+            match order_service.注文発送(&order_id_2) {
                  Ok(_) => println!("エラーが発生するはずが、成功してしまいました。"),
                  Err(e) => println!("期待通りのエラー: {}", e),
             }
