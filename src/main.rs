@@ -9,7 +9,7 @@ mod domain {
     use uuid::Uuid;
 
     // --- 値オブジェクト ---
-    #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct 商品ID(Uuid);
 
     impl 商品ID {
@@ -26,7 +26,7 @@ mod domain {
         }
     }
 
-    #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct 注文ID(Uuid);
 
     impl 注文ID {
@@ -60,7 +60,7 @@ mod domain {
         キャンセル済み,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, PartialEq)]
     pub struct 注文 {
         pub id: 注文ID,
          #[allow(dead_code)]
@@ -84,6 +84,8 @@ mod domain {
         注文NotFound(注文ID),
          #[error("商品が見つかりません: ID={0:?}")]
         商品NotFound(商品ID),
+        #[error("価格計算中にオーバーフローが発生しました")]
+        価格計算オーバーフロー,
         // 他のドメインルール違反に対応するエラー
     }
 
@@ -103,7 +105,7 @@ mod domain {
             match get_item_price(item_id) {
                  Some(price) => {
                      total = total.checked_add(price)
-                        .ok_or_else(|| DomainError::注文商品空エラー)?
+                        .ok_or(DomainError::価格計算オーバーフロー)?
                  },
                  None => return Err(DomainError::商品NotFound(item_id.clone())),
             }
@@ -246,6 +248,39 @@ mod domain {
              let item_ids: Vec<商品ID> = vec![];
              let get_price = |_id: &商品ID| -> Option<u32> { None };
              assert_eq!(calculate_total_price(&item_ids, get_price), Ok(0));
+        }
+
+        #[test]
+        fn test_calculate_total_price_overflow() {
+            let item_id1 = create_dummy_item_id();
+            let item_ids = vec![item_id1];
+
+            // u32::MAX を返すクロージャ
+            let get_price = |_id: &商品ID| Some(u32::MAX);
+            // 2回呼ぶとオーバーフローするはずだが、1回でもエラーを返すか確認
+            // calculate_total_price内で加算するので、u32::MAX単品でもオーバーフローしない
+            // 2つの商品でテスト
+            let item_id2 = create_dummy_item_id();
+            let item_ids_two = vec![item_id1, item_id2];
+            let get_price_max = |id: &商品ID| {
+                if id == &item_id1 { Some(u32::MAX) }
+                else if id == &item_id2 { Some(1) }
+                else { None }
+            };
+            assert_eq!(
+                calculate_total_price(&item_ids_two, get_price_max),
+                Err(DomainError::価格計算オーバーフロー)
+            );
+
+             let get_price_half_max = |id: &商品ID| {
+                 if id == &item_id1 { Some(u32::MAX / 2 + 1) }
+                 else if id == &item_id2 { Some(u32::MAX / 2 + 1) }
+                 else { None }
+             };
+             assert_eq!(
+                 calculate_total_price(&item_ids_two, get_price_half_max),
+                 Err(DomainError::価格計算オーバーフロー)
+             );
         }
 
         #[test]
@@ -730,9 +765,9 @@ mod application {
             let order_id = domain::注文ID::new();
             let mut mock_order_repo = Mock注文Repository::new();
             mock_order_repo.expect_find_by_id()
-                .with(eq(order_id.clone()))
+                .with(eq(order_id))
                 .times(1)
-                .returning(|_| Err(DomainError::注文NotFound(order_id.clone())));
+                .returning(move |_| Err(DomainError::注文NotFound(order_id)));
 
             let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
             let result = service.get_order_details(&order_id);
@@ -824,10 +859,9 @@ fn main() -> Result<()> { // anyhow::Result を使用
 
     println!("--- DDD Sample Start ---");
 
-    // サンプル商品IDを取得
-    let item_id_for_order = domain::商品ID::new();
+    // サンプル商品IDを取得 (get_sample_item_ids を使う)
     let initial_items = infrastructure::InMemory商品Repository::new();
-    let sample_item_ids = initial_items.items.lock().unwrap().keys().cloned().collect::<Vec<_>>();
+    let sample_item_ids = initial_items.get_sample_item_ids(); // プライベートアクセスではなくメソッドを使う
 
     if sample_item_ids.is_empty() {
         println!("サンプル商品がありません。");
