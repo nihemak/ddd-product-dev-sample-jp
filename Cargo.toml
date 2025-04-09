@@ -6,4 +6,7 @@ edition = "2021"
 [dependencies]
 thiserror = "1.0" # エラーハンドリングを容易にするため
 uuid = { version = "1.4", features = ["v4"] } # 一意なID生成のため
-anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため 
+anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため
+
+[dev-dependencies]
+mockall = "0.11" 

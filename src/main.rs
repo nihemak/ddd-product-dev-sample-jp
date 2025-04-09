@@ -16,9 +16,11 @@ mod domain {
         pub fn new() -> Self {
             Self(Uuid::new_v4())
         }
+        #[allow(dead_code)]
         pub fn from_uuid(id: Uuid) -> Self {
             Self(id)
         }
+         #[allow(dead_code)]
         pub fn as_uuid(&self) -> &Uuid {
             &self.0
         }
@@ -31,9 +33,11 @@ mod domain {
         pub fn new() -> Self {
             Self(Uuid::new_v4())
         }
+         #[allow(dead_code)]
          pub fn from_uuid(id: Uuid) -> Self {
             Self(id)
         }
+         #[allow(dead_code)]
         pub fn as_uuid(&self) -> &Uuid {
             &self.0
         }
@@ -42,6 +46,7 @@ mod domain {
     #[derive(Debug, Clone)]
     pub struct 商品 {
         pub id: 商品ID,
+        #[allow(dead_code)]
         pub 名前: String,
         pub 価格: u32,
     }
@@ -58,7 +63,9 @@ mod domain {
     #[derive(Debug, Clone)]
     pub struct 注文 {
         pub id: 注文ID,
+         #[allow(dead_code)]
         pub 商品リスト: Vec<商品ID>,
+         #[allow(dead_code)]
         pub 合計金額: u32,
         pub 状態: 注文状態,
     }
@@ -83,19 +90,23 @@ mod domain {
     // --- ドメインサービス / ロジック関数 ---
 
     // 商品リストから合計金額を計算する (純粋関数)
-    pub fn calculate_total_price<'a>(
+    pub fn calculate_total_price(
         item_ids: &[商品ID],
         get_item_price: impl Fn(&商品ID) -> Option<u32>, // 商品価格取得関数を外部から注入
     ) -> Result<u32, DomainError> {
         let mut total: u32 = 0;
+        if item_ids.is_empty() {
+            return Ok(0);
+        }
+
         for item_id in item_ids {
             match get_item_price(item_id) {
-                 Some(price) => total = total.checked_add(price).ok_or(DomainError::注文商品空エラー)?, // オーバーフローチェック
+                 Some(price) => {
+                     total = total.checked_add(price)
+                        .ok_or_else(|| DomainError::注文商品空エラー)?
+                 },
                  None => return Err(DomainError::商品NotFound(item_id.clone())),
             }
-        }
-        if total == 0 && !item_ids.is_empty() {
-             // 価格0円の商品のみの場合などの考慮。ここでは単純化。
         }
         Ok(total)
     }
@@ -128,7 +139,7 @@ mod domain {
                 ..order // 他のフィールドはそのまま
             }),
             _ => Err(DomainError::不正な状態遷移エラー {
-                current: order.状態,
+                current: order.状態.clone(),
                 requested: 注文状態::発送準備中,
             }),
         }
@@ -141,17 +152,18 @@ mod domain {
                 ..order
             }),
             _ => Err(DomainError::不正な状態遷移エラー {
-                current: order.状態,
+                current: order.状態.clone(),
                 requested: 注文状態::発送済み,
             }),
         }
     }
 
+    #[allow(dead_code)]
     pub fn cancel_order(order: 注文) -> Result<注文, DomainError> {
          // 発送済みはキャンセルできない等のルールを追加可能
         match order.状態 {
             注文状態::発送済み => Err(DomainError::不正な状態遷移エラー{
-                current: order.状態,
+                current: order.状態.clone(),
                 requested: 注文状態::キャンセル済み,
             }),
             _ => Ok(注文 {
@@ -164,37 +176,215 @@ mod domain {
 
     // --- リポジトリインターフェース (トレイト) ---
     // クレート境界を越えて実装を提供できるようにpubにする
-    #[cfg_attr(test, mockall::automock)] // テスト時にモック化する場合
-    pub trait 注文Repository {
+    #[cfg_attr(test, mockall::automock)]
+    pub trait 注文Repository: Send + Sync {
         fn save(&self, order: &注文) -> Result<(), DomainError>;
         fn find_by_id(&self, id: &注文ID) -> Result<Option<注文>, DomainError>;
-        // 必要に応じて他のメソッドを追加 (e.g., find_by_customer_id)
     }
 
     #[cfg_attr(test, mockall::automock)]
-    pub trait 商品Repository {
+    pub trait 商品Repository: Send + Sync {
         fn find_by_id(&self, id: &商品ID) -> Result<Option<商品>, DomainError>;
-        // find_all, save なども必要に応じて定義
     }
 
+    // --- Domain Tests ---
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        use std::collections::HashMap;
+
+        // --- Helper functions/data for tests ---
+        fn create_dummy_order(state: 注文状態) -> 注文 {
+            注文 {
+                id: 注文ID::new(),
+                商品リスト: vec![商品ID::new()],
+                合計金額: 1000,
+                状態: state,
+            }
+        }
+
+        fn create_dummy_item_id() -> 商品ID {
+            商品ID::new()
+        }
+
+        // --- Tests for domain logic functions ---
+
+        #[test]
+        fn test_calculate_total_price_success() {
+            let item_id1 = create_dummy_item_id();
+            let item_id2 = create_dummy_item_id();
+            let item_ids = vec![item_id1.clone(), item_id2.clone()];
+
+            let mut prices = HashMap::new();
+            prices.insert(item_id1, 1000);
+            prices.insert(item_id2, 500);
+
+            let get_price = |id: &商品ID| prices.get(id).cloned();
+
+            assert_eq!(calculate_total_price(&item_ids, get_price), Ok(1500));
+        }
+
+        #[test]
+        fn test_calculate_total_price_item_not_found() {
+            let item_id1 = create_dummy_item_id();
+            let item_id_unknown = create_dummy_item_id();
+            let item_ids = vec![item_id1.clone(), item_id_unknown.clone()];
+
+            let mut prices = HashMap::new();
+            prices.insert(item_id1, 1000); // item_id_unknown は含まない
+
+            let get_price = |id: &商品ID| prices.get(id).cloned();
+
+            assert_eq!(
+                calculate_total_price(&item_ids, get_price),
+                Err(DomainError::商品NotFound(item_id_unknown))
+            );
+        }
+
+        #[test]
+        fn test_calculate_total_price_empty_list() {
+             let item_ids: Vec<商品ID> = vec![];
+             let get_price = |_id: &商品ID| -> Option<u32> { None };
+             assert_eq!(calculate_total_price(&item_ids, get_price), Ok(0));
+        }
+
+        #[test]
+        fn test_create_order_success() {
+            let item_id1 = create_dummy_item_id();
+            let item_ids = vec![item_id1.clone()];
+            let get_price = |id: &商品ID| if id == &item_id1 { Some(2000) } else { None };
+
+            let result = create_order(item_ids.clone(), get_price);
+            assert!(result.is_ok());
+            let order = result.unwrap();
+            assert_eq!(order.商品リスト, item_ids);
+            assert_eq!(order.合計金額, 2000);
+            assert_eq!(order.状態, 注文状態::受付済み);
+        }
+
+        #[test]
+        fn test_create_order_empty_items() {
+            let item_ids: Vec<商品ID> = vec![];
+            let get_price = |_id: &商品ID| None;
+            assert_eq!(create_order(item_ids, get_price), Err(DomainError::注文商品空エラー));
+        }
+
+        #[test]
+        fn test_create_order_item_not_found() {
+            let item_id_unknown = create_dummy_item_id();
+            let item_ids = vec![item_id_unknown.clone()];
+             let get_price = |_id: &商品ID| None;
+            assert_eq!(create_order(item_ids, get_price), Err(DomainError::商品NotFound(item_id_unknown)));
+        }
+
+
+        #[test]
+        fn test_mark_as_preparing_success() {
+            let order = create_dummy_order(注文状態::受付済み);
+            let result = mark_as_preparing(order);
+            assert!(result.is_ok());
+            assert_eq!(result.unwrap().状態, 注文状態::発送準備中);
+        }
+
+        #[test]
+        fn test_mark_as_preparing_fail_invalid_state() {
+            let order = create_dummy_order(注文状態::発送準備中);
+            let current_state = order.状態.clone();
+            let result = mark_as_preparing(order);
+            assert_eq!(
+                result,
+                Err(DomainError::不正な状態遷移エラー {
+                    current: current_state,
+                    requested: 注文状態::発送準備中
+                })
+            );
+             let order_shipped = create_dummy_order(注文状態::発送済み);
+             let current_state_shipped = order_shipped.状態.clone();
+             let result_shipped = mark_as_preparing(order_shipped);
+             assert_eq!(
+                result_shipped,
+                Err(DomainError::不正な状態遷移エラー {
+                    current: current_state_shipped,
+                    requested: 注文状態::発送準備中
+                })
+            );
+        }
+
+        #[test]
+        fn test_mark_as_shipped_success() {
+            let order = create_dummy_order(注文状態::発送準備中);
+            let result = mark_as_shipped(order);
+            assert!(result.is_ok());
+            assert_eq!(result.unwrap().状態, 注文状態::発送済み);
+        }
+
+        #[test]
+        fn test_mark_as_shipped_fail_invalid_state() {
+            let order = create_dummy_order(注文状態::受付済み);
+            let current_state = order.状態.clone();
+            let result = mark_as_shipped(order);
+             assert_eq!(
+                result,
+                Err(DomainError::不正な状態遷移エラー {
+                    current: current_state,
+                    requested: 注文状態::発送済み
+                })
+            );
+
+             let order_shipped = create_dummy_order(注文状態::発送済み);
+             let current_state_shipped = order_shipped.状態.clone();
+             let result_shipped = mark_as_shipped(order_shipped);
+             assert_eq!(
+                result_shipped,
+                Err(DomainError::不正な状態遷移エラー {
+                    current: current_state_shipped,
+                    requested: 注文状態::発送済み
+                })
+            );
+        }
+
+        #[test]
+        fn test_cancel_order_success() {
+             let order_received = create_dummy_order(注文状態::受付済み);
+             assert_eq!(cancel_order(order_received).unwrap().状態, 注文状態::キャンセル済み);
+
+             let order_preparing = create_dummy_order(注文状態::発送準備中);
+             assert_eq!(cancel_order(order_preparing).unwrap().状態, 注文状態::キャンセル済み);
+        }
+
+        #[test]
+        fn test_cancel_order_fail_when_shipped() {
+            let order = create_dummy_order(注文状態::発送済み);
+            let current_state = order.状態.clone();
+            let result = cancel_order(order);
+            assert_eq!(
+                result,
+                Err(DomainError::不正な状態遷移エラー {
+                    current: current_state,
+                    requested: 注文状態::キャンセル済み
+                })
+            );
+        }
+    }
 }
 
 // --- Application Layer ---
 mod application {
     use super::domain::{
-        self, create_order, mark_as_preparing, mark_as_shipped, 注文, 注文ID, 注文Repository, 注文状態, 商品ID, 商品Repository, DomainError
+        self, create_order, mark_as_preparing, mark_as_shipped, 注文, 注文ID, 注文Repository, 注文状態, 商品, 商品ID, 商品Repository, DomainError
     };
     use std::sync::Arc; // Arcを使ってリポジトリの所有権を共有
     use thiserror::Error;
 
     // --- アプリケーションエラー ---
     // DomainErrorをラップしたり、アプリケーション固有のエラーを追加
-    #[derive(Error, Debug)]
+    #[derive(Error, Debug, PartialEq)]
     pub enum ApplicationError {
         #[error("ドメインエラー: {0}")]
         Domain(#[from] DomainError), // DomainErrorからの変換を自動実装
         #[error("リポジトリ操作エラー: {0}")]
         Repository(String), // Infra層からの具体的なエラーメッセージなど
+         #[allow(dead_code)]
          #[error("予期せぬエラー: {0}")]
         Unexpected(String),
     }
@@ -204,8 +394,8 @@ mod application {
 
     // --- ユースケース / ワークフロー ---
     pub struct 注文サービス {
-        order_repo: Arc<dyn 注文Repository + Send + Sync>, // トレイトオブジェクトとしてリポジトリを持つ
-        item_repo: Arc<dyn 商品Repository + Send + Sync>,   // Send + Sync はマルチスレッド対応のため
+        order_repo: Arc<dyn 注文Repository + Send + Sync>,
+        item_repo: Arc<dyn 商品Repository + Send + Sync>,
     }
 
     impl 注文サービス {
@@ -218,44 +408,42 @@ mod application {
 
         // ROPスタイルでの実装例: 商品を注文する
         pub fn place_order(&self, item_ids: Vec<商品ID>) -> AppResult<注文ID> {
-            // 1. 商品価格取得関数を定義 (リポジトリから取得)
-            let get_item_price = |id: &商品ID| -> Option<u32> {
-                 // Resultを返すリポジトリメソッドをOptionに変換
-                 self.item_repo.find_by_id(id).ok().flatten().map(|item| item.価格)
+            let item_repo_clone = Arc::clone(&self.item_repo);
+            let get_item_price = move |id: &商品ID| -> Option<u32> {
+                 match item_repo_clone.find_by_id(id) {
+                     Ok(Some(item)) => Some(item.価格),
+                     _ => None,
+                 }
             };
 
-            // 2. ドメイン関数を呼び出して注文エンティティを作成 (Result)
             let order_result = create_order(item_ids, get_item_price);
 
-            // 3. 作成した注文を保存 (Result)
-            // and_then を使って Result を繋げる (Railway Oriented Programming)
             order_result
-                .map_err(ApplicationError::Domain) // DomainErrorをApplicationErrorに変換
+                .map_err(ApplicationError::Domain)
                 .and_then(|order| {
+                    let order_id = order.id.clone();
                     self.order_repo
                         .save(&order)
-                        .map_err(|e| ApplicationError::Repository(e.to_string()))?; // 保存エラーもAppErrorに
-                    Ok(order.id) // 成功したら注文IDを返す
+                        .map_err(|e| ApplicationError::Repository(e.to_string()))?;
+                    Ok(order_id)
                 })
         }
 
         // 注文を発送準備中にする
         pub fn prepare_order(&self, order_id: &注文ID) -> AppResult<()> {
-            // ROP: find -> mark_as_preparing -> save
             self.order_repo
-                .find_by_id(order_id) // Result<Option<注文>, DomainError>
-                .map_err(|e| ApplicationError::Repository(e.to_string()))? // Repository Error -> AppError
-                .ok_or_else(|| ApplicationError::Domain(DomainError::注文NotFound(order_id.clone()))) // Option<注文> -> Result<注文, AppError>
-                .and_then(|order| mark_as_preparing(order).map_err(ApplicationError::Domain)) // Result<注文, DomainError> -> Result<注文, AppError>
+                .find_by_id(order_id)
+                .map_err(|e| ApplicationError::Repository(e.to_string()))?
+                .ok_or_else(|| ApplicationError::Domain(DomainError::注文NotFound(order_id.clone())))
+                .and_then(|order| mark_as_preparing(order).map_err(ApplicationError::Domain))
                 .and_then(|updated_order| {
                      self.order_repo.save(&updated_order)
-                         .map_err(|e| ApplicationError::Repository(e.to_string())) // Result<(), DomainError> -> Result<(), AppError>
+                         .map_err(|e| ApplicationError::Repository(e.to_string()))
                 })
         }
 
          // 注文を発送済みにする
         pub fn ship_order(&self, order_id: &注文ID) -> AppResult<()> {
-             // ROP: find -> mark_as_shipped -> save
             self.order_repo
                 .find_by_id(order_id)
                 .map_err(|e| ApplicationError::Repository(e.to_string()))?
@@ -273,7 +461,287 @@ mod application {
                 .map_err(|e| ApplicationError::Repository(e.to_string()))
         }
     }
+
+    // --- Application Tests ---
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        use mockall::predicate::*;
+        use crate::domain::{Mock注文Repository, Mock商品Repository};
+
+         // --- Helper functions/data for tests ---
+        fn create_dummy_item(id: 商品ID, price: u32) -> 商品 {
+            商品 { id, 名前: "テスト商品".to_string(), 価格: price }
+        }
+
+         fn create_dummy_order_app(id: 注文ID, item_ids: Vec<商品ID>, total: u32, state: 注文状態) -> 注文 {
+            注文 { id, 商品リスト: item_ids, 合計金額: total, 状態: state }
+        }
+
+
+        #[test]
+        fn test_place_order_success() {
+            let item_id = domain::商品ID::new();
+            let item_price = 1500u32;
+            let order_id = domain::注文ID::new();
+
+            let mut mock_item_repo = Mock商品Repository::new();
+            let mut mock_order_repo = Mock注文Repository::new();
+
+            let item_id_clone = item_id.clone();
+            mock_item_repo.expect_find_by_id()
+                .with(eq(item_id_clone.clone()))
+                .times(1)
+                .returning(move |_| Ok(Some(create_dummy_item(item_id_clone.clone(), item_price))));
+
+            mock_order_repo.expect_save()
+                 .withf(move |order: &注文| {
+                     order.商品リスト == vec![item_id.clone()] &&
+                     order.合計金額 == item_price &&
+                     order.状態 == 注文状態::受付済み
+                 })
+                .times(1)
+                .returning(move |order| {
+                    Ok(())
+                 });
+
+            let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
+            let result = service.place_order(vec![item_id.clone()]);
+
+            assert!(result.is_ok());
+        }
+
+
+        #[test]
+        fn test_place_order_fail_item_not_found() {
+            let item_id = domain::商品ID::new();
+
+            let mut mock_item_repo = Mock商品Repository::new();
+            let mock_order_repo = Mock注文Repository::new();
+
+            mock_item_repo.expect_find_by_id()
+                .with(eq(item_id.clone()))
+                .times(1)
+                .returning(|_| Ok(None));
+
+            let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
+            let result = service.place_order(vec![item_id.clone()]);
+
+            assert!(matches!(result, Err(ApplicationError::Domain(DomainError::商品NotFound(_)))));
+        }
+
+         #[test]
+        fn test_place_order_fail_empty_items() {
+             let mock_item_repo = Mock商品Repository::new();
+             let mock_order_repo = Mock注文Repository::new();
+
+             let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
+             let result = service.place_order(vec![]);
+
+             assert!(matches!(result, Err(ApplicationError::Domain(DomainError::注文商品空エラー))));
+        }
+
+        #[test]
+        fn test_place_order_fail_save_error() {
+            let item_id = domain::商品ID::new();
+            let item_price = 1500u32;
+
+            let mut mock_item_repo = Mock商品Repository::new();
+            let mut mock_order_repo = Mock注文Repository::new();
+
+            let item_id_clone = item_id.clone();
+             mock_item_repo.expect_find_by_id()
+                .with(eq(item_id_clone.clone()))
+                .times(1)
+                .returning(move |_| Ok(Some(create_dummy_item(item_id_clone.clone(), item_price))));
+
+             mock_order_repo.expect_save()
+                 .times(1)
+                 .returning(|_| Err(DomainError::注文NotFound(domain::注文ID::new())));
+
+            let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(mock_item_repo));
+            let result = service.place_order(vec![item_id.clone()]);
+
+            assert!(matches!(result, Err(ApplicationError::Repository(_))));
+        }
+
+
+        #[test]
+        fn test_prepare_order_success() {
+            let order_id = domain::注文ID::new();
+            let initial_order = create_dummy_order_app(
+                order_id.clone(), vec![], 0, 注文状態::受付済み
+            );
+
+            let mut mock_order_repo = Mock注文Repository::new();
+
+            mock_order_repo.expect_find_by_id()
+                .with(eq(order_id.clone()))
+                .times(1)
+                .returning(move |_| Ok(Some(initial_order.clone())));
+
+            mock_order_repo.expect_save()
+                 .withf(move |order: &注文| {
+                     order.id == order_id && order.状態 == 注文状態::発送準備中
+                 })
+                .times(1)
+                .returning(|_| Ok(()));
+
+            let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+            let result = service.prepare_order(&order_id);
+
+            assert!(result.is_ok());
+        }
+
+        #[test]
+        fn test_prepare_order_fail_not_found() {
+             let order_id = domain::注文ID::new();
+             let mut mock_order_repo = Mock注文Repository::new();
+
+             mock_order_repo.expect_find_by_id()
+                 .with(eq(order_id.clone()))
+                 .times(1)
+                 .returning(|_| Ok(None));
+
+            mock_order_repo.expect_save().times(0);
+
+             let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+             let result = service.prepare_order(&order_id);
+
+             assert_eq!(result, Err(ApplicationError::Domain(DomainError::注文NotFound(order_id))));
+        }
+
+         #[test]
+        fn test_prepare_order_fail_invalid_state() {
+             let order_id = domain::注文ID::new();
+             let initial_order = create_dummy_order_app(
+                 order_id.clone(), vec![], 0, 注文状態::発送準備中
+             );
+             let current_state = initial_order.状態.clone();
+
+             let mut mock_order_repo = Mock注文Repository::new();
+
+             mock_order_repo.expect_find_by_id()
+                 .with(eq(order_id.clone()))
+                 .times(1)
+                 .returning(move |_| Ok(Some(initial_order.clone())));
+
+             mock_order_repo.expect_save().times(0);
+
+             let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+             let result = service.prepare_order(&order_id);
+
+             assert_eq!(result, Err(ApplicationError::Domain(DomainError::不正な状態遷移エラー {
+                 current: current_state,
+                 requested: 注文状態::発送準備中
+             })));
+        }
+
+        #[test]
+        fn test_ship_order_success() {
+            let order_id = domain::注文ID::new();
+            let initial_order = create_dummy_order_app(
+                order_id.clone(), vec![], 0, 注文状態::発送準備中
+            );
+
+            let mut mock_order_repo = Mock注文Repository::new();
+
+            mock_order_repo.expect_find_by_id()
+                .with(eq(order_id.clone()))
+                .times(1)
+                .returning(move |_| Ok(Some(initial_order.clone())));
+
+            mock_order_repo.expect_save()
+                .withf(move |order: &注文| order.id == order_id && order.状態 == 注文状態::発送済み)
+                .times(1)
+                .returning(|_| Ok(()));
+
+            let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+            let result = service.ship_order(&order_id);
+
+            assert!(result.is_ok());
+        }
+
+         #[test]
+        fn test_ship_order_fail_invalid_state() {
+             let order_id = domain::注文ID::new();
+             let initial_order = create_dummy_order_app(
+                 order_id.clone(), vec![], 0, 注文状態::受付済み
+             );
+             let current_state = initial_order.状態.clone();
+
+             let mut mock_order_repo = Mock注文Repository::new();
+
+             mock_order_repo.expect_find_by_id()
+                 .with(eq(order_id.clone()))
+                 .times(1)
+                 .returning(move |_| Ok(Some(initial_order.clone())));
+
+             mock_order_repo.expect_save().times(0);
+
+             let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+             let result = service.ship_order(&order_id);
+
+            assert_eq!(result, Err(ApplicationError::Domain(DomainError::不正な状態遷移エラー {
+                current: current_state,
+                requested: 注文状態::発送済み
+            })));
+        }
+
+         #[test]
+         fn test_get_order_details_success() {
+             let order_id = domain::注文ID::new();
+             let expected_order = create_dummy_order_app(
+                 order_id.clone(), vec![], 0, 注文状態::受付済み
+             );
+             let expected_order_clone = expected_order.clone();
+
+             let mut mock_order_repo = Mock注文Repository::new();
+             mock_order_repo.expect_find_by_id()
+                 .with(eq(order_id.clone()))
+                 .times(1)
+                 .returning(move |_| Ok(Some(expected_order_clone.clone())));
+
+             let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+             let result = service.get_order_details(&order_id);
+
+             assert!(result.is_ok());
+             assert_eq!(result.unwrap(), Some(expected_order));
+         }
+
+         #[test]
+         fn test_get_order_details_not_found() {
+             let order_id = domain::注文ID::new();
+             let mut mock_order_repo = Mock注文Repository::new();
+             mock_order_repo.expect_find_by_id()
+                 .with(eq(order_id.clone()))
+                 .times(1)
+                 .returning(|_| Ok(None));
+
+             let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+             let result = service.get_order_details(&order_id);
+
+             assert!(result.is_ok());
+             assert_eq!(result.unwrap(), None);
+         }
+
+        #[test]
+        fn test_get_order_details_repository_error() {
+            let order_id = domain::注文ID::new();
+            let mut mock_order_repo = Mock注文Repository::new();
+            mock_order_repo.expect_find_by_id()
+                .with(eq(order_id.clone()))
+                .times(1)
+                .returning(|_| Err(DomainError::注文NotFound(order_id.clone())));
+
+            let service = 注文サービス::new(Arc::new(mock_order_repo), Arc::new(Mock商品Repository::new()));
+            let result = service.get_order_details(&order_id);
+
+            assert!(matches!(result, Err(ApplicationError::Repository(_))));
+        }
+    }
 }
+
 
 // --- Infrastructure Layer ---
 mod infrastructure {
@@ -303,6 +771,7 @@ mod infrastructure {
          }
 
          // アプリケーション側で商品IDを知るためのヘルパー（テスト用）
+         #[allow(dead_code)]
          pub fn get_sample_item_ids(&self) -> Vec<商品ID> {
              self.items.lock().unwrap().keys().cloned().collect()
          }
@@ -313,7 +782,6 @@ mod infrastructure {
             let items_map = self.items.lock().unwrap(); // Mutexをロック
             // clone() で HashMap から所有権のある値を取り出す
             Ok(items_map.get(id).cloned())
-            // DBエラーなどを模倣する場合はここで Err を返すことも可能
         }
     }
 
@@ -335,7 +803,6 @@ mod infrastructure {
             let mut orders_map = self.orders.lock().unwrap(); // Mutexをロック
             println!("Saving order: {:?}", order); // 永続化処理のシミュレーション
             orders_map.insert(order.id.clone(), order.clone());
-            // DBエラーなどを模倣する場合はここで Err を返すことも可能
             Ok(())
         }
 
@@ -358,7 +825,10 @@ fn main() -> Result<()> { // anyhow::Result を使用
     println!("--- DDD Sample Start ---");
 
     // サンプル商品IDを取得
-    let sample_item_ids = item_repo.get_sample_item_ids();
+    let item_id_for_order = domain::商品ID::new();
+    let initial_items = infrastructure::InMemory商品Repository::new();
+    let sample_item_ids = initial_items.items.lock().unwrap().keys().cloned().collect::<Vec<_>>();
+
     if sample_item_ids.is_empty() {
         println!("サンプル商品がありません。");
         return Ok(());
