@@ -15,8 +15,7 @@ fn main() -> Result<()> {
 
     println!("--- DDD Sample Start ---");
 
-    let initial_items = infrastructure::InMemory商品Repository::new();
-    let sample_item_ids = initial_items.get_sample_item_ids();
+    let sample_item_ids = item_repo.get_sample_item_ids();
 
     if sample_item_ids.is_empty() {
         println!("サンプル商品がありません。");
@@ -68,9 +67,8 @@ fn main() -> Result<()> {
     }
 
      println!("\n5. 受付済みの注文を直接発送済みにしようとしてみる（エラーになるはず）");
-     let sample_item_ids_for_test = initial_items.get_sample_item_ids();
-     if !sample_item_ids_for_test.is_empty(){
-        let items_to_order_2 = vec![sample_item_ids_for_test[0]];
+     if !sample_item_ids.is_empty() {
+        let items_to_order_2 = vec![sample_item_ids[0]];
         if let Ok(order_id_2) = order_service.place_order(items_to_order_2) {
             println!("新しい注文ID: {:?}", order_id_2);
             match order_service.ship_order(&order_id_2) {
