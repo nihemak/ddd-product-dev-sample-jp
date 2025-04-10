@@ -1,0 +1,37 @@
+---
+description: DDD Sample Projectの概要と構造
+globs: ["**/*.rs"]
+alwaysApply: true
+---
+# DDD Sample Project 概要
+
+このプロジェクトは、ドメイン駆動設計（DDD）の概念を実践するためのサンプルアプリケーションです。
+
+## プロジェクトの目的
+- DDDの実践的な理解と学習
+- クリーンアーキテクチャの実装例
+- Rustでの実践的なアプリケーション開発の例示
+
+## 主要コンポーネント
+- `domain.rs`: ドメインモデルとビジネスロジック
+- `application.rs`: ユースケースの実装
+- `infrastructure.rs`: 永続化層の実装
+- `main.rs`: アプリケーションのエントリーポイント
+
+## 開発環境
+- Rust 2021 edition
+- 標準的なRustツールチェーン（cargo, rustc）
+- テストフレームワーク（標準の`#[test]`）
+- モックライブラリ（mockall）
+
+## プロジェクト構造
+
+```
+src/
+├── domain.rs # ドメインモデルとビジネスロジック
+├── application.rs # ユースケースの実装
+├── infrastructure.rs # 永続化層の実装
+├── main.rs # アプリケーションのエントリーポイント
+└── lib.rs # ライブラリのエントリーポイント
+```
+
