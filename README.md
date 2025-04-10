@@ -27,6 +27,7 @@
 
 ### 主要ドキュメント
 
+*   [開発ガイドライン (Development Guide)](docs/DEVELOPMENT_GUIDE.md) ✨ **まずはこちらをお読みください**
 *   [要求/仕様 (Requirements)](docs/requirements/)
 *   [ドメイン関連 (Domain)](docs/domain/)
 *   [アーキテクチャ関連 (Architecture)](docs/architecture/)
