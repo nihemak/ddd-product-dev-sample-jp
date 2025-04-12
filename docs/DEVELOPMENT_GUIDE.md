@@ -68,7 +68,7 @@
 
 *   **Mermaid**: `domain-model.md` や `overview.md` 内で図を描画します。Cursor (VS Code) のプレビュー機能で確認できます。
 *   **Draw.io (diagrams.net)**:
-    *   イベントストーミングの結果 (`docs/requirements/イベントストーミング.drawio.svg`) など、より自由なレイアウトや表現が必要な図の作成・編集に使用します。
+    *   イベントストーミングの結果 (`docs/requirements/eventstorming.drawio.svg`) など、より自由なレイアウトや表現が必要な図の作成・編集に使用します。
     *   `.drawio.svg` 形式で保存することで、SVGとして画像表示が可能でありながら、Draw.ioツールで再編集可能なデータを保持できます。
     *   **編集方法**: [diagrams.net](https://app.diagrams.net/) の Web サイト、または VSCode の [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) などの拡張機能を使用します。
     *   **Git管理**: `.drawio.svg` ファイルはテキストベース（XML）なので、Git で差分管理がある程度可能です。
