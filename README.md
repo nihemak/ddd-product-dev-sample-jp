@@ -28,9 +28,9 @@
 ### 主要ドキュメント
 
 *   [開発ガイドライン (Development Guide)](docs/DEVELOPMENT_GUIDE.md) ✨ **まずはこちらをお読みください**
-*   [要求/仕様 (Requirements)](docs/requirements/)
-*   [ドメイン関連 (Domain)](docs/domain/)
-*   [アーキテクチャ関連 (Architecture)](docs/architecture/)
+*   [要求/仕様 (Requirements)](docs/requirements/) - 具体例: [ユーザーストーリーマップ](docs/requirements/user_story_mapping.md)
+*   [ドメイン関連 (Domain)](docs/domain/) - 主要ファイル: [ユビキタス言語](docs/domain/ubiquitous-language.md), [モデル図](docs/domain/domain-model.md)
+*   [アーキテクチャ関連 (Architecture)](docs/architecture/) - 主要ファイル: [概要](docs/architecture/overview.md), [ADR](docs/architecture/adr/)
 
 ## 実行方法
 
