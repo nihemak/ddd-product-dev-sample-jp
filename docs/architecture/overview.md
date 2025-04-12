@@ -60,10 +60,10 @@ graph TD
     Infra -.-> Domain
     App --> Domain
 
-    style Domain fill:#f9f,stroke:#333
-    style App fill:#ccf,stroke:#333
-    style Infra fill:#cfc,stroke:#333
-    style Main fill:#ffc,stroke:#333
+    style Domain fill:#f9f,stroke:#333,color:#333
+    style App fill:#ccf,stroke:#333,color:#333
+    style Infra fill:#cfc,stroke:#333,color:#333
+    style Main fill:#ffc,stroke:#333,color:#333
 ```
 
 *   `Domain` 層は他のどの層にも依存しません。
