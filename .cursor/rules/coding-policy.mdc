@@ -62,11 +62,48 @@ cargo test
 
 ## コミットメッセージ
 
-### コミット規約
-- 日本語で記述する。
-- 変更内容を簡潔に説明する。
-- 関連するIssue番号がある場合は記載する。
-- コミット前に `cargo fmt` を実行し、コードが標準フォーマットに準拠していることを確認してください。
+### コミット規約 (Conventional Commits)
+
+コミットメッセージは [Conventional Commits](mdc:https:/www.conventionalcommits.org) 規約に従います。
+**件名 (Subject) は日本語で記述してください。**
+
+**フォーマット**:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+*   **Type**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore` など。
+*   **Scope** (任意): コミットが影響する範囲 (例: `domain`, `application`, `readme`)。
+*   **Description (Subject)**: 変更内容の簡潔な説明（**日本語**）。50文字以内目安。
+*   **Body** (任意): 変更の動機や詳細。
+*   **Footer** (任意): 破壊的変更 (`BREAKING CHANGE:`) や関連するIssue (`Refs #123`, `Fixes #123`)。
+
+**例**:
+
+```
+feat(注文): 注文キャンセル機能を追加
+
+注文状態が「発送済み」以外の場合にキャンセルできるようにする。
+
+Fixes #45
+```
+
+```
+fix(domain): 価格計算時のオーバーフローを修正
+
+合計金額計算時にu32の最大値を超えた場合にエラーを返すようにした。
+
+Refs #123
+```
+
+**その他**:
+
+*   コミット前に `cargo fmt` を実行し、コードがフォーマットされていることを確認してください。
 
 ## その他
 

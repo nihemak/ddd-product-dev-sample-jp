@@ -58,4 +58,16 @@
 *   **`cargo fmt`**: コードスタイルを統一します。コミット前に実行します。
 *   **`cargo clippy`**: 静的解析により、潜在的な問題や改善点を指摘します。定期的に実行します。
 *   **`cargo doc`**: ソースコード中のドキュメントコメントからHTMLドキュメントを生成します。
-*   **Git**: バージョン管理。コミットメッセージは `coding-policy.mdc` の規約に従います。
+*   **Git**: バージョン管理。コミットメッセージは **Conventional Commits** 規約に従います。
+    *   **フォーマット**: `<type>(<scope>): <subject>`
+        *   `type`: コミットの種類 (例: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`)。
+        *   `scope` (任意): コミットが影響する範囲 (例: `domain`, `application`, `readme`)。
+        *   `subject`: 変更内容の簡潔な説明（**日本語で記述**）。50文字以内が目安。
+    *   **例**:
+        *   `feat(注文): 注文キャンセル機能を追加`
+        *   `fix(domain): 価格計算時のオーバーフローを修正 (#123)`
+        *   `docs: DEVELOPMENT_GUIDE にコミット規約を追記`
+        *   `refactor: 注文サービスの依存性注入方法を変更`
+        *   `test(application): 注文受付サービスのテストケースを追加`
+    *   詳細は [Conventional Commits](https://www.conventionalcommits.org/) を参照してください。
+    *   コミット前に `cargo fmt` を実行し、コードがフォーマットされていることを確認します。
