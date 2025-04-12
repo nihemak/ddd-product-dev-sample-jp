@@ -6,6 +6,69 @@
 
 本プロジェクトでは、ドメイン駆動設計 (DDD) の考え方に基づき、要求定義から実装までを以下の流れで進めることを推奨します。
 
+```mermaid
+graph TD
+    %% スタイル定義
+    classDef requirement fill:#f9f,stroke:#333,stroke-width:2px,color:#333;
+    classDef modeling fill:#ccf,stroke:#333,stroke-width:2px,color:#333;
+    classDef design fill:#9cf,stroke:#333,stroke-width:2px,color:#333;
+    classDef dev fill:#cfc,stroke:#333,stroke-width:2px,color:#333;
+    classDef artifact fill:#eee,stroke:#333,stroke-width:1px,color:#333;
+    classDef tech fill:#fcc,stroke:#333,stroke-width:2px,color:#333;
+
+    %% 要求定義フェーズ
+    subgraph "要求定義"
+        direction LR
+        ES[イベントストーミング<br/>docs/requirements/eventstorming.md]:::requirement --> USM[ユーザーストーリーマッピング<br/>docs/requirements/user_story_mapping.md]:::requirement;
+        USM -- 生成/更新 --> UL(ユビキタス言語<br/>docs/domain/ubiquitous-language.md):::artifact;
+        USM -- 生成/更新 --> DM(ドメインモデル<br/>docs/domain/domain-model.md):::artifact;
+    end
+
+    %% 開発・改善ループ (設計含む)
+    subgraph "開発サイクル (イテレーション)"
+        direction LR
+        %% ノード定義
+        PLAN[計画<br/>（ストーリー選択 +<br/>技術タスク割当）]:::dev;
+        ARCH[アーキテクチャ設計<br/>（ADR含む）<br/>docs/architecture/]:::design;
+        IMPL[実装 （TDD）<br/>src/]:::dev;
+        REVIEW[レビュー & フィードバック]:::dev;
+
+        %% 内部フロー
+        PLAN --> ARCH;
+        ARCH --> IMPL;
+        IMPL --> REVIEW;
+        REVIEW -- 修正 --> IMPL;
+        REVIEW -- 知見/課題 --> ARCH;
+    end
+
+    subgraph "技術タスク管理 (並行)"
+        TECH[技術タスクバックログ<br/>docs/technical_tasks.md]:::tech;
+    end
+
+    %% 開発サイクルへのインプット
+    UL --> ARCH;
+    DM --> ARCH;
+    DM --> IMPL;
+    USM -- ユーザーストーリー --> PLAN;
+    TECH -- 技術タスク --> PLAN;
+
+    %% 開発サイクル外へのフィードバック
+    REVIEW -- 知見/課題 --> USM;
+    REVIEW -- 知見/課題 --> TECH;
+
+    %% 完了
+    REVIEW -- リリース準備完了 --> RELEASE((リリース));
+
+    %% クラス適用 (Mermaid構文)
+    class ES,USM requirement;
+    class UL,DM artifact;
+    class ARCH design;
+    class PLAN,IMPL,REVIEW dev;
+    class TECH tech;
+```
+
+以下、開発プロセスの各ステップの詳細です。
+
 1.  **要求・仕様の探求 (イベントストーミングの活用)**:
     *   **目的**: ビジネス要求を深く理解し、ドメインイベント、コマンド、アクター、重要な概念を洗い出す。
     *   **手法**: ドメインエキスパートや関係者と共に**イベントストーミング**を実施します。
