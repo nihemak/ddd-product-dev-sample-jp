@@ -67,6 +67,13 @@
 ## ツールの活用
 
 *   **Mermaid**: `domain-model.md` や `overview.md` 内で図を描画します。Cursor (VS Code) のプレビュー機能で確認できます。
+*   **Draw.io (diagrams.net)**:
+    *   イベントストーミングの結果 (`docs/requirements/イベントストーミング.drawio.svg`) など、より自由なレイアウトや表現が必要な図の作成・編集に使用します。
+    *   `.drawio.svg` 形式で保存することで、SVGとして画像表示が可能でありながら、Draw.ioツールで再編集可能なデータを保持できます。
+    *   **編集方法**: [diagrams.net](https://app.diagrams.net/) の Web サイト、または VSCode の [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) などの拡張機能を使用します。
+    *   **Git管理**: `.drawio.svg` ファイルはテキストベース（XML）なので、Git で差分管理がある程度可能です。
+    *   **共同編集**: Web サイト版ではリアルタイム共同編集も可能ですが、ファイルをローカルで編集し Git で管理する場合は、コンフリクトに注意が必要です。Pull Request 前に最新版を取得し、変更箇所が衝突しないように心がけます。
+    *   Markdownへの埋め込み: `![代替テキスト](ファイルパス.drawio.svg)` の形式で Markdown ファイルに埋め込み、プレビューで表示できます。
 *   **`cargo test`**: 実装したコードが仕様（テストケース）を満たしているかを確認します。コミット前には必ず実行します。
 *   **`cargo fmt`**: コードスタイルを統一します。コミット前に実行します。
 *   **`cargo clippy`**: 静的解析により、潜在的な問題や改善点を指摘します。定期的に実行します。
