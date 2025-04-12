@@ -78,14 +78,14 @@
 
 ## ツールの活用
 
+**推奨VS Code拡張機能:** このプロジェクトでの開発を快適に進めるために推奨される VS Code 拡張機能は `.vscode/extensions.json` にリストアップされています。VS Code はこのファイルを認識し、必要な拡張機能のインストールを促します。
+
 *   **Mermaid**: `domain-model.md` や `overview.md` 内で図を描画します。Cursor (VS Code) のプレビュー機能で確認できます。
+    *   **推奨拡張機能**: `bierner.markdown-mermaid` ([`.vscode/extensions.json`](../.vscode/extensions.json) に記載)
 *   **Draw.io (diagrams.net)**:
-    *   イベントストーミングの結果 (`docs/requirements/eventstorming.drawio.svg`) など、より自由なレイアウトや表現が必要な図の作成・編集に使用します。
+    *   イベントストーミングの結果 (`docs/requirements/eventstorming.drawio.svg`) やユーザーストーリーマップ (`docs/requirements/user_story_mapping.drawio.svg`) など、より自由なレイアウトや表現が必要な図の作成・編集に使用します。
     *   `.drawio.svg` 形式で保存することで、SVGとして画像表示が可能でありながら、Draw.ioツールで再編集可能なデータを保持できます。
-    *   **編集方法**: [diagrams.net](https://app.diagrams.net/) の Web サイト、または VSCode の [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) などの拡張機能を使用します。
-    *   **Git管理**: `.drawio.svg` ファイルはテキストベース（XML）なので、Git で差分管理がある程度可能です。
-    *   **共同編集**: Web サイト版ではリアルタイム共同編集も可能ですが、ファイルをローカルで編集し Git で管理する場合は、コンフリクトに注意が必要です。Pull Request 前に最新版を取得し、変更箇所が衝突しないように心がけます。
-    *   Markdownへの埋め込み: `![代替テキスト](ファイルパス.drawio.svg)` の形式で Markdown ファイルに埋め込み、プレビューで表示できます。
+    *   **編集方法**: [diagrams.net](https://app.diagrams.net/) の Web サイト、または推奨拡張機能である `hediet.vscode-drawio` ([`.vscode/extensions.json`](../.vscode/extensions.json) に記載) を使用します。
 *   **`cargo test`**: 実装したコードが仕様（テストケース）を満たしているかを確認します。コミット前には必ず実行します。
 *   **`cargo fmt`**: コードスタイルを統一します。コミット前に実行します。
 *   **`cargo clippy`**: 静的解析により、潜在的な問題や改善点を指摘します。定期的に実行します。
