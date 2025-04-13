@@ -1,7 +1,7 @@
-# Rust 関数型DDDサンプル (日本語ユビキタス言語)
+# DDDプロダクト開発 サンプル (Rustバックエンド, 日本語UL)
 
-これは、Rustを用いてドメイン駆動設計 (DDD) の原則に基づいた簡単なサンプルアプリケーションです。
-以下の特徴を持っています：
+これは、ドメイン駆動設計 (DDD) の原則と軽量なプロダクト開発プロセスを組み合わせたサンプルアプリケーションです。
+バックエンドはRustで実装され、以下の特徴を持っています：
 
 *   **関数型スタイル**: ドメインロジックは副作用を極力排した関数として実装されています。
 *   **Railway Oriented Programming (ROP)**: `Result` 型と `and_then`, `map_err` などを活用し、エラー処理を含むワークフローを直線的に記述しています。
@@ -27,7 +27,8 @@
 
 ### 主要ドキュメント
 
-*   [開発ガイドライン (Development Guide)](docs/DEVELOPMENT_GUIDE.md) ✨ **まずはこちらをお読みください**
+*   [プロダクト開発ガイドライン (Product Development Guide)](docs/PRODUCT_DEVELOPMENT_GUIDE.md) ✨ **まずはこちらをお読みください**
+*   [プロダクト定義 (Product Definition)](docs/product/) - 主要ファイル: [ビジョン＆戦略](docs/product/vision_strategy.md), [ロードマップ](docs/product/roadmap.md)
 *   [要求/仕様 (Requirements)](docs/requirements/) - 具体例: [ユーザーストーリーマップ](docs/requirements/user_story_mapping.md)
 *   [ドメイン関連 (Domain)](docs/domain/) - 主要ファイル: [ユビキタス言語](docs/domain/ubiquitous-language.md), [モデル図](docs/domain/domain-model.md)
 *   [アーキテクチャ関連 (Architecture)](docs/architecture/) - 主要ファイル: [概要](docs/architecture/overview.md), [ADR](docs/architecture/adr/)
@@ -65,6 +66,7 @@ cargo test
 ├── Cargo.lock          # 依存関係のロックファイル
 ├── .gitignore          # Gitで無視するファイル
 ├── docs/               # ドキュメントルート
+│   ├── product/        # プロダクト定義 (ビジョン, 戦略, ロードマップ, ペルソナ)
 │   ├── requirements/   # 要求/仕様
 │   ├── domain/         # ドメインモデリング関連 (ユビキタス言語, モデル図)
 │   └── architecture/   # アーキテクチャ設計 (概要, ADR)
@@ -79,5 +81,14 @@ cargo test
 
 ## 目的
 
-このサンプルは、Rustにおける関数型DDD、ROP、オニオンアーキテクチャの基本的な実装方法を示すことを目的としています。
-実際のアプリケーション開発の出発点として、またはこれらの概念を学習するための参考として利用できます。 
+このサンプルプロジェクトは、以下の複数の目的を持っています。
+
+1.  **Rustによる実践的なDDDの実装例:**
+    *   Rustを用いてドメイン駆動設計 (DDD) の原則（特に日本語ユビキタス言語、オニオンアーキテクチャ）を適用する具体的な方法を示すこと。
+    *   関数型プログラミングのスタイル（純粋関数中心のロジック、Railway Oriented Programmingによるエラー処理）をRustで実践する例を示すこと。
+
+2.  **軽量なプロダクト開発プロセスの提示:**
+    *   プロダクトの「Why」（ビジョン、戦略）から「What」（要求定義）、そして「How」（設計、実装）までを、ドキュメント（Markdown, Mermaid等）を活用して一貫して繋げる、軽量な開発プロセスの一例を示すこと。
+    *   DDDのプラクティス（ユビキタス言語、ドメインモデリング）を、技術実装だけでなく要求定義やプロダクト定義の段階から活用するアプローチを示すこと。
+
+これらの目的を通じて、Rustでのアプリケーション開発やDDDの実践、あるいは軽量なプロダクト開発プロセスの導入を検討する際の、具体的な出発点や学習リソースとなることを目指しています。 
