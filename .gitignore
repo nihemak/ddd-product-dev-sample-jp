@@ -12,4 +12,7 @@
 # OS generated files
 .DS_Store
 ._*
-Thumbs.db 
+Thumbs.db
+
+# Scratch directory for local work
+.scratch/ 
