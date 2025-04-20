@@ -1,5 +1,5 @@
 # Rust build artifacts
-/target/
+/backend/target/
 
 # Cargo lock file (optional, depends on team policy)
 # Cargo.lock
