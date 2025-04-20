@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Map host port 8080 to container port 8080
+    volumes:
+      # Mount local src directory to container's src for hot reloading
+      - ./backend/src:/usr/src/app/src
+      # You might also want to mount Cargo.toml if you frequently change dependencies
+      # - ./backend/Cargo.toml:/usr/src/app/Cargo.toml
+      # - ./backend/Cargo.lock:/usr/src/app/Cargo.lock
+    environment:
+      # Ensure Rust backtraces are enabled for easier debugging
+      - RUST_BACKTRACE=1
+      # Database connection URL (adjust user/password/db name as needed)
+      # Uses the 'db' service name as the host
+      - DATABASE_URL=postgres://app_user:password123@db:5432/app_db
+      # Add any other environment variables your backend needs
+      # - MY_OTHER_VAR=some_value
+    depends_on:
+      - db
+    # Add healthcheck if needed
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+  db:
+    image: postgres:16-alpine # Use a specific version
+    ports:
+      # Optionally expose the DB port to the host for direct access/debugging
+      - "5432:5432"
+    volumes:
+      # Persist database data using a named volume
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=app_user
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=app_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app_user -d app_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  # Define the named volume for data persistence
+  postgres_data: 
