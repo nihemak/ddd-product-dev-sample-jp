@@ -24,7 +24,7 @@
 *   [ ] chore(devops): フロントエンド開発環境を構築する #frontend #dev-env
 *   [ ] chore(frontend): Shadcn/ui (Tailwind CSS, Radix UI) をセットアップする #frontend #dev-env #ui
 *   [ ] chore(storybook): Storybook をセットアップする #frontend #dev-env #documentation
-*   [ ] chore(devops): バックエンド開発環境を構築する #backend #dev-env
+*   [ ] chore(devops): バックエンド開発環境を Docker Compose で構築する (Rust + PostgreSQL) #backend #dev-env #docker
 *   [ ] chore(infra): クラウド環境 (Render, Vercel) を構築・設定する #infra
 *   [ ] chore(security): Auth0の初期設定を行う #security
 
