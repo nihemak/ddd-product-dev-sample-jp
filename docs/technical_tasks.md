@@ -7,7 +7,7 @@
 *   [x] docs(architecture): サービス提供形態を決定する (Web, Mobile, etc.) #decision
 *   [x] docs(architecture): システム構成を決定する (SPA, SSR, etc.) #decision
 *   [ ] docs(architecture): データストアを選定する (RDB, NoSQL, etc.) #decision
-*   [ ] docs(architecture): Webフロントエンド技術を選定する (React, Rust(SSR/WASM), etc.) #decision #frontend
+*   [x] docs(architecture): Webフロントエンド技術を選定する (React, Rust(SSR/WASM), etc.) #decision #frontend
 *   [ ] docs(architecture): プロジェクト構成を決定する (モノレポ or Not) #decision
 *   [ ] docs(architecture): デプロイ戦略・プラットフォームを選定する (GCP, AWS, Cloud Run, Lambda, etc.) #decision #infra
 *   [ ] docs(architecture): ブランチ戦略を定義する #decision #process
