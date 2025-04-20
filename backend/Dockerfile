@@ -1,6 +1,6 @@
 # Use an official Rust image.
 # Specify a version for reproducibility.
-FROM rust:1.77-slim as builder
+FROM rust:1.80-slim as builder
 
 # Install cargo-watch for hot reloading
 RUN cargo install cargo-watch
