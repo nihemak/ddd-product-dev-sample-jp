@@ -12,11 +12,11 @@
 *   [x] docs(architecture): デプロイ戦略・プラットフォームを選定する (GCP, AWS, Cloud Run, Lambda, etc.) #decision #infra
 *   [ ] docs(architecture): ブランチ戦略を定義する #decision #process
 *   [ ] docs(architecture): 環境定義 (本番, Staging, Test) #decision #infra
-*   [ ] docs(architecture): API設計方針を決定する (REST, GraphQL, etc.) #decision
+*   [x] docs(architecture): API設計方針を決定する (REST, GraphQL, etc.) #decision
 *   [x] docs(architecture): 認証・認可方式を決定する #decision #security
 *   [ ] docs(architecture): ログ・監視戦略を決定する #decision #infra
 *   [ ] docs(architecture): Webアナリティクス導入を検討・決定する #decision #monitoring
-*   [ ] docs(architecture): APIスキーマ定義・管理方法を決定する (OpenAPI?) #decision #api
+*   [x] docs(architecture): APIスキーマ定義・管理方法を決定する (OpenAPI?) #decision #api
 
 ## 環境構築・CI/CD (Setup & Infra)
 
