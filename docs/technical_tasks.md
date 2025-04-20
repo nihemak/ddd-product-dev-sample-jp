@@ -4,7 +4,7 @@
 
 ## アーキテクチャ・技術選定 (Decision & Design)
 
-*   [ ] docs(architecture): サービス提供形態を決定する (Web, Mobile, etc.) #decision
+*   [x] docs(architecture): サービス提供形態を決定する (Web, Mobile, etc.) #decision
 *   [ ] docs(architecture): システム構成を決定する (SPA, SSR, etc.) #decision
 *   [ ] docs(architecture): データストアを選定する (RDB, NoSQL, etc.) #decision
 *   [ ] docs(architecture): Webフロントエンド技術を選定する (React, Rust(SSR/WASM), etc.) #decision #frontend
