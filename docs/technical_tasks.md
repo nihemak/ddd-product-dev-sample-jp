@@ -8,6 +8,7 @@
 - [ ] refactor(domain): 注文集約内の複雑な条件分岐をポリシークラスに切り出す #refactoring
 - [ ] deps: ロギングライブラリを最新バージョンに更新し、非推奨APIの呼び出し箇所を修正する #maintenance
 - [x] refactor(domain): 状態を型で表現するアプローチを採用し、プレゼント予約ドメインに適用する #refactoring #architecture
+- [ ] refactor(domain): 状態を型で表現するアプローチを採用し、支払いドメインに適用する #refactoring #architecture
 
 ## いつかやる (優先度 中 - 例)
 
