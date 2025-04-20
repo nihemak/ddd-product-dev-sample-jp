@@ -15,6 +15,10 @@ WORKDIR /usr/src/app
 # Copy the Cargo manifests
 COPY Cargo.toml Cargo.lock ./
 
+# Create a dummy src/main.rs so that cargo fetch can determine the package type
+# This will be overwritten by the subsequent COPY src ./src
+RUN mkdir src && echo "fn main() {}" > src/main.rs
+
 # Fetch dependencies. This layer is cached based on Cargo.lock changes.
 # Using cargo fetch instead of build to only download deps.
 RUN cargo fetch
