@@ -1,351 +1,14 @@
-<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1236px" height="602px" viewBox="-0.5 -0.5 1236 602" content="&lt;mxfile scale=&quot;1&quot; border=&quot;0&quot;&gt;&lt;diagram name=&quot;Page-1&quot; id=&quot;aL6dDDT1nPlyANCxTLao&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;">
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1901px" height="2624px" viewBox="-0.5 -0.5 1901 2624" content="&lt;mxfile scale=&quot;1&quot; border=&quot;0&quot;&gt;&lt;diagram name=&quot;Page-1&quot; id=&quot;aL6dDDT1nPlyANCxTLao&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;">
     <defs/>
     <g>
         <g>
-            <rect x="405" y="190" width="130" height="130" fill="#fff2cc" stroke="#d6b656" transform="rotate(90,470,255)" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+            <rect x="0" y="0" width="180" height="30" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
         </g>
         <g>
             <g transform="translate(-0.5 -0.5)">
                 <switch>
                     <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 128px; height: 1px; padding-top: 255px; margin-left: 406px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    ユーザーは
-                                    <div>
-                                        商品を
-                                        <span style="background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                            カートに入れて
-                                        </span>
-                                        <div>
-                                            注文を確定できる
-                                            <div>
-                                                （注文受付）
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="470" y="259" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        ユーザーは商品をカートに入れて注文を確定できる（注文受付）...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="430" y="90" width="80" height="80" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 130px; margin-left: 431px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    商品を
-                                    <div>
-                                        注文する
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="470" y="134" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        商品を
-注文する
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="260" y="350" width="80" height="80" fill="#f8cecc" stroke="#b85450" pointer-events="all" style="fill: light-dark(rgb(248, 206, 204), rgb(81, 45, 43)); stroke: light-dark(rgb(184, 84, 80), rgb(215, 129, 126));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 390px; margin-left: 261px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    MVP候補
-                                    <div>
-                                        (リリース1)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="300" y="394" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        MVP候補...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="410" y="330" width="120" height="120" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 390px; margin-left: 411px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    (エラーケース)
-                                    <div>
-                                        ユーザーは
-                                    </div>
-                                    <div>
-                                        空の注文はできない
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="470" y="394" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        (エラーケース)...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="620" y="90" width="80" height="80" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 130px; margin-left: 621px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    注文の状態を確認する
-                                    <span style="color: light-dark(rgba(0, 0, 0, 0), rgb(237, 237, 237)); font-family: monospace; font-size: 0px; text-align: start; text-wrap-mode: nowrap;">
-                                        %3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%E5%95%86%E5%93%81%E3%82%92%26lt%3Bdiv%26gt%3B%E6%B3%A8%E6%96%87%E3%81%99%E3%82%8B%26lt%3B%2Fdiv%26gt%3B%22%20style%3D%22whiteSpace%3Dwrap%3Bhtml%3D1%3Baspect%3Dfixed%3BfillColor%3D%23d5e8d4%3BstrokeColor%3D%2382b366%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22190%22%20y%3D%22190%22%20width%3D%2280%22%20height%3D%2280%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="660" y="134" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        注文の状態を確認する%3CmxGraphMod...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="790" y="90" width="80" height="80" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 130px; margin-left: 791px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    注文を
-                                    <div>
-                                        処理する
-                                        <div>
-                                            （管理者）
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="830" y="134" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        注文を処理する（管理者）...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="410" y="470" width="120" height="120" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 530px; margin-left: 411px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    (エラーケース)
-                                    <div>
-                                        ユーザーは
-                                    </div>
-                                    <div>
-                                        存在しない商品を
-                                    </div>
-                                    <div>
-                                        注文できない
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="470" y="534" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        (エラーケース)...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="580" y="190" width="140" height="140" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 260px; margin-left: 581px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    ユーザーは
-                                    <div>
-                                        自分の注文の
-                                        <span style="background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                            詳細情報
-                                        </span>
-                                    </div>
-                                    <div>
-                                        （商品、金額、状態）
-                                    </div>
-                                    <div>
-                                        を確認できる
-                                    </div>
-                                    <div>
-                                        (注文詳細取得)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="650" y="264" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        ユーザーは自分の注文の詳細情報（商品、金額、状態）を確認できる (注文詳細取得)...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="770" y="190" width="120" height="120" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 250px; margin-left: 771px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    管理者は
-                                    <div>
-                                        受け付けた注文を
-                                    </div>
-                                    <div>
-                                        発送準備中に
-                                    </div>
-                                    <div>
-                                        変更できる
-                                    </div>
-                                    <div>
-                                        (注文発送準備)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="830" y="254" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        管理者は受け付けた注文を発送準備中に変更できる...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="770" y="340" width="120" height="120" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 400px; margin-left: 771px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    (エラーケース)
-                                    <div>
-                                        管理者は
-                                    </div>
-                                    <div>
-                                        不正な状態遷移
-                                    </div>
-                                    <div>
-                                        （例: 受付済み→発送済み）はできない
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="830" y="404" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        (エラーケース)...
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <path d="M 260 180 L 930 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
-        </g>
-        <g>
-            <path d="M 250 600 L 930 600" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
-        </g>
-        <g>
-            <rect x="420" y="0" width="460" height="60" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 458px; height: 1px; padding-top: 30px; margin-left: 421px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    注文作成
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="650" y="34" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        注文作成
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="960" y="0" width="275" height="60" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 273px; height: 1px; padding-top: 30px; margin-left: 961px;">
-                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    注文一覧表示
-                                </div>
-                            </div>
-                        </div>
-                    </foreignObject>
-                    <text x="1098" y="34" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        注文一覧表示
-                    </text>
-                </switch>
-            </g>
-        </g>
-        <g>
-            <rect x="0" y="10" width="180" height="30" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
-        </g>
-        <g>
-            <g transform="translate(-0.5 -0.5)">
-                <switch>
-                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 25px; margin-left: 1px;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 15px; margin-left: 1px;">
                             <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
                                 <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                     エピック
@@ -353,20 +16,20 @@
                             </div>
                         </div>
                     </foreignObject>
-                    <text x="90" y="29" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                    <text x="90" y="19" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
                         エピック
                     </text>
                 </switch>
             </g>
         </g>
         <g>
-            <rect x="0" y="60" width="180" height="30" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+            <rect x="0" y="50" width="180" height="30" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
         </g>
         <g>
             <g transform="translate(-0.5 -0.5)">
                 <switch>
                     <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 75px; margin-left: 1px;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 65px; margin-left: 1px;">
                             <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
                                 <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                     バックボーン
@@ -374,20 +37,20 @@
                             </div>
                         </div>
                     </foreignObject>
-                    <text x="90" y="79" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                    <text x="90" y="69" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
                         バックボーン
                     </text>
                 </switch>
             </g>
         </g>
         <g>
-            <rect x="0" y="110" width="180" height="30" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+            <rect x="0" y="100" width="180" height="30" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
         </g>
         <g>
             <g transform="translate(-0.5 -0.5)">
                 <switch>
                     <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 125px; margin-left: 1px;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 115px; margin-left: 1px;">
                             <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
                                 <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                     ストーリー
@@ -395,20 +58,20 @@
                             </div>
                         </div>
                     </foreignObject>
-                    <text x="90" y="129" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                    <text x="90" y="119" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
                         ストーリー
                     </text>
                 </switch>
             </g>
         </g>
         <g>
-            <rect x="0" y="160" width="180" height="30" fill="#f8cecc" stroke="#b85450" pointer-events="all" style="fill: light-dark(rgb(248, 206, 204), rgb(81, 45, 43)); stroke: light-dark(rgb(184, 84, 80), rgb(215, 129, 126));"/>
+            <rect x="0" y="150" width="180" height="30" fill="#f8cecc" stroke="#b85450" pointer-events="all" style="fill: light-dark(rgb(248, 206, 204), rgb(81, 45, 43)); stroke: light-dark(rgb(184, 84, 80), rgb(215, 129, 126));"/>
         </g>
         <g>
             <g transform="translate(-0.5 -0.5)">
                 <switch>
                     <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 175px; margin-left: 1px;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 165px; margin-left: 1px;">
                             <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
                                 <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                     リリース
@@ -416,8 +79,1887 @@
                             </div>
                         </div>
                     </foreignObject>
-                    <text x="90" y="179" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                    <text x="90" y="169" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
                         リリース
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="110" width="330" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 328px; height: 1px; padding-top: 130px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    ユーザーアカウント管理
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="445" y="134" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ユーザーアカウント管理
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="630" y="110" width="180" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 130px; margin-left: 631px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    届け先情報管理
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="720" y="134" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        届け先情報管理
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="110" width="200" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 198px; height: 1px; padding-top: 130px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼント発送代行予約
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="930" y="134" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼント発送代行予約
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1060" y="110" width="840" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 838px; height: 1px; padding-top: 130px; margin-left: 1061px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    予約確認
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1480" y="134" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        予約確認
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="950" width="190" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 188px; height: 1px; padding-top: 970px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼント手配予約
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="375" y="974" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼント手配予約
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="490" y="950" width="180" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 970px; margin-left: 491px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    ラッピング選択
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="580" y="974" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ラッピング選択
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="690" y="950" width="200" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 198px; height: 1px; padding-top: 970px; margin-left: 691px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    配送日時指定
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="790" y="974" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        配送日時指定
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="270" y="1560" width="220" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 218px; height: 1px; padding-top: 1580px; margin-left: 271px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    記念日リマインダー通知
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="380" y="1584" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        記念日リマインダー通知
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="510" y="1560" width="270" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 268px; height: 1px; padding-top: 1580px; margin-left: 511px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    予約関連通知
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="645" y="1584" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        予約関連通知
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="2020" width="195" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 193px; height: 1px; padding-top: 2040px; margin-left: 266px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    クレジットカード決済連携
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="363" y="2044" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        クレジットカード決済連携
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="480" y="2020" width="200" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 198px; height: 1px; padding-top: 2040px; margin-left: 481px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    支払い履歴確認
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="580" y="2044" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        支払い履歴確認
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="670" y="2410" width="210" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 208px; height: 1px; padding-top: 2430px; margin-left: 671px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    差出人名選択
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="775" y="2434" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        差出人名選択
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="900" y="2410" width="200" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 198px; height: 1px; padding-top: 2430px; margin-left: 901px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    メッセージカードデザイン選択
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1000" y="2434" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        メッセージカードデザイン選択
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1110" y="2410" width="190" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 188px; height: 1px; padding-top: 2430px; margin-left: 1111px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    予約変更・キャンセル機能
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1205" y="2434" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        予約変更・キャンセル機能
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1310" y="2410" width="180" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 178px; height: 1px; padding-top: 2430px; margin-left: 1311px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    配送状況追跡連携
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1400" y="2434" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        配送状況追跡連携
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="70" width="220" height="30" fill="none" stroke="none" pointer-events="all"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 85px; margin-left: 390px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: nowrap; ">
+                                    基本的なプレゼント予約・発送代行
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="390" y="89" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        基本的なプレゼント予約・発送代行
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="910" width="250" height="30" fill="none" stroke="none" pointer-events="all"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 925px; margin-left: 405px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: nowrap; ">
+                                    プレゼント手配とカスタマイズオプション
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="405" y="929" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼント手配とカスタマイズオプション
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="275" y="1520" width="130" height="30" fill="none" stroke="none" pointer-events="all"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 1535px; margin-left: 340px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: nowrap; ">
+                                    通知とリマインダー
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="1539" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        通知とリマインダー
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="1980" width="70" height="30" fill="none" stroke="none" pointer-events="all"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 1995px; margin-left: 300px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: nowrap; ">
+                                    決済機能
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="300" y="1999" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        決済機能
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="260" y="2370" width="190" height="30" fill="none" stroke="none" pointer-events="all"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 2385px; margin-left: 355px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: nowrap; ">
+                                    高度なカスタマイズと体験向上
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="2389" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        高度なカスタマイズと体験向上
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="160" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 190px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        アカウント登録を行う
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="330" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        アカウント登録を行う
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="235" width="150" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 270px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        初めてサービスを使う人として、メールアドレスとパスワードで簡単にアカウント登録をしたい
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="274" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        初めてサービスを使う人として、メールアドレスとパスワードで簡単にアカウント登録をしたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="320" width="150" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 355px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        (エラーケース)
+                                    </span>
+                                    <div>
+                                        <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                            ユーザーとして、無効な形式のメールアドレスでは登録できない
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="359" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        (エラーケース)...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="412.5" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 454px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        (エラーケース)
+                                    </span>
+                                    <div>
+                                        <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                            ユーザーとして、パスワードが要件（文字数など）を満たさない場合は登録できない
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="457" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        (エラーケース)...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="460" y="235" width="130" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 128px; height: 1px; padding-top: 270px; margin-left: 461px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        登録済みユーザーとして、メールアドレスとパスワードでログインしたい
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="525" y="274" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        登録済みユーザーとして、メールアドレスとパスワードでログインしたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="460" y="315" width="130" height="100" rx="15" ry="15" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 128px; height: 1px; padding-top: 365px; margin-left: 461px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        (エラーケース)
+                                    </span>
+                                    <div>
+                                        <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                            登録済みユーザーとして、誤ったパスワードではログインできない
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="525" y="369" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        (エラーケース)...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="460" y="160" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 190px; margin-left: 461px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        ログインする
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="510" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ログインする
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="630" y="160" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 190px; margin-left: 631px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        届け先を登録・管理する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="680" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        届け先を登録・管理する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="160" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 190px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        プレゼント予約を行う（発送代行）
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="880" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼント予約を行う（発送代行）
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="630" y="230" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 265px; margin-left: 631px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    ユーザーとして、届け先の情報（氏名、住所、記念日など）を複数登録したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="700" y="269" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ユーザーとして、届け先の情報（氏名、住所、記念日など）を複数登録したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="630" y="317.5" width="140" height="95" rx="14.25" ry="14.25" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 365px; margin-left: 631px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    (エラーケース)
+                                    <div>
+                                        ユーザーとして、必須項目（氏名、住所など）が入力されていない場合は届け先を登録できない
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="700" y="369" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        (エラーケース)...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="230" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 265px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、登録した届け先を選択してプレゼント予約を作成したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="900" y="269" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、登録した届け先を選択してプレゼント予約を作成したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="315" width="140" height="80" rx="12" ry="12" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 355px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、送りたい記念日（日付）を指定したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="900" y="359" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、送りたい記念日（日付）を指定したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="409.38" width="140" height="88.75" rx="13.31" ry="13.31" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 454px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    (エラーケース)
+                                    <div>
+                                        プレゼントを送りたい人として、過去の日付を記念日として指定できない
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="900" y="457" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        (エラーケース)...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="510" width="140" height="100" rx="15" ry="15" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 560px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、プレゼントに添えるメッセージカードの内容を入力したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="900" y="564" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、プレゼントに添えるメッセージカードの内容を入力したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="620" width="140" height="100" rx="15" ry="15" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 670px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、自分で用意したプレゼントの情報（品名など）を入力して発送代行を依頼したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="900" y="674" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、自分で用意したプレゼントの情報（品名など）を入力して発送代行を依頼したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="830" y="730" width="140" height="110" rx="16.5" ry="16.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 785px; margin-left: 831px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    (エラーケース)
+                                    <div>
+                                        プレゼントを送りたい人として、必須項目（届け先、記念日、プレゼント情報など）が入力されていない場合は予約を完了できない
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="900" y="789" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        (エラーケース)...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1060" y="160" width="110" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 190px; margin-left: 1061px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        予約詳細を確認する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1115" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        予約詳細を確認する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1230" y="160" width="110" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 190px; margin-left: 1231px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        予約一覧を確認する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1285" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        予約一覧を確認する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1400" y="160" width="110" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 190px; margin-left: 1401px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        （管理者）
+                                    </span>
+                                    <div>
+                                        <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                            予約一覧を確認する
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1455" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        （管理者）
+予約一覧を確認する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1560" y="160" width="110" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 108px; height: 1px; padding-top: 190px; margin-left: 1561px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        （管理者）
+                                    </span>
+                                    <div>
+                                        <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                            予約詳細を確認する
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1615" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        （管理者）
+予約詳細を確認する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1730" y="160" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 190px; margin-left: 1731px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        （管理者）
+                                    </span>
+                                    <div>
+                                        <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                            予約ステータスを更新する
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1780" y="194" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        （管理者）
+予約ステータスを更新する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="0" width="120" height="50" fill="#f8cecc" stroke="#b85450" pointer-events="all" style="fill: light-dark(rgb(248, 206, 204), rgb(81, 45, 43)); stroke: light-dark(rgb(184, 84, 80), rgb(215, 129, 126));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 25px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    リリース1 (MVP)
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="29" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        リリース1 (MVP)
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1060" y="230" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 265px; margin-left: 1061px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、作成したプレゼント予約の詳細を確認したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1130" y="269" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、作成したプレゼント予約の詳細を確認したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1230" y="230" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 265px; margin-left: 1231px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、作成したプレゼント予約の一覧を見たいい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1300" y="269" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、作成したプレゼント予約の一覧を見たいい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1400" y="230" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 265px; margin-left: 1401px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    管理者として、受け付けたプレゼント予約の一覧を確認したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1470" y="269" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        管理者として、受け付けたプレゼント予約の一覧を確認したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1560" y="230" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 265px; margin-left: 1561px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    管理者として、特定の予約の詳細を確認したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1630" y="269" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        管理者として、特定の予約の詳細を確認したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1730" y="230" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 265px; margin-left: 1731px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    管理者として、受け付けた予約を「発送準備中」に更新したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1800" y="269" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        管理者として、受け付けた予約を「発送準備中」に更新したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1730" y="315" width="140" height="70" rx="10.5" ry="10.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 350px; margin-left: 1731px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    管理者として、「発送準備中」の予約を「発送済み」に更新したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1800" y="354" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        管理者として、「発送準備中」の予約を「発送済み」に更新したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="840" width="120" height="50" fill="#f8cecc" stroke="#b85450" pointer-events="all" style="fill: light-dark(rgb(248, 206, 204), rgb(81, 45, 43)); stroke: light-dark(rgb(184, 84, 80), rgb(215, 129, 126));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 865px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    リリース2
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="869" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        リリース2
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="1010" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 1040px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        プレゼント予約を行う（手配）
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="330" y="1044" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼント予約を行う（手配）
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="490" y="1010" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 1040px; margin-left: 491px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        ラッピングを選択する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="540" y="1044" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ラッピングを選択する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="690" y="1010" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 1040px; margin-left: 691px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        配送日時を指定する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="740" y="1044" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        配送日時を指定する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="270" y="1620" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 1650px; margin-left: 271px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        記念日のリマインダーを受け取る
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="320" y="1654" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        記念日のリマインダーを受け取る
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="630" y="430" width="140" height="80" rx="12" ry="12" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 138px; height: 1px; padding-top: 470px; margin-left: 631px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    ユーザーとして、登録済みの届け先の一覧を見たい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="700" y="474" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ユーザーとして、登録済みの届け先の一覧を見たい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="1090" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1131px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、システムが提案する商品リスト（カタログ）からプレゼントを選びたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="1135" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、システムが提案する商品リスト（カタログ）からプレゼントを選びたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="1190" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1231px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、商品カテゴリ、価格帯、キーワードなどでプレゼント候補を検索したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="1235" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、商品カテゴリ、価格帯、キーワードなどでプレゼント候補を検索したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="1280" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1321px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、商品の詳細情報（写真、説明、価格、レビューなど）を確認したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="1325" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、商品の詳細情報（写真、説明、価格、レビューなど）を確認したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="280" y="1380" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1421px; margin-left: 281px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、カタログから選んだ商品でプレゼント予約を作成したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="1425" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、カタログから選んだ商品でプレゼント予約を作成したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="490" y="1090" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1131px; margin-left: 491px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、ラッピングの種類を選びたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="565" y="1135" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、ラッピングの種類を選びたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="690" y="1090" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1131px; margin-left: 691px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、配送希望日時を指定したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="765" y="1135" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、配送希望日時を指定したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="270" y="1700" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1741px; margin-left: 271px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、登録した記念日が近づいたらリマインダーを受け取りたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="345" y="1745" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、登録した記念日が近づいたらリマインダーを受け取りたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="510" y="1700" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1741px; margin-left: 511px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    忘れっぽい夫（鈴木さん）として、予約したプレゼントの配送が近づいたら通知を受け取りたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="585" y="1745" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        忘れっぽい夫（鈴木さん）として、予約したプレゼントの配送が近づいたら通知を受け取りたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="510" y="1800" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 1841px; margin-left: 511px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、プレゼントが無事に届け先に配送完了したら通知を受け取りたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="585" y="1845" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、プレゼントが無事に届け先に配送完了したら通知を受け取りたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="515" y="1620" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 1650px; margin-left: 516px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    予約関連の通知を受け取る
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="565" y="1654" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        予約関連の通知を受け取る
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="1920" width="120" height="50" fill="#f8cecc" stroke="#b85450" pointer-events="all" style="fill: light-dark(rgb(248, 206, 204), rgb(81, 45, 43)); stroke: light-dark(rgb(184, 84, 80), rgb(215, 129, 126));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 1945px; margin-left: 266px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    リリース3 以降 (Later)
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="325" y="1949" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        リリース3 以降 (Later)
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="2080" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2110px; margin-left: 266px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        クレジットカードで支払いを行う
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="315" y="2114" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        クレジットカードで支払いを行う
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="2160" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2201px; margin-left: 266px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、クレジットカードでサービス利用料や商品代金を支払いたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="2205" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、クレジットカードでサービス利用料や商品代金を支払いたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="2260" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2301px; margin-left: 266px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、予約時に明確な費用を確認したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="2305" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、予約時に明確な費用を確認したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="480" y="2080" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2110px; margin-left: 481px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        支払い履歴を確認する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="530" y="2114" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        支払い履歴を確認する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="480" y="2160" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2201px; margin-left: 481px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    ユーザーとして、過去の支払い履歴を確認したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="555" y="2205" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ユーザーとして、過去の支払い履歴を確認したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="260" y="2410" width="190" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 188px; height: 1px; padding-top: 2430px; margin-left: 261px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プロフィール情報編集
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="355" y="2434" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プロフィール情報編集
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="460" y="2410" width="190" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 188px; height: 1px; padding-top: 2430px; margin-left: 461px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    届け先情報編集・削除
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="555" y="2434" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        届け先情報編集・削除
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="2470" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2500px; margin-left: 266px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        プロフィールを編集する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="315" y="2504" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プロフィールを編集する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="265" y="2540" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2581px; margin-left: 266px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    ユーザーとして、登録した自分の情報（氏名、連絡先、パスワードなど）を編集したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="2585" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ユーザーとして、登録した自分の情報（氏名、連絡先、パスワードなど）を編集したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="460" y="2470" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2500px; margin-left: 461px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        届け先を編集・削除する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="510" y="2504" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        届け先を編集・削除する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="460" y="2540" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2581px; margin-left: 461px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    ユーザーとして、登録した届け先の情報を編集・削除したい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="535" y="2585" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        ユーザーとして、登録した届け先の情報を編集・削除したい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="670" y="2470" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2500px; margin-left: 671px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        差出人名を設定する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="720" y="2504" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        差出人名を設定する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="665" y="2540" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2581px; margin-left: 666px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、差出人名を自分（依頼者）の名前にするか、サービス名（匿名）にするか選びたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="740" y="2585" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、差出人名を自分（依頼者）の名前にするか、サービス名（匿名）にするか選びたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="900" y="2470" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2500px; margin-left: 901px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        メッセージカードデザインを選択する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="950" y="2504" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        メッセージカードデザインを選択する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="900" y="2540" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2581px; margin-left: 901px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、メッセージカードのデザインを選びたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="975" y="2585" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、メッセージカードのデザインを選びたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1110" y="2470" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2500px; margin-left: 1111px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        予約を変更・キャンセルする
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1160" y="2504" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        予約を変更・キャンセルする
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1110" y="2540" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2581px; margin-left: 1111px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、作成したプレゼント予約を変更・キャンセルしたい
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1185" y="2585" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、作成したプレゼント予約を変更・キャンセルしたい
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1310" y="2470" width="100" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 98px; height: 1px; padding-top: 2500px; margin-left: 1311px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <span style="color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));">
+                                        配送状況を確認する
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1360" y="2504" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        配送状況を確認する
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="1310" y="2540" width="150" height="82.5" rx="12.38" ry="12.38" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 148px; height: 1px; padding-top: 2581px; margin-left: 1311px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    プレゼントを送りたい人として、予約したプレゼントの配送状況を確認したい（外部連携）
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1385" y="2585" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
+                        プレゼントを送りたい人として、予約したプレゼントの配送状況を確認したい（外部連携）
                     </text>
                 </switch>
             </g>
