@@ -1,4 +1,4 @@
-# ADR 002: テストにおける `mockall` クレートの採用
+# ADR 0002: テストにおける `mockall` クレートの採用
 
 *   **Status**: Accepted (実装済み)
 *   **Date**: YYYY-MM-DD (推定)

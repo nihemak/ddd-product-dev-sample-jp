@@ -34,8 +34,8 @@
 *   [ ] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Jest/RTL?) #testing #frontend #process
 *   [ ] docs(testing): フロントエンドのE2Eテスト戦略・ツールを選定する (Playwright/Cypress?) #testing #frontend #process
 *   [ ] docs(testing): バックエンドの結合テスト戦略を決定する #testing #backend #process
-*   [ ] docs(adr): ADR 001 (オニオンアーキテクチャ) の内容を現状に合わせて見直す #documentation
-*   [ ] docs(adr): ADR 002 (mockall採用) の内容を現状に合わせて見直す #documentation
+*   [ ] docs(adr): ADR 0001 (オニオンアーキテクチャ) の内容を現状に合わせて見直す #documentation
+*   [ ] docs(adr): ADR 0002 (mockall採用) の内容を現状に合わせて見直す #documentation
 
 ## 実装・リファクタリング (Implementation)
 
