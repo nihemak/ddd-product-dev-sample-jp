@@ -6,23 +6,25 @@
 
 *   [x] docs(architecture): サービス提供形態を決定する (Web, Mobile, etc.) #decision
 *   [x] docs(architecture): システム構成を決定する (SPA, SSR, etc.) #decision
-*   [ ] docs(architecture): データストアを選定する (RDB, NoSQL, etc.) #decision
+*   [x] docs(architecture): データストアを選定する (RDB, NoSQL, etc.) #decision
 *   [x] docs(architecture): Webフロントエンド技術を選定する (React, Rust(SSR/WASM), etc.) #decision #frontend
 *   [ ] docs(architecture): プロジェクト構成を決定する (モノレポ or Not) #decision
-*   [ ] docs(architecture): デプロイ戦略・プラットフォームを選定する (GCP, AWS, Cloud Run, Lambda, etc.) #decision #infra
+*   [x] docs(architecture): デプロイ戦略・プラットフォームを選定する (GCP, AWS, Cloud Run, Lambda, etc.) #decision #infra
 *   [ ] docs(architecture): ブランチ戦略を定義する #decision #process
 *   [ ] docs(architecture): 環境定義 (本番, Staging, Test) #decision #infra
 *   [ ] docs(architecture): API設計方針を決定する (REST, GraphQL, etc.) #decision
-*   [ ] docs(architecture): 認証・認可方式を決定する #decision #security
+*   [x] docs(architecture): 認証・認可方式を決定する #decision #security
 *   [ ] docs(architecture): ログ・監視戦略を決定する #decision #infra
 *   [ ] docs(architecture): Webアナリティクス導入を検討・決定する #decision #monitoring
 *   [ ] docs(architecture): APIスキーマ定義・管理方法を決定する (OpenAPI?) #decision #api
 
 ## 環境構築・CI/CD (Setup & Infra)
 
-*   [ ] chore(dev-env): ローカル開発環境を整備する (Docker?) #setup
-*   [ ] chore(ci-cd): CI/CDパイプラインを構築する (GitHub Actions?) #setup
-*   [ ] chore(iac): Infrastructure as Code を導入する (Terraform?) #setup #infra
+*   [ ] docs(devops): CI/CDパイプラインを構築する #ci-cd
+*   [ ] chore(devops): フロントエンド開発環境を構築する #frontend #dev-env
+*   [ ] chore(devops): バックエンド開発環境を構築する #backend #dev-env
+*   [ ] chore(infra): クラウド環境 (Render, Vercel) を構築・設定する #infra
+*   [ ] chore(security): Auth0の初期設定を行う #security
 
 ## 開発プロセス・ドキュメント (Process & Docs)
 
@@ -41,4 +43,6 @@
 ## いつかやる (優先度 低)
 
 *   [ ] chore: リポジトリ全体のlintルールを最新化する #tech-debt
-*   [ ] docs: ADRテンプレートを導入する #documentation 
+*   [ ] docs: ADRテンプレートを導入する #documentation
+*   [ ] chore(infra): 基本的なサーバー監視を設定する (Render/Vercel標準機能) #monitoring #infra
+*   [ ] docs: プロジェクトのセットアップ手順をREADMEに記述する #documentation 
