@@ -22,6 +22,7 @@
 
 *   [ ] docs(devops): CI/CDパイプラインを構築する #ci-cd
 *   [ ] chore(devops): フロントエンド開発環境を構築する #frontend #dev-env
+*   [ ] chore(frontend): Shadcn/ui (Tailwind CSS, Radix UI) をセットアップする #frontend #dev-env #ui
 *   [ ] chore(storybook): Storybook をセットアップする #frontend #dev-env #documentation
 *   [ ] chore(devops): バックエンド開発環境を構築する #backend #dev-env
 *   [ ] chore(infra): クラウド環境 (Render, Vercel) を構築・設定する #infra
@@ -30,7 +31,7 @@
 ## 開発プロセス・ドキュメント (Process & Docs)
 
 *   [x] docs(process): 画面仕様の定義・管理方法を決定する (Storybook+MD) #process #documentation
-*   [ ] docs(frontend): UIコンポーネントライブラリを選定する #frontend #decision
+*   [x] docs(frontend): UIコンポーネントライブラリを選定する #frontend #decision
 *   [ ] docs(process): 開発サイクルの計画・管理方法を定義する (イテレーション計画ドキュメント?) #process
 *   [ ] docs(process): テーブル設計（データモデリング）の記録方法を決定する #process
 *   [ ] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Jest/RTL?) #testing #frontend #process
