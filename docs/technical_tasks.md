@@ -31,6 +31,9 @@
 *   [ ] docs(process): 画面仕様の定義・管理方法を決定する (デザインシステム?) #process
 *   [ ] docs(process): 開発サイクルの計画・管理方法を定義する (イテレーション計画ドキュメント?) #process
 *   [ ] docs(process): テーブル設計（データモデリング）の記録方法を決定する #process
+*   [ ] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Jest/RTL?) #testing #frontend #process
+*   [ ] docs(testing): フロントエンドのE2Eテスト戦略・ツールを選定する (Playwright/Cypress?) #testing #frontend #process
+*   [ ] docs(testing): バックエンドの結合テスト戦略を決定する #testing #backend #process
 *   [ ] docs(adr): ADR 001 (オニオンアーキテクチャ) の内容を現状に合わせて見直す #documentation
 *   [ ] docs(adr): ADR 002 (mockall採用) の内容を現状に合わせて見直す #documentation
 
