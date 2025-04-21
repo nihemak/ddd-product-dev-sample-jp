@@ -26,7 +26,7 @@ async fn main() -> std::io::Result<()> {
 
     // アプリケーションがリッスンするアドレスとポート
     // TODO: 設定ファイルや環境変数から読み込むようにする
-    let address = "127.0.0.1:8080";
+    let address = "0.0.0.0:8080";
     let listener = TcpListener::bind(address)?;
     println!("Listening on {}", address);
 

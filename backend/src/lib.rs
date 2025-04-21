@@ -3,6 +3,8 @@
 use std::net::TcpListener;
 use actix_web::{dev::Server, web, App, HttpServer};
 use sqlx::PgPool;
+use utoipa::OpenApi;
+use utoipa_swagger_ui::SwaggerUi;
 
 // モジュール宣言 (ファイルから読み込む)
 pub mod domain;
@@ -16,15 +18,42 @@ pub mod routes;
 // pub use application::*;
 // pub use infrastructure::*;
 
+// OpenAPI ドキュメントの定義
+#[derive(OpenApi)]
+#[openapi(
+    paths(
+        // ここに公開するAPIエンドポイントのハンドラ関数を追加していく
+        routes::health_check::health_check,
+    ),
+    components(
+        schemas(
+            // ここにAPIで使うデータ構造 (レスポンス/リクエストボディ等) を追加していく
+            // 例: crate::domain::注文, crate::domain::エラー応答
+        )
+    ),
+    tags(
+        (name = "ddd-sample-jp", description = "DDD Sample API")
+    ),
+    servers(
+        (url = "/api/v1", description = "Local server") // APIのベースパス (任意)
+    ),
+)]
+struct ApiDoc;
+
 // テスト時やmain関数からアプリケーションサーバーを起動するための関数
 pub async fn run(listener: TcpListener, db_pool: PgPool) -> Result<Server, std::io::Error> {
-    // 接続プールを Arc でラップして web::Data に変換 (複数スレッドで安全に共有するため)
     let db_pool_data = web::Data::new(db_pool);
-    let server = HttpServer::new(move || { // move クロージャで db_pool_data の所有権を移動
+    // OpenAPIドキュメントを生成
+    let openapi = ApiDoc::openapi();
+
+    let server = HttpServer::new(move || {
         App::new()
-            // アプリケーションデータを登録
-            .app_data(db_pool_data.clone()) // 各ワーカースレッド用にプールをクローン
-            // /health ルートを追加し、health_checkハンドラに紐付ける
+            // Swagger UI を /swagger-ui/* で提供
+            .service(
+                SwaggerUi::new("/swagger-ui/{_:.*}")
+                    .url("/api-docs/openapi.json", openapi.clone()),
+            )
+            .app_data(db_pool_data.clone())
             .route("/health", web::get().to(routes::health_check::health_check))
     })
     .listen(listener)?

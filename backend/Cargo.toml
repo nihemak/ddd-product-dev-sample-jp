@@ -10,6 +10,9 @@ anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため
 actix-web = "4"
 tokio = { version = "1", features = ["full"] }
 sqlx = { version = "0.7", features = [ "runtime-tokio-rustls", "postgres", "uuid", "chrono", "json" ] }
+serde = { version = "1.0", features = ["derive"] } # データ構造のシリアライズ/デシリアライズ (utoipaで必要)
+utoipa = { version = "4", features = ["actix_extras", "chrono", "uuid"] } # OpenAPIスキーマ生成
+utoipa-swagger-ui = { version = "7", features = ["actix-web"] } # Swagger UI
 
 [dev-dependencies]
 mockall = "0.11"
