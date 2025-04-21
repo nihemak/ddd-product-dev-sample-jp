@@ -1,13 +1,39 @@
-use anyhow::Result;
-use std::sync::Arc;
+// use anyhow::Result; // anyhowは必須ではなくなるかも
+// use std::sync::Arc;
+use std::net::TcpListener;
+use std::env;
+use sqlx::PgPool;
 
 // クレートからモジュールや型をインポート
 use ddd_sample_jp::application; // 注文サービスを使うため
 use ddd_sample_jp::infrastructure; // InMemoryリポジトリを使うため
 // use ddd_sample_jp::domain; // 必要ならドメイン要素もインポート
 
+// クレートからrun関数をインポート
+use ddd_sample_jp::run;
+
 // --- Main / Presentation Layer ---
-fn main() -> Result<()> {
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    // 環境変数からデータベース接続URLを取得
+    let database_url = env::var("DATABASE_URL")
+        .expect("DATABASE_URL must be set");
+
+    // データベース接続プールを作成
+    let connection_pool = PgPool::connect(&database_url)
+        .await
+        .expect("Failed to create Postgres connection pool.");
+
+    // アプリケーションがリッスンするアドレスとポート
+    // TODO: 設定ファイルや環境変数から読み込むようにする
+    let address = "127.0.0.1:8080";
+    let listener = TcpListener::bind(address)?;
+    println!("Listening on {}", address);
+
+    // アプリケーションサーバーを起動
+    run(listener, connection_pool).await?.await // runが返すServerをawaitし、その実行完了もawait
+
+    /* ---- 既存のサンプルコードは一旦コメントアウト ----
     // --- 依存関係の構築 (Dependency Injection) ---
     let item_repo = Arc::new(infrastructure::InMemory商品Repository::new());
     let order_repo = Arc::new(infrastructure::InMemory注文Repository::new());
@@ -81,7 +107,8 @@ fn main() -> Result<()> {
      }
 
 
-    println!("\n--- DDD Sample End ---");
+    println!("--- DDD Sample End ---");
+    ---- 既存のサンプルコードここまで ---- */
 
-    Ok(())
+    // Ok(()) // `run(..).await?.await` が Result<(), std::io::Error> を返すので不要
 } 
