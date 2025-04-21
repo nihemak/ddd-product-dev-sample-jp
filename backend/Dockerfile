@@ -2,6 +2,9 @@
 # Specify a version for reproducibility.
 FROM rust:1.81-slim as builder
 
+# Install necessary packages for OpenSSL build
+RUN apt-get update && apt-get install -y --no-install-recommends libssl-dev pkg-config && rm -rf /var/lib/apt/lists/*
+
 # Install cargo-watch for hot reloading
 RUN cargo install cargo-watch
 
