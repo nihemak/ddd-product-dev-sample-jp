@@ -5,8 +5,11 @@ edition = "2021"
 
 [dependencies]
 thiserror = "1.0" # エラーハンドリングを容易にするため
-uuid = { version = "1.4", features = ["v4"] } # 一意なID生成のため
+uuid = { version = "1.16", features = ["v4"] } # 一意なID生成のため # uuidのバージョンを1.16に更新
 anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため
+actix-web = "4"
+tokio = { version = "1", features = ["full"] }
 
 [dev-dependencies]
-mockall = "0.11" 
+mockall = "0.11"
+reqwest = "0.12" 

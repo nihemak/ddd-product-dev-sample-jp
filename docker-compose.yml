@@ -10,6 +10,8 @@ services:
     volumes:
       # Mount local src directory to container's src for hot reloading
       - ./backend/src:/usr/src/app/src
+      # Mount local tests directory to container's tests
+      - ./backend/tests:/usr/src/app/tests
       # You might also want to mount Cargo.toml if you frequently change dependencies
       # - ./backend/Cargo.toml:/usr/src/app/Cargo.toml
       # - ./backend/Cargo.lock:/usr/src/app/Cargo.lock
