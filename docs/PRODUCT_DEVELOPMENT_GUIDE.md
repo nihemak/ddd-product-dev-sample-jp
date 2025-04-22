@@ -164,14 +164,20 @@ graph TD
 
 要求定義フェーズで詳細化されたユーザーストーリーや、技術タスク管理で特定された課題に基づき、設計・実装・レビューのサイクルを反復的に回してソフトウェアを構築・改善していくフェーズです。**常に最新のユビキタス言語とドメインモデルを参照し、それらに基づいて設計・実装を行います（図には示されていませんが、これらは重要なインプットです）。**
 
-### 1. 計画
-*   **目的**: イテレーションで取り組むユーザーストーリーや技術タスクを選択し、優先順位を決定する。
+**本プロジェクトでは、1週間の固定期間（イテレーション）で開発サイクルを回します。現在の開発体制（開発者1名とAIによるペアプログラミング）を反映しつつ、将来的なチーム開発も見据えて、各イテレーションの計画、実行、レビュー、振り返りの詳細なプロセスは [`docs/process/iteration_planning.md`](./process/iteration_planning.md) で定義されています。**
+
+### 1. 計画 (Planning)
+*   **目的**: イテレーションで取り組むゴールを設定し、ユーザーストーリーや技術タスクを選択し、優先順位を決定する。
+*   **タイミング**: 各イテレーション開始時。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) 参照。
+*   **参加者**: **開発者（あなた）とAI。** （将来のチーム開発を見据え、プロセスは定義）
 *   **インプット**:
     *   [`docs/product/vision_strategy.md`](./product/vision_strategy.md) (戦略目標)
     *   [`docs/product/roadmap.md`](./product/roadmap.md) (ロードマップ上の優先度)
     *   [`docs/requirements/user_story_mapping.md`](./requirements/user_story_mapping.md) (ユーザーストーリー)
     *   [`docs/technical_tasks.md`](./technical_tasks.md) (技術タスクバックログ)
-*   **アクティビティ**: チームでイテレーションのゴールを設定し、**プロダクト戦略やロードマップ上の優先度を考慮**しながら、バックログからタスクを選択・見積もり、担当を割り振る。
+    *   前回のイテレーションの振り返り結果 (Try項目)
+*   **アクティビティ**: イテレーションゴールを設定し、**プロダクト戦略やロードマップ上の優先度、依存関係、技術的リスク等を考慮**しながら、バックログからタスクを選択・優先順位付けする。
+*   **アウトプット**: イテレーションバックログ ([`docs/process/iterations/`](./process/iterations/YYYY-WW.md) など)。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) 参照。
 
 ### 2. アーキテクチャ設計 (必要に応じて)
 *   **目的**: 計画されたタスクを実現するために必要なアーキテクチャ上の判断や設計を行う。オニオンアーキテクチャの原則に従い、各レイヤーの責務や依存関係を維持・改善する。**ユビキタス言語とドメインモデルをガイドとして設計を進める。**
@@ -188,12 +194,16 @@ graph TD
     *   **Infrastructure層**: リポジトリインターフェースなどを実装する。必要に応じて結合テストを行う。
 *   **該当コード**: `src/` 以下。
 *   **テスト**: 各モジュール内の `#[cfg(test)] mod tests { ... }`。**テストケースの記述もユビキタス言語で行う。**
+*   **完了の定義 (DoD)**: 実装が完了したとみなされる基準。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) の「完了の定義」を参照。**CIでのテストパスを含む。**
 
 ### 4. レビューとフィードバック
-*   **目的**: 実装されたコードや関連ドキュメントをレビューし、品質を確保し、改善のためのフィードバックを得る。
-*   **対象**: Pull Request に含まれるコード、テスト、ドキュメント変更（ユビキタス言語 ([`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md))、モデル図 ([`docs/domain/domain-model.md`](./domain/domain-model.md))、ADR ([`docs/architecture/adr/`](./architecture/adr/)) など）。
-*   **観点**: コードの品質、テストの網羅性、プロダクト定義・要求定義ドキュメントとの整合性、**ユビキタス言語の一貫性（コード、テスト、ドキュメント間）**、**ドメインモデルとの整合性**、アーキテクチャ原則の遵守など。
-*   **フィードバック**: レビュー結果に基づき、実装の修正、アーキテクチャ設計の見直し、ユーザーストーリー（要求 ([`docs/requirements/user_story_mapping.md`](./requirements/user_story_mapping.md))）の再確認、プロダクトロードマップ ([`docs/product/roadmap.md`](./product/roadmap.md)) への影響確認、**ユビキタス言語やドメインモデルの更新提案**、新たな技術タスク ([`docs/technical_tasks.md`](./technical_tasks.md)) の特定などが行われる。
+*   **目的**: 実装されたコードや関連ドキュメントをレビューし、品質を確保し、改善のためのフィードバックを得る。イテレーションの成果を確認し、プロセスを改善する。
+*   **対象**: イテレーションで完了したコード、テスト、ドキュメント変更（ユビキタス言語 ([`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md))、モデル図 ([`docs/domain/domain-model.md`](./domain/domain-model.md))、ADR ([`docs/architecture/adr/`](./architecture/adr/)) など）を含む成果物全体。
+*   **アクティビティ**:
+    *   **ペアプログラミングによる常時レビュー:** 実装プロセス中に継続的にレビューが行われることを基本とする。
+    *   **イテレーションレビュー:** イテレーション最終日に実施。**開発者（あなた）とAI**で成果物を確認し、学習とフィードバックを得る。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) 参照。
+    *   **振り返り (Retrospective):** イテレーション最終日に実施。**開発者（あなた）とAI**でプロセスを振り返り、改善アクションを決定する。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) 参照。
+*   **フィードバック**: レビューや振り返りの結果に基づき、実装の修正、アーキテクチャ設計の見直し、ユーザーストーリー（要求 ([`docs/requirements/user_story_mapping.md`](./requirements/user_story_mapping.md))）の再確認、プロダクトロードマップ ([`docs/product/roadmap.md`](./product/roadmap.md)) への影響確認、**ユビキタス言語やドメインモデルの更新提案**、新たな技術タスク ([`docs/technical_tasks.md`](./technical_tasks.md)) の特定などが行われる。
 
 ## 技術タスク管理
 
@@ -234,9 +244,9 @@ graph TD
 ### シームレスな連携のためのプラクティス
 
 *   **日本語ユビキタス言語の徹底**: **本プロジェクトでは、ドメインに関する用語は原則として日本語で定義・使用します。** プロダクト定義から実装、テストに至るまで、会話する際、コードを書く前、ドキュメントを作成する際に、常に [`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md) を参照・意識します。レビューでは用語の不一致を指摘します。実装における命名（変数、関数、型など）も、この日本語ユビキタス言語に従います。
-*   **コードとドキュメントの同期**: コード変更（特にドメイン層やインターフェース）と同時に、関連するドキュメント（プロダクト定義、要求定義、**日本語ユビキタス言語、ドメインモデル**など）も更新します。Pull Request にドキュメント変更も含めることを原則とします。
+*   **コードとドキュメントの同期**: コード変更（特にドメイン層やインターフェース）と同時に、関連するドキュメント（プロダクト定義、要求定義、**日本語ユビキタス言語、ドメインモデル**など）も更新します。**ペアプログラミング中に同期を意識し、イテレーション完了時には同期が取れていることを確認します。** （Pull Request は当面利用しないため、マージ前の最終確認は不要）
 *   **軽量ドキュメント**: PlantUML/Mermaid や ADR など、テキストベースでバージョン管理しやすく、メンテナンスコストの低い形式を優先します。
-*   **レビューの活用**: コードレビュー時に、関連ドキュメント（プロダクト定義含む）との整合性、**特に日本語ユビキタス言語とドメインモデルとの一貫性**を確認します。
+*   **レビューの活用**: **ペアプログラミングによる常時レビュー**時に、関連ドキュメント（プロダクト定義含む）との整合性、**特に日本語ユビキタス言語とドメインモデルとの一貫性**を確認します。イテレーションレビューや振り返りもプロセス改善に活用します。
 
 ## ツールの活用
 
@@ -248,11 +258,11 @@ graph TD
     *   イベントストーミングの結果 (`docs/requirements/eventstorming.drawio.svg`) やユーザーストーリーマップ (`docs/requirements/user_story_mapping.drawio.svg`) など、より自由なレイアウトや表現が必要な図の作成・編集に使用します。
     *   `.drawio.svg` 形式で保存することで、SVGとして画像表示が可能でありながら、Draw.ioツールで再編集可能なデータを保持できます。
     *   **編集方法**: [diagrams.net](https://app.diagrams.net/) の Web サイト、または推奨拡張機能である `hediet.vscode-drawio` ([`.vscode/extensions.json`](../.vscode/extensions.json) に記載) を使用します。
-*   **`cargo test`**: 実装したコードが仕様（テストケース）を満たしているかを確認します。コミット前には必ず実行します。
+*   **`cargo test`**: 実装したコードが仕様（テストケース）を満たしているかを確認します。**CI環境でも自動実行されることを目指します。** コミット前には必ずローカルでも実行します。
 *   **`cargo fmt`**: コードスタイルを統一します。コミット前に実行します。
 *   **`cargo clippy`**: 静的解析により、潜在的な問題や改善点を指摘します。定期的に実行します。
 *   **`cargo doc`**: ソースコード中のドキュメントコメントからHTMLドキュメントを生成します。
-*   **Git**: バージョン管理。コミットメッセージは **Conventional Commits** 規約に従います。
+*   **Git**: バージョン管理。コミットメッセージは **Conventional Commits** 規約 ([`docs/CONTRIBUTING.md`](./CONTRIBUTING.md) 等に規約詳細を記載することも検討) に従います。
     *   **フォーマット**: `<type>(<scope>): <subject>`
         *   `type`: コミットの種類 (例: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`)。
         *   `scope` (任意): コミットが影響する範囲 (例: `domain`, `application`, `readme`)。
@@ -260,7 +270,7 @@ graph TD
     *   **例**:
         *   `feat(注文): 注文キャンセル機能を追加`
         *   `fix(domain): 価格計算時のオーバーフローを修正 (#123)`
-        *   `docs: DEVELOPMENT_GUIDE にコミット規約を追記`
+        *   `docs: iteration_planning ガイドラインを作成`
         *   `refactor: 注文サービスの依存性注入方法を変更`
         *   `test(application): 注文受付サービスのテストケースを追加`
     *   詳細は [Conventional Commits](https://www.conventionalcommits.org/) を参照してください。

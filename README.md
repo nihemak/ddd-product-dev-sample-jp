@@ -2,14 +2,18 @@
 
 これは、ドメイン駆動設計 (DDD) の原則と軽量なプロダクト開発プロセスを組み合わせたサンプルアプリケーションです。
 **具体的には、「記念日プレゼント予約・配送サービス」を題材としています。**
-バックエンドはRustで実装され、以下の特徴を持っています：
+バックエンド (`backend/`) はRustで実装され、以下の特徴を持っています：
 
-*   **関数型スタイル**: ドメインロジックは副作用を極力排した関数として実装されています。
-*   **Railway Oriented Programming (ROP)**: `Result` 型と `and_then`, `map_err` などを活用し、エラー処理を含むワークフローを直線的に記述しています。
-*   **オニオンアーキテクチャ**: 関心事を Domain, Application, Infrastructure の層に分離しています。
-    *   `src/main.rs` 内に `mod domain`, `mod application`, `mod infrastructure` として定義されています。
-*   **日本語ユビキタス言語**: ドメイン層の型名や関数名には、日本語（またはそのローマ字表記）を積極的に採用しています（例: `注文`, `商品ID`, `mark_as_preparing`）。
-*   **依存性の注入 (DI)**: Application層はRepositoryのインターフェース（トレイト）に依存し、具体的な実装は `main` 関数で注入されます（ここではインメモリ実装を使用）。
+*   **Webフレームワーク**: `actix-web` を使用。
+*   **非同期ランタイム**: `tokio` を使用。
+*   **データベースアクセス**: `sqlx` を使用 (PostgreSQL)。
+*   **APIドキュメント**: `utoipa` を使用して OpenAPI 仕様を生成し、Swagger UI で表示。
+*   **開発環境**: `Docker Compose` で構築。
+*   **関数型スタイル**: ドメインロジックは副作用を極力排した関数として実装。
+*   **Railway Oriented Programming (ROP)**: `Result` 型を活用。
+*   **オニオンアーキテクチャ**: Domain, Application, Infrastructure の層分離。
+*   **日本語ユビキタス言語**: ドメイン層の命名に日本語を採用。
+*   **依存性の注入 (DI)**: `main` 関数でリポジトリ等を注入。
 
 ## 主な概念
 
@@ -33,50 +37,73 @@
 *   [要求/仕様 (Requirements)](docs/requirements/) - 具体例: [ユーザーストーリーマップ](docs/requirements/user_story_mapping.md)
 *   [ドメイン関連 (Domain)](docs/domain/) - 主要ファイル: [ユビキタス言語](docs/domain/ubiquitous-language.md), [モデル図](docs/domain/domain-model.md)
 *   [アーキテクチャ関連 (Architecture)](docs/architecture/) - 主要ファイル: [概要](docs/architecture/overview.md), [ADR](docs/architecture/adr/)
+*   [開発プロセス (Process)](docs/process/) - 主要ファイル: [イテレーション計画](docs/process/iteration_planning.md)
 
-## 実行方法
+## 実行方法 (Docker Compose)
 
-1.  Rustのツールチェインがインストールされていることを確認してください。
-2.  プロジェクトのルートディレクトリで以下のコマンドを実行します。
-
+1.  Docker および Docker Compose がインストールされていることを確認してください。
+2.  プロジェクトのルートディレクトリで環境変数ファイルを作成します。
     ```bash
-    cargo run
+    cp .env.sample .env
+    # .env ファイル内の DATABASE_URL などを必要に応じて編集します。
     ```
+3.  以下のコマンドでコンテナをビルドしてバックグラウンドで起動します。
+    ```bash
+    docker compose up -d --build
+    ```
+4.  バックエンドAPIは `http://localhost:8080` で利用可能になります。
+    *   APIドキュメント (Swagger UI): `http://localhost:8080/swagger-ui/`
 
-これにより、依存関係がダウンロード・コンパイルされ、`src/main.rs` 内のサンプルコードが実行されます。
-コンソールに注文の作成、状態遷移、エラーハンドリングの過程が出力されます。
+*   **ログの確認:** `docker compose logs -f backend`
+*   **コンテナの停止:** `docker compose down`
+*   **開発時のホットリロード:** Dockerfile の CMD で `cargo watch` が設定されているため、`backend/src` 以下のコードを変更すると自動で再ビルド・再起動されます。
 
 ## テスト
 
-このプロジェクトにはユニットテストが含まれています。各モジュールファイル (`src/domain.rs`, `src/application.rs`) 内にテストコード (`#[cfg(test)] mod tests { ... }`) が記述されています。
+### 単体・結合テスト (バックエンド)
 
-テストの実行は以下のコマンドで行います。
+`cargo test` を使用して、ユニットテスト（主にドメイン層）と結合テスト（アプリケーション層・インフラ層）を実行します。
 
 ```bash
-cargo test
+# プロジェクトルートから実行
+docker compose exec backend cargo test
+# または、バックエンドディレクトリ内で直接実行
+# cd backend
+# cargo test
 ```
 
-*   **Domain層のテスト**: ドメインロジック関数の純粋性を検証します。
-*   **Application層のテスト**: `mockall` クレートを使用してリポジトリインターフェース（トレイト）をモック化し、ユースケース（`注文サービス`）が期待通りにドメインロジックやリポジトリメソッドを呼び出すかを検証します。
+*   **Domain層**: ドメインロジックの純粋性を検証。
+*   **Application層**: `mockall` を使用して依存性をモック化し、ユースケースを検証。
+*   **Infrastructure層**: 実際のDBコンテナに接続してリポジトリ実装を検証するテストも含まれる場合があります。
+
+### API エンドポイントテスト
+
+`backend/tests/` ディレクトリ (今後作成予定) にて、`reqwest` クレートなどを用いて実際のAPIエンドポイントを叩くテストを実装します。これらのテストも `cargo test` で実行されます。
 
 ## 構成
 
 ```
 .
-├── Cargo.toml          # プロジェクト定義と依存関係
-├── Cargo.lock          # 依存関係のロックファイル
+├── .env.sample         # 環境変数サンプル
 ├── .gitignore          # Gitで無視するファイル
+├── docker-compose.yml  # Docker Compose 設定
+├── backend/            # バックエンド Rust プロジェクト
+│   ├── Cargo.toml      # プロジェクト定義と依存関係
+│   ├── Cargo.lock      # 依存関係のロックファイル
+│   ├── Dockerfile      # バックエンド用 Dockerfile
+│   └── src/
+│       ├── lib.rs      # ライブラリクレートのエントリ、モジュール宣言、OpenAPI定義
+│       ├── main.rs     # アプリケーションのエントリ、DIコンテナ、サーバー起動
+│       ├── domain.rs   # Domain層
+│       ├── application.rs # Application層
+│       ├── infrastructure.rs # Infrastructure層
+│       └── routes/     # APIルートハンドラ
 ├── docs/               # ドキュメントルート
-│   ├── product/        # プロダクト定義 (ビジョン, 戦略, ロードマップ, ペルソナ)
+│   ├── product/        # プロダクト定義
 │   ├── requirements/   # 要求/仕様
-│   ├── domain/         # ドメインモデリング関連 (ユビキタス言語, モデル図)
-│   └── architecture/   # アーキテクチャ設計 (概要, ADR)
-├── src/
-│   ├── main.rs         # アプリケーションのエントリーポイント (バイナリクレート)
-│   ├── lib.rs          # ライブラリクレートのエントリーポイント、モジュール宣言
-│   ├── domain.rs       # Domain層のコードとテスト
-│   ├── application.rs  # Application層のコードとテスト
-│   └── infrastructure.rs # Infrastructure層のコード
+│   ├── domain/         # ドメイン関連
+│   ├── architecture/   # アーキテクチャ関連 (ADR含む)
+│   └── process/        # 開発プロセス関連
 └── target/             # (Git無視) ビルド成果物
 ```
 

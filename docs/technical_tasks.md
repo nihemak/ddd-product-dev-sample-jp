@@ -33,7 +33,7 @@
 *   [x] docs(process): 画面仕様の定義・管理方法を決定する (Storybook+MD) #process #documentation
 *   [x] docs(frontend): UIコンポーネントライブラリを選定する #frontend #decision
 *   [ ] docs(ui): 主要画面の仕様（画面定義・遷移）をドキュメント化する (Storybook+MD) #documentation #ui
-*   [ ] docs(process): 開発サイクルの計画・管理方法を定義する (イテレーション計画ドキュメント?) #process
+*   [x] docs(process): 開発サイクルの計画・管理方法を定義する (イテレーション計画ドキュメント?) #process
 *   [ ] docs(process): テーブル設計（データモデリング）の記録方法を決定する #process
 *   [ ] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Jest/RTL?) #testing #frontend #process
 *   [ ] docs(testing): フロントエンドのE2Eテスト戦略・ツールを選定する (Playwright/Cypress?) #testing #frontend #process
