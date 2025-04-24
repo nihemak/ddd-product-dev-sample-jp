@@ -124,8 +124,8 @@ pub mod core {
     #[derive(Debug, Clone, PartialEq)]
     pub struct キャンセル済みプレゼント予約型 {
         pub base: プレゼント予約ベース,
-        // pub キャンセル理由: String, // 例: 今回は見送り
-        // pub キャンセル日時: String, // 例: 今回は見送り
+        pub キャンセル理由: Option<String>,
+        pub キャンセル日時: Option<String>, // 仮: 本来はDateTime型
     }
 
     // --- ドメインエラー ---
@@ -182,9 +182,17 @@ pub mod core {
         pub fn 発送準備を開始する(self) -> Result<発送準備中プレゼント予約型, DomainError> {
             Ok(発送準備中プレゼント予約型 { base: self.base })
         }
-        pub fn 予約をキャンセルする(self) -> Result<キャンセル済みプレゼント予約型, DomainError> {
+        pub fn 予約をキャンセルする(
+            self,
+            理由: Option<String>,
+            日時: Option<String>,
+        ) -> Result<キャンセル済みプレゼント予約型, DomainError> {
             // 予約受付済み -> キャンセル済み は許可される
-            Ok(キャンセル済みプレゼント予約型 { base: self.base })
+            Ok(キャンセル済みプレゼント予約型 {
+                base: self.base,
+                キャンセル理由: 理由,
+                キャンセル日時: 日時,
+            })
         }
     }
 
@@ -195,9 +203,17 @@ pub mod core {
                 配送伝票番号,
             })
         }
-        pub fn 予約をキャンセルする(self) -> Result<キャンセル済みプレゼント予約型, DomainError> {
+        pub fn 予約をキャンセルする(
+            self,
+            理由: Option<String>,
+            日時: Option<String>,
+        ) -> Result<キャンセル済みプレゼント予約型, DomainError> {
             // 発送準備中 -> キャンセル済み は許可される
-            Ok(キャンセル済みプレゼント予約型 { base: self.base })
+            Ok(キャンセル済みプレゼント予約型 {
+                base: self.base,
+                キャンセル理由: 理由,
+                キャンセル日時: 日時,
+            })
         }
     }
 
@@ -466,20 +482,24 @@ mod tests {
 
     #[test]
     fn test_予約受付済みからキャンセル済みへ遷移_success() {
-        // Arrange: 予約受付済みの予約を作成
+        // Arrange
         let reservation_received = 予約を受け付ける(
             ユーザーID::new(), 届け先ID::new(), 記念日 { value: "2025-05-01".to_string() },
             vec![商品ID::new()].into_iter().collect(), 支払いID::new(), 金額::new(1000)
         ).unwrap();
         let original_base = reservation_received.base.clone();
+        let reason = Some("顧客都合".to_string());
+        let time = Some("2025-05-02T10:00:00Z".to_string());
 
-        // Act: 予約をキャンセルする
-        let result = reservation_received.予約をキャンセルする();
+        // Act
+        let result = reservation_received.予約をキャンセルする(reason.clone(), time.clone());
 
         // Assert
         assert!(result.is_ok());
         let reservation_cancelled = result.unwrap();
         assert_eq!(reservation_cancelled.base, original_base);
+        assert_eq!(reservation_cancelled.キャンセル理由, reason);
+        assert_eq!(reservation_cancelled.キャンセル日時, time);
         assert!(matches!(
             プレゼント予約状態::キャンセル済み(reservation_cancelled),
             プレゼント予約状態::キャンセル済み(_)
@@ -488,21 +508,25 @@ mod tests {
 
     #[test]
     fn test_発送準備中からキャンセル済みへ遷移_success() {
-        // Arrange: 発送準備中の予約を作成
+        // Arrange
         let reservation_received = 予約を受け付ける(
             ユーザーID::new(), 届け先ID::new(), 記念日 { value: "2025-05-05".to_string() },
             vec![商品ID::new()].into_iter().collect(), 支払いID::new(), 金額::new(2000)
         ).unwrap();
         let reservation_preparing = reservation_received.発送準備を開始する().unwrap();
         let original_base = reservation_preparing.base.clone();
+        let reason = None; // 理由なしケース
+        let time = Some("2025-05-06T11:00:00Z".to_string());
 
-        // Act: 予約をキャンセルする
-        let result = reservation_preparing.予約をキャンセルする();
+        // Act
+        let result = reservation_preparing.予約をキャンセルする(reason.clone(), time.clone());
 
         // Assert
         assert!(result.is_ok());
         let reservation_cancelled = result.unwrap();
         assert_eq!(reservation_cancelled.base, original_base);
+        assert_eq!(reservation_cancelled.キャンセル理由, reason);
+        assert_eq!(reservation_cancelled.キャンセル日時, time);
         assert!(matches!(
             プレゼント予約状態::キャンセル済み(reservation_cancelled),
             プレゼント予約状態::キャンセル済み(_)
