@@ -109,7 +109,7 @@ pub mod core {
     #[derive(Debug, Clone, PartialEq)]
     pub struct 発送済みプレゼント予約型 {
         pub base: プレゼント予約ベース,
-        pub 配送伝票番号: String, // この状態固有のデータ
+        pub 配送伝票番号: String,
     }
 
     /// 配送完了状態のデータと振る舞い
@@ -117,15 +117,15 @@ pub mod core {
     pub struct 配送完了プレゼント予約型 {
         pub base: プレゼント予約ベース,
         pub 配送伝票番号: String,
-        // pub 配送完了日時: chrono::DateTime<chrono::Utc>, // 例
+        pub 配送完了日時: String, // 仮: 本来はDateTime型
     }
 
     /// キャンセル済み状態のデータと振る舞い
     #[derive(Debug, Clone, PartialEq)]
     pub struct キャンセル済みプレゼント予約型 {
         pub base: プレゼント予約ベース,
-        // pub キャンセル理由: String, // 例
-        // pub キャンセル日時: chrono::DateTime<chrono::Utc>, // 例
+        // pub キャンセル理由: String, // 例: 今回は見送り
+        // pub キャンセル日時: String, // 例: 今回は見送り
     }
 
     // --- ドメインエラー ---
@@ -177,19 +177,42 @@ pub mod core {
         Ok(予約受付済みプレゼント予約型 { base })
     }
 
-    // 例: 状態遷移の関数 (シグネチャのみ)
+    // 例: 状態遷移の関数
     impl 予約受付済みプレゼント予約型 {
         pub fn 発送準備を開始する(self) -> Result<発送準備中プレゼント予約型, DomainError> {
-            // 状態遷移ロジック
-            unimplemented!()
+            Ok(発送準備中プレゼント予約型 { base: self.base })
         }
         pub fn 予約をキャンセルする(self) -> Result<キャンセル済みプレゼント予約型, DomainError> {
-            // 状態遷移ロジック
-            unimplemented!()
+            // 予約受付済み -> キャンセル済み は許可される
+            Ok(キャンセル済みプレゼント予約型 { base: self.base })
         }
     }
-    // 他の状態遷移関数も同様に定義 (発送準備中 -> 発送済み など)
 
+    impl 発送準備中プレゼント予約型 {
+        pub fn 発送を完了する(self, 配送伝票番号: String) -> Result<発送済みプレゼント予約型, DomainError> {
+            Ok(発送済みプレゼント予約型 {
+                base: self.base,
+                配送伝票番号,
+            })
+        }
+        pub fn 予約をキャンセルする(self) -> Result<キャンセル済みプレゼント予約型, DomainError> {
+            // 発送準備中 -> キャンセル済み は許可される
+            Ok(キャンセル済みプレゼント予約型 { base: self.base })
+        }
+    }
+
+    impl 発送済みプレゼント予約型 {
+        pub fn 配送完了を記録する(self, 記録日時: String) -> Result<配送完了プレゼント予約型, DomainError> {
+            Ok(配送完了プレゼント予約型 {
+                base: self.base,
+                配送伝票番号: self.配送伝票番号,
+                配送完了日時: 記録日時,
+            })
+        }
+        // 他の遷移メソッド (例: キャンセルは不可？)
+    }
+
+    // 他の状態遷移関数も同様に定義
 
     // --- リポジトリインターフェース (トレイト) ---
     // #[cfg_attr(test, mockall::automock)] // 必要ならmockallを有効化
@@ -323,26 +346,174 @@ mod tests {
         assert_eq!(result.err(), Some(DomainError::予約商品空エラー));
     }
 
-    // --- 他のドメインロジックや状態遷移のプレースホルダーテスト ---
+    // --- 状態遷移テスト ---
 
     #[test]
-    fn test_initial_state_creation_placeholder() {
-        // let result = 予約を受け付ける(...);
-        // assert!(result.is_ok());
-        // let reservation = result.unwrap();
-        // assert!(matches!(reservation.base.状態, プレゼント予約状態::予約受付済み(_)));
-        assert!(true); // Placeholder test
+    fn test_予約受付済みから発送準備中へ遷移_success() {
+        // Arrange: 予約受付済みの予約を作成
+        let 依頼者 = ユーザーID::new();
+        let 届け先 = 届け先ID::new();
+        let 記念日_obj = 記念日 { value: "2025-02-14".to_string() };
+        let 商品1 = 商品ID::new();
+        let mut 商品リスト = HashSet::new();
+        商品リスト.insert(商品1);
+        let 支払い = 支払いID::new();
+        let 金額_obj = 金額::new(5000);
+
+        // 予約を受け付ける関数を呼び出して初期状態を作る
+        let reservation_received_result = 予約を受け付ける(
+            依頼者, 届け先, 記念日_obj.clone(), 商品リスト.clone(), 支払い, 金額_obj,
+        );
+        assert!(reservation_received_result.is_ok());
+        let reservation_received = reservation_received_result.unwrap();
+        let original_base = reservation_received.base.clone(); // 後で比較するためにクローン
+
+        // Act: 発送準備を開始する
+        let result = reservation_received.発送準備を開始する();
+
+        // Assert: 遷移が成功し、正しい状態になっているか
+        assert!(result.is_ok());
+        let reservation_preparing = result.unwrap();
+
+        // base の内容が維持されているか確認
+        assert_eq!(reservation_preparing.base, original_base);
+
+        // reservation_preparing が `発送準備中プレゼント予約型` であることを確認
+        // （型システムで保証されているが、明示的に確認するなら match などを使う）
+        assert!(matches!(
+            プレゼント予約状態::発送準備中(reservation_preparing), // 型チェックのためのダミー状態
+            プレゼント予約状態::発送準備中(_)
+        ));
     }
 
-     #[test]
-     fn test_state_transition_placeholder() {
-         // let initial_state = 予約受付済みプレゼント予約型 { ... };
-         // let result = initial_state.発送準備を開始する();
-         // assert!(result.is_ok());
-         // let next_state = result.unwrap();
-         // assert!(matches!(next_state.base.状態, プレゼント予約状態::発送準備中(_)));
-         assert!(true); // Placeholder test
-     }
+    #[test]
+    fn test_発送準備中から発送済みへ遷移_success() {
+        // Arrange: 発送準備中の予約を作成
+        let 依頼者 = ユーザーID::new();
+        let 届け先 = 届け先ID::new();
+        let 記念日_obj = 記念日 { value: "2025-03-14".to_string() };
+        let 商品1 = 商品ID::new();
+        let mut 商品リスト = HashSet::new();
+        商品リスト.insert(商品1);
+        let 支払い = 支払いID::new();
+        let 金額_obj = 金額::new(8000);
+        let reservation_received = 予約を受け付ける(
+            依頼者, 届け先, 記念日_obj.clone(), 商品リスト.clone(), 支払い, 金額_obj,
+        ).unwrap();
+        let reservation_preparing = reservation_received.発送準備を開始する().unwrap();
+        let original_base = reservation_preparing.base.clone();
+        let slip_number = "1234-5678-9012".to_string();
+
+        // Act: 発送を完了する
+        let result = reservation_preparing.発送を完了する(slip_number.clone());
+
+        // Assert: 遷移が成功し、正しい状態になっているか
+        assert!(result.is_ok());
+        let reservation_shipped = result.unwrap();
+
+        // base の内容が維持されているか確認 (配送伝票番号以外)
+        assert_eq!(reservation_shipped.base, original_base);
+        // 配送伝票番号が正しく設定されているか確認
+        assert_eq!(reservation_shipped.配送伝票番号, slip_number);
+
+        // reservation_shipped が `発送済みプレゼント予約型` であることを確認
+        assert!(matches!(
+            プレゼント予約状態::発送済み(reservation_shipped), // ダミー状態
+            プレゼント予約状態::発送済み(_)
+        ));
+    }
+
+    #[test]
+    fn test_発送済みから配送完了へ遷移_success() {
+        // Arrange: 発送済みの予約を作成
+        let 依頼者 = ユーザーID::new();
+        let 届け先 = 届け先ID::new();
+        let 記念日_obj = 記念日 { value: "2025-04-01".to_string() };
+        let 商品1 = 商品ID::new();
+        let mut 商品リスト = HashSet::new();
+        商品リスト.insert(商品1);
+        let 支払い = 支払いID::new();
+        let 金額_obj = 金額::new(3000);
+        let reservation_received = 予約を受け付ける(
+            依頼者, 届け先, 記念日_obj.clone(), 商品リスト.clone(), 支払い, 金額_obj,
+        ).unwrap();
+        let reservation_preparing = reservation_received.発送準備を開始する().unwrap();
+        let slip_number = "9876-5432-1098".to_string();
+        let reservation_shipped = reservation_preparing.発送を完了する(slip_number.clone()).unwrap();
+        let original_base = reservation_shipped.base.clone(); // 比較用にベースをクローン
+        let completion_time = "2025-04-02T14:30:00Z".to_string(); // 仮の時刻文字列
+
+        // Act: 配送完了を記録する
+        let result = reservation_shipped.配送完了を記録する(completion_time.clone());
+
+        // Assert: 遷移が成功し、正しい状態になっているか
+        assert!(result.is_ok());
+        let reservation_delivered = result.unwrap();
+
+        // base の内容が維持されているか確認
+        assert_eq!(reservation_delivered.base, original_base);
+        // 配送伝票番号が維持されているか確認
+        assert_eq!(reservation_delivered.配送伝票番号, slip_number);
+        // 配送完了日時が正しく設定されているか確認
+        assert_eq!(reservation_delivered.配送完了日時, completion_time);
+
+        // reservation_delivered が `配送完了プレゼント予約型` であることを確認
+        assert!(matches!(
+            プレゼント予約状態::配送完了(reservation_delivered), // ダミー状態
+            プレゼント予約状態::配送完了(_)
+        ));
+    }
+
+    #[test]
+    fn test_予約受付済みからキャンセル済みへ遷移_success() {
+        // Arrange: 予約受付済みの予約を作成
+        let reservation_received = 予約を受け付ける(
+            ユーザーID::new(), 届け先ID::new(), 記念日 { value: "2025-05-01".to_string() },
+            vec![商品ID::new()].into_iter().collect(), 支払いID::new(), 金額::new(1000)
+        ).unwrap();
+        let original_base = reservation_received.base.clone();
+
+        // Act: 予約をキャンセルする
+        let result = reservation_received.予約をキャンセルする();
+
+        // Assert
+        assert!(result.is_ok());
+        let reservation_cancelled = result.unwrap();
+        assert_eq!(reservation_cancelled.base, original_base);
+        assert!(matches!(
+            プレゼント予約状態::キャンセル済み(reservation_cancelled),
+            プレゼント予約状態::キャンセル済み(_)
+        ));
+    }
+
+    #[test]
+    fn test_発送準備中からキャンセル済みへ遷移_success() {
+        // Arrange: 発送準備中の予約を作成
+        let reservation_received = 予約を受け付ける(
+            ユーザーID::new(), 届け先ID::new(), 記念日 { value: "2025-05-05".to_string() },
+            vec![商品ID::new()].into_iter().collect(), 支払いID::new(), 金額::new(2000)
+        ).unwrap();
+        let reservation_preparing = reservation_received.発送準備を開始する().unwrap();
+        let original_base = reservation_preparing.base.clone();
+
+        // Act: 予約をキャンセルする
+        let result = reservation_preparing.予約をキャンセルする();
+
+        // Assert
+        assert!(result.is_ok());
+        let reservation_cancelled = result.unwrap();
+        assert_eq!(reservation_cancelled.base, original_base);
+        assert!(matches!(
+            プレゼント予約状態::キャンセル済み(reservation_cancelled),
+            プレゼント予約状態::キャンセル済み(_)
+        ));
+    }
+
+    // #[test]
+    // fn test_state_transition_placeholder() {
+    //     // このプレースホルダーは不要になるので削除してもよい
+    //     assert!(true); // Placeholder test
+    // }
 
     // 他のテストケース (エラーケース、境界値など) も追加していく
 } 
