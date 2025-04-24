@@ -1,10 +1,3 @@
-/* --- 古いドメイン要素の利用箇所をコメントアウト --- */
-// use crate::domain::{注文, 注文ID, 注文Repository, 商品, 商品ID, 商品Repository, DomainError};
-use crate::domain::{DomainError, 商品ID}; // DomainError, 商品ID はインメモリ実装内で使われている可能性があるので残す
-
-use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
-
 // --- インメモリリポジトリの実装 ---
 
 /* --- 古い商品リポジトリ実装をコメントアウト --- */

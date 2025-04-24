@@ -3,10 +3,13 @@
 use std::net::TcpListener;
 use std::env;
 use sqlx::PgPool;
+use anyhow::Result;
+use std::sync::Arc; // InMemoryRepository を Arc<Mutex<>> でラップするため
 
 // クレートからモジュールや型をインポート
-use ddd_sample_jp::application; // 注文サービスを使うため
-use ddd_sample_jp::infrastructure; // InMemoryリポジトリを使うため
+// use ddd_sample_jp::application; // 注文サービスを使うため
+// use ddd_sample_jp::infrastructure; // InMemoryリポジトリを使うため
+// use ddd_sample_jp::domain; // 各状態の型やリポジトリトレイトを使うため
 // use ddd_sample_jp::domain; // 必要ならドメイン要素もインポート
 
 // クレートからrun関数をインポート
