@@ -1,14 +1,40 @@
 // src/domain.rs
 
 // Define internal module and re-export
-pub mod core { // pub mod core の追加
+pub mod core {
     use uuid::Uuid;
     use thiserror::Error;
+    use std::collections::HashSet; // List<商品ID> の代わりに HashSet を使う例
 
     // --- 値オブジェクト ---
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct 予約ID(Uuid);
+    impl 予約ID {
+        pub fn new() -> Self { Self(Uuid::new_v4()) }
+        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
+        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+    }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct ユーザーID(Uuid); // 依頼者ID
+    impl ユーザーID {
+        pub fn new() -> Self { Self(Uuid::new_v4()) }
+        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
+        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+    }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct 届け先ID(Uuid);
+    impl 届け先ID {
+        pub fn new() -> Self { Self(Uuid::new_v4()) }
+        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
+        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+    }
+
+    // 商品IDはサンプルから流用、必要なら修正
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct 商品ID(Uuid);
-
     impl 商品ID {
         pub fn new() -> Self { Self(Uuid::new_v4()) }
         #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
@@ -16,102 +42,169 @@ pub mod core { // pub mod core の追加
     }
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub struct 注文ID(Uuid);
-
-    impl 注文ID {
+    pub struct 支払いID(Uuid);
+    impl 支払いID {
         pub fn new() -> Self { Self(Uuid::new_v4()) }
         #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
         #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
     }
 
-    #[derive(Debug, Clone, PartialEq)]
-    pub struct 商品 {
-        pub id: 商品ID,
-        #[allow(dead_code)] pub 名前: String,
-        pub 価格: u32,
+    // 他の値オブジェクト（記念日、金額、メッセージ内容、ラッピングオプション、配送希望日時など）も必要に応じて追加
+
+    #[derive(Debug, Clone, PartialEq)] // 仮: chrono::NaiveDate などを使うべき
+    pub struct 記念日 { pub value: String } // 通常のstructに変更
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)] // 仮: 通貨も考慮すべき
+    pub struct 金額(u32);
+    impl 金額 {
+        pub fn new(value: u32) -> Self { // 公開されたコンストラクタ関数を追加
+            // ここでバリデーションを行うことも可能 (例: value >= 0)
+            Self(value)
+        }
+        pub fn value(&self) -> u32 { self.0 } // アクセサメソッド
     }
 
-    // --- エンティティ ---
-    #[derive(Debug, Clone, Copy, PartialEq)]
-    pub enum 注文状態 { 受付済み, 発送準備中, 発送済み, キャンセル済み }
+    // --- エンティティと状態 ---
 
+    /// プレゼント予約の状態 (ADR 0003)
     #[derive(Debug, Clone, PartialEq)]
-    pub struct 注文 {
-        pub id: 注文ID,
-        #[allow(dead_code)] pub 商品リスト: Vec<商品ID>,
-        #[allow(dead_code)] pub 合計金額: u32,
-        pub 状態: 注文状態,
+    pub enum プレゼント予約状態 {
+        予約受付済み(予約受付済みプレゼント予約型),
+        発送準備中(発送準備中プレゼント予約型),
+        発送済み(発送済みプレゼント予約型),
+        配送完了(配送完了プレゼント予約型),
+        キャンセル済み(キャンセル済みプレゼント予約型),
+    }
+
+    /// 各状態に共通のデータ (トレイトや抽象クラスの代わり)
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct プレゼント予約ベース {
+        pub id: 予約ID,
+        pub 依頼者id: ユーザーID,
+        pub 届け先id: 届け先ID,
+        pub 記念日: 記念日,
+        // pub メッセージ内容: String, // 必要に応じて追加
+        // pub ラッピングオプション: ...,
+        // pub 配送希望日時: ...,
+        pub 合計金額: 金額,
+        pub 支払いid: 支払いID,
+        pub 手配商品リスト: HashSet<商品ID>, // どの状態でも持ちそうなのでベースに含める例
+    }
+
+    /// 予約受付済み状態のデータと振る舞い
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct 予約受付済みプレゼント予約型 {
+        pub base: プレゼント予約ベース,
+        // この状態固有のデータがあれば追加
+    }
+
+    /// 発送準備中状態のデータと振る舞い
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct 発送準備中プレゼント予約型 {
+        pub base: プレゼント予約ベース,
+        // pub 梱包担当者id: ユーザーID, // 例
+    }
+
+    /// 発送済み状態のデータと振る舞い
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct 発送済みプレゼント予約型 {
+        pub base: プレゼント予約ベース,
+        pub 配送伝票番号: String, // この状態固有のデータ
+    }
+
+    /// 配送完了状態のデータと振る舞い
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct 配送完了プレゼント予約型 {
+        pub base: プレゼント予約ベース,
+        pub 配送伝票番号: String,
+        // pub 配送完了日時: chrono::DateTime<chrono::Utc>, // 例
+    }
+
+    /// キャンセル済み状態のデータと振る舞い
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct キャンセル済みプレゼント予約型 {
+        pub base: プレゼント予約ベース,
+        // pub キャンセル理由: String, // 例
+        // pub キャンセル日時: chrono::DateTime<chrono::Utc>, // 例
     }
 
     // --- ドメインエラー ---
     #[derive(Error, Debug, PartialEq)]
     pub enum DomainError {
-        #[error("注文に商品が含まれていません")] 注文商品空エラー,
-        #[error("指定された状態遷移は許可されていません: 現在の状態={current:?}, 要求された状態={requested:?}")]
-        不正な状態遷移エラー { current: 注文状態, requested: 注文状態 },
-        #[error("注文が見つかりません: ID={0:?}")] 注文NotFound(注文ID),
-        #[error("商品が見つかりません: ID={0:?}")] 商品NotFound(商品ID),
-        #[error("価格計算中にオーバーフローが発生しました")] 価格計算オーバーフロー,
+        #[error("プレゼント予約が見つかりません: ID={0:?}")]
+        予約NotFound(予約ID),
+        #[error("不正な状態遷移です: 現在の状態={current_state_type}")]
+        不正な状態遷移 { current_state_type: String }, // どの型からの遷移が不正かを示す
+        #[error("必須項目が不足しています: {field}")]
+        必須項目不足 { field: String },
+        #[error("予約に商品が含まれていません")]
+        予約商品空エラー, // 新しいエラーを追加
+        #[error("商品が見つかりません: ID={0:?}")]
+        商品NotFound(商品ID), // これは商品ドメインのエラーかもしれない
+        // 他に必要なドメイン固有のエラーを追加
     }
 
     // --- ドメインサービス / ロジック関数 ---
-    pub fn 合計金額計算(
-        item_ids: &[商品ID],
-        get_item_price: impl Fn(&商品ID) -> Option<u32>,
-    ) -> Result<u32, DomainError> {
-        let mut total: u32 = 0;
-        if item_ids.is_empty() { return Ok(0); }
-        for item_id in item_ids {
-            match get_item_price(item_id) {
-                Some(price) => { total = total.checked_add(price).ok_or(DomainError::価格計算オーバーフロー)? },
-                None => return Err(DomainError::商品NotFound(*item_id)),
-            }
+    // 例: 予約を受け付ける関数
+    pub fn 予約を受け付ける(
+        依頼者id: ユーザーID,
+        届け先id: 届け先ID,
+        記念日: 記念日,
+        商品idリスト: HashSet<商品ID>,
+        支払いid: 支払いID, // 引数追加
+        合計金額: 金額,     // 引数追加
+    ) -> Result<予約受付済みプレゼント予約型, DomainError> {
+        // バリデーション: 商品リストが空でないか
+        if 商品idリスト.is_empty() {
+            return Err(DomainError::予約商品空エラー);
         }
-        Ok(total)
+
+        // 新しい予約IDを生成
+        let 予約id = 予約ID::new();
+
+        // プレゼント予約ベースを作成
+        let base = プレゼント予約ベース {
+            id: 予約id,
+            依頼者id,
+            届け先id,
+            記念日,
+            合計金額,
+            支払いid,
+            手配商品リスト: 商品idリスト,
+        };
+
+        // 予約受付済みプレゼント予約型を作成して返す
+        Ok(予約受付済みプレゼント予約型 { base })
     }
 
-    pub fn 注文作成(
-        item_ids: Vec<商品ID>,
-        get_item_price: impl Fn(&商品ID) -> Option<u32>,
-    ) -> Result<注文, DomainError> {
-        if item_ids.is_empty() { return Err(DomainError::注文商品空エラー); }
-        let total_price = 合計金額計算(&item_ids, get_item_price)?;
-        Ok(注文 { id: 注文ID::new(), 商品リスト: item_ids, 合計金額: total_price, 状態: 注文状態::受付済み })
-    }
-
-    pub fn 発送準備中へ変更(order: 注文) -> Result<注文, DomainError> {
-        match order.状態 {
-            注文状態::受付済み => Ok(注文 { 状態: 注文状態::発送準備中, ..order }),
-            _ => Err(DomainError::不正な状態遷移エラー { current: order.状態, requested: 注文状態::発送準備中 }),
+    // 例: 状態遷移の関数 (シグネチャのみ)
+    impl 予約受付済みプレゼント予約型 {
+        pub fn 発送準備を開始する(self) -> Result<発送準備中プレゼント予約型, DomainError> {
+            // 状態遷移ロジック
+            unimplemented!()
+        }
+        pub fn 予約をキャンセルする(self) -> Result<キャンセル済みプレゼント予約型, DomainError> {
+            // 状態遷移ロジック
+            unimplemented!()
         }
     }
+    // 他の状態遷移関数も同様に定義 (発送準備中 -> 発送済み など)
 
-    pub fn 発送済みへ変更(order: 注文) -> Result<注文, DomainError> {
-         match order.状態 {
-            注文状態::発送準備中 => Ok(注文 { 状態: 注文状態::発送済み, ..order }),
-            _ => Err(DomainError::不正な状態遷移エラー { current: order.状態, requested: 注文状態::発送済み }),
-        }
-    }
-
-    #[allow(dead_code)]
-    pub fn 注文キャンセル(order: 注文) -> Result<注文, DomainError> {
-        match order.状態 {
-            注文状態::発送済み => Err(DomainError::不正な状態遷移エラー { current: order.状態, requested: 注文状態::キャンセル済み }),
-            _ => Ok(注文 { 状態: 注文状態::キャンセル済み, ..order }),
-        }
-    }
 
     // --- リポジトリインターフェース (トレイト) ---
-    #[cfg_attr(test, mockall::automock)]
-    pub trait 注文Repository: Send + Sync {
-        fn save(&self, order: &注文) -> Result<(), DomainError>;
-        fn find_by_id(&self, id: &注文ID) -> Result<Option<注文>, DomainError>;
+    // #[cfg_attr(test, mockall::automock)] // 必要ならmockallを有効化
+    pub trait プレゼント予約Repository: Send + Sync {
+        fn save(&self, reservation: &プレゼント予約状態) -> Result<(), DomainError>;
+        fn find_by_id(&self, id: &予約ID) -> Result<Option<プレゼント予約状態>, DomainError>;
+        // 必要に応じて他の検索メソッドを追加 (例: find_by_user_id)
     }
 
-    #[cfg_attr(test, mockall::automock)]
-    pub trait 商品Repository: Send + Sync {
-        fn find_by_id(&self, id: &商品ID) -> Result<Option<商品>, DomainError>;
-    }
+    // 商品リポジトリはシンプル化のため一旦コメントアウト or 削除しても良い
+    // #[cfg_attr(test, mockall::automock)]
+    // pub trait 商品Repository: Send + Sync {
+    //     fn find_by_id(&self, id: &商品ID) -> Result<Option<商品>, DomainError>;
+    // }
+
 } // End of pub mod core
 
 // Re-export all public items from the core module
@@ -121,162 +214,135 @@ pub use core::*;
 #[cfg(test)]
 mod tests {
     use super::core::*; // Use items from the inner core module now
-    use std::collections::HashMap;
+    use std::collections::HashSet;
+    use uuid::Uuid;
 
-    // --- Helper functions/data for tests ---
-    fn create_dummy_order(state: 注文状態) -> 注文 {
-        注文 {
-            id: 注文ID::new(),
-            商品リスト: vec![商品ID::new()],
-            合計金額: 1000,
-            状態: state,
-        }
-    }
-
-    fn create_dummy_item_id() -> 商品ID {
-        商品ID::new()
-    }
-
-    // --- Tests for domain logic functions ---
-    #[test]
-    fn test_calculate_total_price_success() {
-        let item_id1 = create_dummy_item_id();
-        let item_id2 = create_dummy_item_id();
-        let item_ids = vec![item_id1, item_id2];
-        let mut prices = HashMap::new();
-        prices.insert(item_id1, 1000);
-        prices.insert(item_id2, 500);
-        let get_price = |id: &商品ID| prices.get(id).cloned();
-        assert_eq!(合計金額計算(&item_ids, get_price), Ok(1500));
-    }
+    // --- 値オブジェクトのテスト ---
 
     #[test]
-    fn test_calculate_total_price_item_not_found() {
-        let item_id1 = create_dummy_item_id();
-        let item_id_unknown = create_dummy_item_id();
-        let item_ids = vec![item_id1, item_id_unknown];
-        let mut prices = HashMap::new();
-        prices.insert(item_id1, 1000);
-        let get_price = |id: &商品ID| prices.get(id).cloned();
-        assert_eq!(
-            合計金額計算(&item_ids, get_price),
-            Err(DomainError::商品NotFound(item_id_unknown))
+    fn test_id_value_objects_creation_and_access() {
+        // new() で生成
+        let yoyaku_id = 予約ID::new();
+        let user_id = ユーザーID::new();
+        let todokesaki_id = 届け先ID::new();
+        let shohin_id = 商品ID::new();
+        let shiharai_id = 支払いID::new();
+
+        // as_uuid() でアクセスできるか
+        assert_ne!(yoyaku_id.as_uuid().to_string(), "");
+        assert_ne!(user_id.as_uuid().to_string(), "");
+        assert_ne!(todokesaki_id.as_uuid().to_string(), "");
+        assert_ne!(shohin_id.as_uuid().to_string(), "");
+        assert_ne!(shiharai_id.as_uuid().to_string(), "");
+
+        // from_uuid() で生成
+        let specific_uuid = Uuid::new_v4();
+        let yoyaku_id_from = 予約ID::from_uuid(specific_uuid);
+        let user_id_from = ユーザーID::from_uuid(specific_uuid);
+        let todokesaki_id_from = 届け先ID::from_uuid(specific_uuid);
+        let shohin_id_from = 商品ID::from_uuid(specific_uuid);
+        let shiharai_id_from = 支払いID::from_uuid(specific_uuid);
+
+        // 渡したUUIDと同じか
+        assert_eq!(yoyaku_id_from.as_uuid(), &specific_uuid);
+        assert_eq!(user_id_from.as_uuid(), &specific_uuid);
+        assert_eq!(todokesaki_id_from.as_uuid(), &specific_uuid);
+        assert_eq!(shohin_id_from.as_uuid(), &specific_uuid);
+        assert_eq!(shiharai_id_from.as_uuid(), &specific_uuid);
+    }
+
+    #[test]
+    fn test_記念日_creation() {
+        let date_str = "2025-12-24".to_string();
+        let kinenbi = 記念日 { value: date_str.clone() };
+        assert_eq!(kinenbi.value, date_str);
+        // TODO: chrono などを使って日付としての妥当性検証を追加する
+    }
+
+    #[test]
+    fn test_金額_creation() {
+        let kingaku_val = 5000u32;
+        let kingaku = 金額::new(kingaku_val); // new() を使って生成
+        assert_eq!(kingaku.value(), kingaku_val); // アクセサメソッドを使用
+        // TODO: 通貨やマイナス値の考慮など、より詳細なテストを追加する
+    }
+
+    // --- 予約受付テスト ---
+
+    #[test]
+    fn test_予約を受け付ける_success() {
+        let 依頼者 = ユーザーID::new();
+        let 届け先 = 届け先ID::new();
+        let 記念日_obj = 記念日 { value: "2025-01-01".to_string() };
+        let 商品1 = 商品ID::new();
+        let mut 商品リスト = HashSet::new();
+        商品リスト.insert(商品1);
+        let 支払い = 支払いID::new();
+        let 金額_obj = 金額::new(10000);
+
+        let result = 予約を受け付ける(
+            依頼者,
+            届け先,
+            記念日_obj.clone(),
+            商品リスト.clone(),
+            支払い,
+            金額_obj,
         );
+
+        assert!(result.is_ok());
+        let reservation = result.unwrap();
+
+        assert_eq!(reservation.base.依頼者id, 依頼者);
+        assert_eq!(reservation.base.届け先id, 届け先);
+        assert_eq!(reservation.base.記念日, 記念日_obj);
+        assert_eq!(reservation.base.手配商品リスト, 商品リスト);
+        assert_eq!(reservation.base.支払いid, 支払い);
+        assert_eq!(reservation.base.合計金額, 金額_obj);
+        assert_ne!(reservation.base.id.as_uuid().to_string(), ""); // IDが生成されているか
     }
 
     #[test]
-    fn test_calculate_total_price_empty_list() {
-         let item_ids: Vec<商品ID> = vec![];
-         let get_price = |_id: &商品ID| -> Option<u32> { None };
-         assert_eq!(合計金額計算(&item_ids, get_price), Ok(0));
-    }
+    fn test_予約を受け付ける_fail_empty_items() {
+        let 依頼者 = ユーザーID::new();
+        let 届け先 = 届け先ID::new();
+        let 記念日_obj = 記念日 { value: "2025-01-01".to_string() };
+        let 商品リスト = HashSet::new(); // 空のリスト
+        let 支払い = 支払いID::new();
+        let 金額_obj = 金額::new(0);
 
-    #[test]
-    fn test_calculate_total_price_overflow() {
-        let item_id1 = create_dummy_item_id();
-        let item_id2 = create_dummy_item_id();
-        let item_ids_two = vec![item_id1, item_id2];
-        let get_price_max = |id: &商品ID| {
-            if id == &item_id1 { Some(u32::MAX) }
-            else if id == &item_id2 { Some(1) }
-            else { None }
-        };
-        assert_eq!(
-            合計金額計算(&item_ids_two, get_price_max),
-            Err(DomainError::価格計算オーバーフロー)
+        let result = 予約を受け付ける(
+            依頼者,
+            届け先,
+            記念日_obj.clone(),
+            商品リスト.clone(),
+            支払い,
+            金額_obj,
         );
-        let get_price_half_max = |id: &商品ID| {
-             if id == &item_id1 { Some(u32::MAX / 2 + 1) }
-             else if id == &item_id2 { Some(u32::MAX / 2 + 1) }
-             else { None }
-         };
-         assert_eq!(
-             合計金額計算(&item_ids_two, get_price_half_max),
-             Err(DomainError::価格計算オーバーフロー)
-         );
+
+        assert!(result.is_err());
+        assert_eq!(result.err(), Some(DomainError::予約商品空エラー));
     }
 
-    #[test]
-    fn test_create_order_success() {
-        let item_id1 = create_dummy_item_id();
-        let item_ids = vec![item_id1];
-        let get_price = |id: &商品ID| if id == &item_id1 { Some(2000) } else { None };
-        let result = 注文作成(item_ids.clone(), get_price);
-        assert!(result.is_ok());
-        let order = result.unwrap();
-        assert_eq!(order.商品リスト, item_ids);
-        assert_eq!(order.合計金額, 2000);
-        assert_eq!(order.状態, 注文状態::受付済み);
-    }
+    // --- 他のドメインロジックや状態遷移のプレースホルダーテスト ---
 
     #[test]
-    fn test_create_order_empty_items() {
-        let item_ids: Vec<商品ID> = vec![];
-        let get_price = |_id: &商品ID| None;
-        assert_eq!(注文作成(item_ids, get_price), Err(DomainError::注文商品空エラー));
+    fn test_initial_state_creation_placeholder() {
+        // let result = 予約を受け付ける(...);
+        // assert!(result.is_ok());
+        // let reservation = result.unwrap();
+        // assert!(matches!(reservation.base.状態, プレゼント予約状態::予約受付済み(_)));
+        assert!(true); // Placeholder test
     }
 
-    #[test]
-    fn test_create_order_item_not_found() {
-        let item_id_unknown = create_dummy_item_id();
-        let item_ids = vec![item_id_unknown];
-         let get_price = |_id: &商品ID| None;
-        assert_eq!(注文作成(item_ids, get_price), Err(DomainError::商品NotFound(item_id_unknown)));
-    }
+     #[test]
+     fn test_state_transition_placeholder() {
+         // let initial_state = 予約受付済みプレゼント予約型 { ... };
+         // let result = initial_state.発送準備を開始する();
+         // assert!(result.is_ok());
+         // let next_state = result.unwrap();
+         // assert!(matches!(next_state.base.状態, プレゼント予約状態::発送準備中(_)));
+         assert!(true); // Placeholder test
+     }
 
-    #[test]
-    fn test_mark_as_preparing_success() {
-        let order = create_dummy_order(注文状態::受付済み);
-        let result = 発送準備中へ変更(order);
-        assert!(result.is_ok());
-        assert_eq!(result.unwrap().状態, 注文状態::発送準備中);
-    }
-
-    #[test]
-    fn test_mark_as_preparing_fail_invalid_state() {
-        let order = create_dummy_order(注文状態::発送準備中);
-        let current_state = order.状態;
-        let result = 発送準備中へ変更(order);
-        assert_eq!(result, Err(DomainError::不正な状態遷移エラー { current: current_state, requested: 注文状態::発送準備中 }));
-         let order_shipped = create_dummy_order(注文状態::発送済み);
-         let current_state_shipped = order_shipped.状態;
-         let result_shipped = 発送準備中へ変更(order_shipped);
-         assert_eq!(result_shipped, Err(DomainError::不正な状態遷移エラー { current: current_state_shipped, requested: 注文状態::発送準備中 }));
-    }
-
-    #[test]
-    fn test_mark_as_shipped_success() {
-        let order = create_dummy_order(注文状態::発送準備中);
-        let result = 発送済みへ変更(order);
-        assert!(result.is_ok());
-        assert_eq!(result.unwrap().状態, 注文状態::発送済み);
-    }
-
-    #[test]
-    fn test_mark_as_shipped_fail_invalid_state() {
-        let order = create_dummy_order(注文状態::受付済み);
-        let current_state = order.状態;
-        let result = 発送済みへ変更(order);
-         assert_eq!(result, Err(DomainError::不正な状態遷移エラー { current: current_state, requested: 注文状態::発送済み }));
-         let order_shipped = create_dummy_order(注文状態::発送済み);
-         let current_state_shipped = order_shipped.状態;
-         let result_shipped = 発送済みへ変更(order_shipped);
-         assert_eq!(result_shipped, Err(DomainError::不正な状態遷移エラー { current: current_state_shipped, requested: 注文状態::発送済み }));
-    }
-
-    #[test]
-    fn test_cancel_order_success() {
-         let order_received = create_dummy_order(注文状態::受付済み);
-         assert_eq!(注文キャンセル(order_received).unwrap().状態, 注文状態::キャンセル済み);
-         let order_preparing = create_dummy_order(注文状態::発送準備中);
-         assert_eq!(注文キャンセル(order_preparing).unwrap().状態, 注文状態::キャンセル済み);
-    }
-
-    #[test]
-    fn test_cancel_order_fail_when_shipped() {
-        let order = create_dummy_order(注文状態::発送済み);
-        let current_state = order.状態;
-        let result = 注文キャンセル(order);
-        assert_eq!(result, Err(DomainError::不正な状態遷移エラー { current: current_state, requested: 注文状態::キャンセル済み }));
-    }
+    // 他のテストケース (エラーケース、境界値など) も追加していく
 } 

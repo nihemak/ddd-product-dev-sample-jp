@@ -1,9 +1,11 @@
 use std::sync::Arc;
 use thiserror::Error;
-use crate::domain::{
-    注文作成, 発送準備中へ変更, 発送済みへ変更, 注文, 注文ID, 注文Repository,
-    注文状態, 商品, 商品ID, 商品Repository, DomainError,
-};
+/* --- 古いドメイン要素の利用箇所をコメントアウト --- */
+// use crate::domain::{
+//     注文作成, 発送準備中へ変更, 発送済みへ変更, 注文, 注文ID, 注文Repository,
+//     注文状態, 商品, 商品ID, 商品Repository, DomainError,
+// };
+use crate::domain::{DomainError, 予約ID, 商品ID}; // DomainError, 予約ID, 商品ID は ApplicationError などで参照される可能性があるため残す (必要なら後で修正)
 
 // --- アプリケーションエラー ---
 #[derive(Error, Debug, PartialEq)]
@@ -21,6 +23,8 @@ pub enum ApplicationError {
 pub type AppResult<T> = Result<T, ApplicationError>;
 
 // --- ユースケース / ワークフロー ---
+/* --- 古いサービス実装をコメントアウト --- */
+/*
 pub struct 注文サービス {
     order_repo: Arc<dyn 注文Repository>,
     item_repo: Arc<dyn 商品Repository>,
@@ -88,8 +92,11 @@ impl 注文サービス {
             .map_err(|e| ApplicationError::Repository(e.to_string()))
     }
 }
+*/
 
 // --- Application Tests ---
+/* --- 古いテストをコメントアウト --- */
+/*
 #[cfg(test)]
 mod tests {
     use super::*; // 親モジュール(application)の要素を使う
@@ -369,4 +376,5 @@ mod tests {
 
         assert!(matches!(result, Err(ApplicationError::Repository(_))));
     }
-} 
+}
+*/ 

@@ -1,9 +1,14 @@
-use crate::domain::{注文, 注文ID, 注文Repository, 商品, 商品ID, 商品Repository, DomainError};
+/* --- 古いドメイン要素の利用箇所をコメントアウト --- */
+// use crate::domain::{注文, 注文ID, 注文Repository, 商品, 商品ID, 商品Repository, DomainError};
+use crate::domain::{DomainError, 商品ID}; // DomainError, 商品ID はインメモリ実装内で使われている可能性があるので残す
+
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 // --- インメモリリポジトリの実装 ---
 
+/* --- 古い商品リポジトリ実装をコメントアウト --- */
+/*
 #[derive(Clone, Default)]
 pub struct InMemory商品Repository {
     items: Arc<Mutex<HashMap<商品ID, 商品>>>,
@@ -40,7 +45,10 @@ impl 商品Repository for InMemory商品Repository {
         Ok(items_map.get(id).cloned())
     }
 }
+*/
 
+/* --- 古い注文リポジトリ実装をコメントアウト --- */
+/*
 #[derive(Clone, Default)]
 pub struct InMemory注文Repository {
     orders: Arc<Mutex<HashMap<注文ID, 注文>>>,
@@ -65,4 +73,5 @@ impl 注文Repository for InMemory注文Repository {
         println!("Finding order by id: {:?}", id);
         Ok(orders_map.get(id).cloned())
     }
-} 
+}
+*/ 
