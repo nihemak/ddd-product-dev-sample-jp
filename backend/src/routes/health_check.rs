@@ -1,4 +1,5 @@
-use actix_web::{HttpResponse, Responder};
+use axum::http::StatusCode;
+use axum::response::IntoResponse;
 
 // utoipa の path マクロを追加
 #[utoipa::path(
@@ -9,7 +10,7 @@ use actix_web::{HttpResponse, Responder};
         (status = 200, description = "Service is healthy")
     )
 )]
-// GET /health リクエストに対するハンドラ
-pub async fn health_check() -> impl Responder {
-    HttpResponse::Ok().finish() // 200 OK ステータスと空のボディを返す
+// GET /health リクエストに対するハンドラ (Axum 版)
+pub async fn health_check() -> impl IntoResponse {
+    StatusCode::OK // Axum では StatusCode を直接返せる
 } 

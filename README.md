@@ -4,7 +4,7 @@
 **具体的には、「記念日プレゼント予約・配送サービス」を題材としています。**
 バックエンド (`backend/`) はRustで実装され、以下の特徴を持っています：
 
-*   **Webフレームワーク**: `actix-web` を使用。
+*   **Webフレームワーク**: `axum` を使用。
 *   **非同期ランタイム**: `tokio` を使用。
 *   **データベースアクセス**: `sqlx` を使用 (PostgreSQL)。
 *   **APIドキュメント**: `utoipa` を使用して OpenAPI 仕様を生成し、Swagger UI で表示。
@@ -92,12 +92,12 @@ docker compose exec backend cargo test
 │   ├── Cargo.lock      # 依存関係のロックファイル
 │   ├── Dockerfile      # バックエンド用 Dockerfile
 │   └── src/
-│       ├── lib.rs      # ライブラリクレートのエントリ、モジュール宣言、OpenAPI定義
-│       ├── main.rs     # アプリケーションのエントリ、DIコンテナ、サーバー起動
+│       ├── lib.rs      # ライブラリクレートのエントリ、モジュール宣言
+│       ├── main.rs     # アプリケーションのエントリ、DIコンテナ、サーバー起動、OpenAPI定義
 │       ├── domain.rs   # Domain層
 │       ├── application.rs # Application層
 │       ├── infrastructure.rs # Infrastructure層
-│       └── routes/     # APIルートハンドラ
+│       └── routes/     # (Axum 用に再構成予定) APIルートハンドラ
 ├── docs/               # ドキュメントルート
 │   ├── product/        # プロダクト定義
 │   ├── requirements/   # 要求/仕様

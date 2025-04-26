@@ -6,15 +6,15 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8080:8080" # Map host port 8080 to container port 8080
+      - "8080:3000" # Map host port 8080 to container port 3000
     volumes:
       # Mount local src directory to container's src for hot reloading
       - ./backend/src:/usr/src/app/src
       # Mount local tests directory to container's tests
       - ./backend/tests:/usr/src/app/tests
       # You might also want to mount Cargo.toml if you frequently change dependencies
-      # - ./backend/Cargo.toml:/usr/src/app/Cargo.toml
-      # - ./backend/Cargo.lock:/usr/src/app/Cargo.lock
+      - ./backend/Cargo.toml:/usr/src/app/Cargo.toml
+      - ./backend/Cargo.lock:/usr/src/app/Cargo.lock
     environment:
       # Ensure Rust backtraces are enabled for easier debugging
       - RUST_BACKTRACE=1

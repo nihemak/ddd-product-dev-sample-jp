@@ -7,15 +7,20 @@ edition = "2021"
 thiserror = "1.0" # エラーハンドリングを容易にするため
 uuid = { version = "1.16", features = ["v4"] } # 一意なID生成のため # uuidのバージョンを1.16に更新
 anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため
-actix-web = "4"
+# actix-web = "4" # Axum に変更したので削除
 tokio = { version = "1", features = ["full"] }
 sqlx = { version = "0.7", features = [ "runtime-tokio-rustls", "postgres", "uuid", "chrono", "json" ] }
 serde = { version = "1.0", features = ["derive"] } # データ構造のシリアライズ/デシリアライズ (utoipaで必要)
-utoipa = { version = "4", features = ["actix_extras", "chrono", "uuid"] } # OpenAPIスキーマ生成
-utoipa-swagger-ui = { version = "7", features = ["actix-web"] } # Swagger UI
+utoipa = { version = "5", features = ["axum_extras", "chrono", "uuid"] } # アップグレード
+utoipa-swagger-ui = { version = "9", features = ["axum"] } # アップグレード
 chrono = { version = "0.4", features = ["serde"] }
 chrono-tz = "0.8"
+tower-http = { version = "0.6.2", features = ["trace"] } # 0.6 系に戻す
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+dotenv = "0.15.0"
+axum = "0.8.3" # 0.8 系に戻す
 
 [dev-dependencies]
 mockall = "0.11"
-reqwest = "0.12" 
+reqwest = { version = "0.12", features = ["json"] } # json feature を追加 (テストで必要になる可能性) 

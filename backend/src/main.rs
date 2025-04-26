@@ -1,117 +1,91 @@
 // use anyhow::Result; // anyhowは必須ではなくなるかも
 // use std::sync::Arc;
-use std::net::TcpListener;
+// use std::net::TcpListener; // tokio を使うため不要
 use std::env;
-use sqlx::PgPool;
+use std::net::SocketAddr;
 use anyhow::Result;
-use std::sync::Arc; // InMemoryRepository を Arc<Mutex<>> でラップするため
+use std::sync::Arc;
+// use sqlx::PgPool; // DB接続はまだ不要なのでコメントアウト
+use axum::{routing::get, Router, serve};
+use dotenv::dotenv;
+use tokio;
+use tower_http::trace::{DefaultMakeSpan, TraceLayer};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use utoipa::OpenApi;
+use utoipa_swagger_ui::SwaggerUi;
 
-// クレートからモジュールや型をインポート
-// use ddd_sample_jp::application; // 注文サービスを使うため
-// use ddd_sample_jp::infrastructure; // InMemoryリポジトリを使うため
-// use ddd_sample_jp::domain; // 各状態の型やリポジトリトレイトを使うため
-// use ddd_sample_jp::domain; // 必要ならドメイン要素もインポート
+// クレートから必要なモジュールや型をインポート (修正)
+use ddd_sample_jp::application::プレゼント予約サービス; // 正しいパスに修正
+use ddd_sample_jp::infrastructure::InMemoryプレゼント予約Repository; // 正しいパスに修正
+use ddd_sample_jp::routes::health_check::health_check;
 
-// クレートからrun関数をインポート
-use ddd_sample_jp::run;
+// --- OpenAPI ドキュメント定義 ---
+#[derive(OpenApi)]
+#[openapi(
+    paths(
+        ddd_sample_jp::routes::health_check::health_check
+    ),
+    components(
+        schemas(
+            // TODO: スキーマを追加
+        )
+    ),
+    tags(
+        (name = "Health", description = "Health check endpoint")
+    ),
+    servers(
+        (url = "/api", description = "Local server")
+    ),
+)]
+struct ApiDoc;
 
 // --- Main / Presentation Layer ---
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    // 環境変数からデータベース接続URLを取得
-    let database_url = env::var("DATABASE_URL")
-        .expect("DATABASE_URL must be set");
+#[tokio::main]
+async fn main() -> Result<()> {
+    dotenv().ok();
 
-    // データベース接続プールを作成
-    let connection_pool = PgPool::connect(&database_url)
+    // --- Tracing の設定 ---
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::EnvFilter::new(
+            std::env::var("RUST_LOG")
+                .unwrap_or_else(|_| "ddd_sample_jp=debug,tower_http=debug".into()),
+        ))
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+
+    /* // --- DB接続 (コメントアウト) ---
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let pool = PgPool::connect(&database_url)
         .await
         .expect("Failed to create Postgres connection pool.");
+    */
 
-    // アプリケーションがリッスンするアドレスとポート
-    // TODO: 設定ファイルや環境変数から読み込むようにする
-    let address = "0.0.0.0:8080";
-    let listener = TcpListener::bind(address)?;
-    println!("Listening on {}", address);
+    // --- 依存関係の構築 (DI) --- (インメモリに戻す)
+    let repository = Arc::new(InMemoryプレゼント予約Repository::new());
+    let reservation_service = Arc::new(プレゼント予約サービス::new(repository)); // 名前を修正
 
-    // アプリケーションサーバーを起動
-    run(listener, connection_pool).await?.await // runが返すServerをawaitし、その実行完了もawait
+    // --- OpenAPI ドキュメント生成 ---
+    let openapi = ApiDoc::openapi();
 
-    /* ---- 既存のサンプルコードは一旦コメントアウト ----
-    // --- 依存関係の構築 (Dependency Injection) ---
-    let item_repo = Arc::new(infrastructure::InMemory商品Repository::new());
-    let order_repo = Arc::new(infrastructure::InMemory注文Repository::new());
-    let order_service = application::注文サービス::new(order_repo.clone(), item_repo.clone());
+    // --- ルーターの設定 --- (State を修正)
+    let app = Router::new()
+        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", openapi.clone()))
+        .route("/health", get(health_check))
+        .layer(
+            TraceLayer::new_for_http()
+                .make_span_with(DefaultMakeSpan::default().include_headers(true)),
+        )
+        .with_state(reservation_service); // インメモリサービスを State として渡す
 
-    println!("--- DDD Sample Start ---");
+    // --- サーバーの起動 ---
+    let addr_str = env::var("LISTEN_ADDR").unwrap_or_else(|_| "0.0.0.0:3000".to_string());
+    let addr: SocketAddr = addr_str.parse().expect("Invalid address format in LISTEN_ADDR");
 
-    let sample_item_ids = item_repo.get_sample_item_ids();
+    tracing::info!("listening on {}", addr);
 
-    if sample_item_ids.is_empty() {
-        println!("サンプル商品がありません。");
-        return Ok(());
-    }
-    let items_to_order = vec![sample_item_ids[0]];
+    let listener = tokio::net::TcpListener::bind(addr).await?;
 
-    // --- ユースケースの実行 ---
-    println!("\n1. 商品を注文します: {:?}", items_to_order);
-    match order_service.注文受付(items_to_order) {
-        Ok(order_id) => {
-            println!("注文成功！ 注文ID: {:?}", order_id);
+    axum::serve(listener, app.into_make_service()).await?;
 
-            println!("\n2. 注文詳細を取得します");
-            match order_service.注文詳細取得(&order_id) {
-                 Ok(Some(order)) => println!("取得した注文: {:?}", order),
-                 Ok(None) => println!("注文が見つかりませんでした。"),
-                 Err(e) => println!("注文取得エラー: {}", e),
-            }
-
-            println!("\n3. 注文を発送準備中にします");
-            match order_service.注文発送準備(&order_id) {
-                 Ok(_) => {
-                     println!("発送準備中に状態変更成功！");
-                     match order_service.注文詳細取得(&order_id) {
-                         Ok(Some(order)) => println!("現在の注文状態: {:?}", order.状態),
-                         _ => println!("注文再取得エラー"),
-                     }
-
-                     println!("\n4. 注文を発送済みにします");
-                     match order_service.注文発送(&order_id) {
-                         Ok(_) => {
-                              println!("発送済みに状態変更成功！");
-                             match order_service.注文詳細取得(&order_id) {
-                                 Ok(Some(order)) => println!("現在の注文状態: {:?}", order.状態),
-                                 _ => println!("注文再取得エラー"),
-                             }
-                         }
-                         Err(e) => println!("発送済みへの変更エラー: {}", e),
-                     }
-                 }
-                 Err(e) => println!("発送準備中への変更エラー: {}", e),
-            }
-
-        }
-        Err(e) => {
-            println!("注文エラー: {}", e);
-        }
-    }
-
-     println!("\n5. 受付済みの注文を直接発送済みにしようとしてみる（エラーになるはず）");
-     if !sample_item_ids.is_empty() {
-        let items_to_order_2 = vec![sample_item_ids[0]];
-        if let Ok(order_id_2) = order_service.注文受付(items_to_order_2) {
-            println!("新しい注文ID: {:?}", order_id_2);
-            match order_service.注文発送(&order_id_2) {
-                 Ok(_) => println!("エラーが発生するはずが、成功してしまいました。"),
-                 Err(e) => println!("期待通りのエラー: {}", e),
-            }
-        }
-     } else {
-         println!("不正遷移テスト用の商品がありません。");
-     }
-
-
-    println!("--- DDD Sample End ---");
-    ---- 既存のサンプルコードここまで ---- */
-
-    // Ok(()) // `run(..).await?.await` が Result<(), std::io::Error> を返すので不要
+    Ok(())
 } 
