@@ -1,12 +1,9 @@
-use anyhow::Result;
 use axum::{serve, Router};
 use ddd_sample_jp::application::プレゼント予約サービス;
 use ddd_sample_jp::infrastructure::InMemoryプレゼント予約Repository; // テストでは InMemory を使う
 use dotenv::dotenv;
 use reqwest;
-use sqlx::PgPool; // DB接続も必要に応じて準備
-use std::env;
-use std::net::{SocketAddr, TcpListener};
+ // DB接続も必要に応じて準備
 use std::sync::Arc;
 use tokio;
 

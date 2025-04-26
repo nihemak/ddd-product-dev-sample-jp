@@ -6,7 +6,7 @@ use std::env;
 use std::net::SocketAddr;
 use std::sync::Arc;
 // use sqlx::PgPool; // DB接続はまだ不要なのでコメントアウト
-use axum::{routing::get, serve, Router};
+use axum::{routing::get, Router};
 use dotenv::dotenv;
 use tokio;
 use tower_http::trace::{DefaultMakeSpan, TraceLayer};
