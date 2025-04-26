@@ -30,6 +30,7 @@
 *   [ ] chore(security): Auth0の初期設定を行う #security
 *   [ ] chore(docker): Dockerfile のビルドキャッシュ効率とイメージサイズを最適化する #docker #performance
 *   [ ] chore(devops): sqlx-cli 実行時の DATABASE_URL 指定方法を改善する (ラッパースクリプト等) #dev-env #db
+*   [ ] chore(ci): GitHub Actions のキャッシュを設定してビルド時間を短縮する #ci-cd #performance
 
 ## 開発プロセス・ドキュメント (Process & Docs)
 
