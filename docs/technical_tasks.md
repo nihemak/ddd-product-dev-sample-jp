@@ -52,4 +52,5 @@
 *   [ ] chore: リポジトリ全体のlintルールを最新化する #tech-debt
 *   [ ] docs: ADRテンプレートを導入する #documentation
 *   [ ] chore(infra): 基本的なサーバー監視を設定する (Render/Vercel標準機能) #monitoring #infra
-*   [ ] docs: プロジェクトのセットアップ手順をREADMEに記述する #documentation 
+*   [ ] docs: プロジェクトのセットアップ手順をREADMEに記述する #documentation
+*   [ ] refactor(db): イミュータブルデータモデリング（履歴テーブル等）の導入を検討・実施する (Ref: ADR 0004) #tech-debt #architecture 
