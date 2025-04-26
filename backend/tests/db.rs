@@ -19,7 +19,7 @@ async fn test_db_connection() {
         env::var("DATABASE_URL").expect("DATABASE_URL must be set for local testing");
 
     // Act & Assert: データベースへの接続を試みる
-    let pool = PgPool::connect(&database_url)
+    let _pool = PgPool::connect(&database_url)
         .await
         .expect("Failed to connect to Postgres.");
 
