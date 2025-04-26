@@ -31,6 +31,7 @@
 *   [ ] chore(docker): Dockerfile のビルドキャッシュ効率とイメージサイズを最適化する #docker #performance
 *   [ ] chore(devops): sqlx-cli 実行時の DATABASE_URL 指定方法を改善する (ラッパースクリプト等) #dev-env #db
 *   [ ] chore(ci): GitHub Actions のキャッシュを設定してビルド時間を短縮する #ci-cd #performance
+*   [ ] chore(ci): backend ディレクトリ配下の変更時のみ CI を実行するようトリガーを最適化する #ci-cd #monorepo
 
 ## 開発プロセス・ドキュメント (Process & Docs)
 
