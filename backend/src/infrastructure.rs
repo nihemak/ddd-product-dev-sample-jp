@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use crate::domain::{self, プレゼント予約Repository, プレゼント予約状態, 予約ID, DomainError};
+use crate::domain::{プレゼント予約Repository, プレゼント予約状態, 予約ID, DomainError};
 
 // --- インメモリリポジトリの実装 ---
 
