@@ -33,9 +33,12 @@ jobs:
 
       - name: Check formatting
         run: cargo fmt --check
+        working-directory: ./backend
 
       - name: Run Clippy
         run: cargo clippy -- -D warnings
+        working-directory: ./backend
 
       - name: Run tests
-        run: cargo test 
+        run: cargo test
+        working-directory: ./backend 
