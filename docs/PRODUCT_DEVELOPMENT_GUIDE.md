@@ -180,10 +180,10 @@ graph TD
 *   **アウトプット**: イテレーションバックログ ([`docs/process/iterations/`](./process/iterations/YYYY-WW.md) など)。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) 参照。
 
 ### 2. アーキテクチャ設計 (必要に応じて)
-*   **目的**: 計画されたタスクを実現するために必要なアーキテクチャ上の判断や設計を行う。オニオンアーキテクチャの原則に従い、各レイヤーの責務や依存関係を維持・改善する。**ユビキタス言語とドメインモデルをガイドとして設計を進める。**
-*   **インプット**: 計画されたタスク、[`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md)、[`docs/domain/domain-model.md`](./domain/domain-model.md)、既存の [`docs/architecture/`](./architecture/)
-*   **アクティビティ**: 新しいパターンの導入検討、インターフェースの定義・変更（**ドメインモデルとの整合性を確認**）、ライブラリ選定、非機能要件の考慮など。重要な決定は ADR (Architecture Decision Record) として **[`docs/architecture/adr/`](./architecture/adr/)** に記録する。
-*   **成果物**: 更新された設計ドキュメント（例: [`docs/architecture/overview.md`](./architecture/overview.md)）、ADR ([`docs/architecture/adr/`](./architecture/adr/))。
+*   **目的**: 計画されたタスクを実現するために必要なアーキテクチャ上の判断や設計を行う。オニオンアーキテクチャの原則に従い、各レイヤーの責務や依存関係を維持・改善する。**ユビキタス言語とドメインモデルをガイドとして設計を進める。データベーススキーマに関する設計もここで行う。**
+*   **インプット**: 計画されたタスク、[`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md)、[`docs/domain/domain-model.md`](./domain/domain-model.md)、既存の [`docs/architecture/`](./architecture/)、**[`docs/db/schema.sql`](./db/schema.sql)**、**[`docs/db/er-diagram.md`](./db/er-diagram.md)**
+*   **アクティビティ**: 新しいパターンの導入検討、インターフェースの定義・変更（**ドメインモデルとの整合性を確認**）、ライブラリ選定、非機能要件の考慮、**データベースのテーブル設計や変更**など。重要な決定は ADR (Architecture Decision Record) として **[`docs/architecture/adr/`](./architecture/adr/)** に記録する。
+*   **成果物**: 更新された設計ドキュメント（例: [`docs/architecture/overview.md`](./architecture/overview.md)）、ADR ([`docs/architecture/adr/`](./architecture/adr/))、**更新された [`docs/db/schema.sql`](./db/schema.sql) および [`docs/db/er-diagram.md`](./db/er-diagram.md) (スキーマ変更時)**。
 
 ### 3. 実装 (テスト駆動開発 - TDD)
 *   **目的**: 設計や仕様に基づき、テストファーストで動作するコードを記述する。**コード内の命名（変数、関数、型など）はユビキタス言語に従う。**
@@ -191,10 +191,10 @@ graph TD
 *   **アクティビティ**:
     *   **Domain層**: ドメインロジックを純粋関数として実装し、単体テストで検証する。**ドメインモデルを直接的にコードに反映させる。**
     *   **Application層**: ユースケース（ストーリーに対応）を実装する。リポジトリ等の依存性はモック化し、テストする (`mockall` 活用)。
-    *   **Infrastructure層**: リポジトリインターフェースなどを実装する。必要に応じて結合テストを行う。
+    *   **Infrastructure層**: リポジトリインターフェースなどを実装する。必要に応じて結合テストを行う。**データベースアクセスが伴う場合は、`sqlx` とマイグレーションツール (`sqlx-cli` など) を使用する。**
 *   **該当コード**: `src/` 以下。
 *   **テスト**: 各モジュール内の `#[cfg(test)] mod tests { ... }`。**テストケースの記述もユビキタス言語で行う。**
-*   **完了の定義 (DoD)**: 実装が完了したとみなされる基準。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) の「完了の定義」を参照。**CIでのテストパスを含む。**
+*   **完了の定義 (DoD)**: 実装が完了したとみなされる基準。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) の「完了の定義」を参照。**CIでのテストパスを含む。データベーススキーマの変更が伴う場合は、対応するマイグレーションファイルが作成・適用され、`docs/db/schema.sql` が更新されていること。**
 
 ### 4. レビューとフィードバック
 *   **目的**: 実装されたコードや関連ドキュメントをレビューし、品質を確保し、改善のためのフィードバックを得る。イテレーションの成果を確認し、プロセスを改善する。
@@ -252,12 +252,16 @@ graph TD
 
 **推奨VS Code拡張機能:** このプロジェクトでの開発を快適に進めるために推奨される VS Code 拡張機能は `.vscode/extensions.json` にリストアップされています。VS Code はこのファイルを認識し、必要な拡張機能のインストールを促します。
 
-*   **Mermaid**: `domain-model.md` や `overview.md` 内で図を描画します。Cursor (VS Code) のプレビュー機能で確認できます。
+*   **Mermaid**: `domain-model.md` や `overview.md`、**`er-diagram.md`** 内で図を描画します。Cursor (VS Code) のプレビュー機能で確認できます。
     *   **推奨拡張機能**: `bierner.markdown-mermaid` ([`.vscode/extensions.json`](../.vscode/extensions.json) に記載)
 *   **Draw.io (diagrams.net)**:
     *   イベントストーミングの結果 (`docs/requirements/eventstorming.drawio.svg`) やユーザーストーリーマップ (`docs/requirements/user_story_mapping.drawio.svg`) など、より自由なレイアウトや表現が必要な図の作成・編集に使用します。
     *   `.drawio.svg` 形式で保存することで、SVGとして画像表示が可能でありながら、Draw.ioツールで再編集可能なデータを保持できます。
     *   **編集方法**: [diagrams.net](https://app.diagrams.net/) の Web サイト、または推奨拡張機能である `hediet.vscode-drawio` ([`.vscode/extensions.json`](../.vscode/extensions.json) に記載) を使用します。
+*   **`sqlx-cli` (予定)**: データベースマイグレーションを管理します。
+    *   マイグレーションファイルは `backend/migrations` ディレクトリ (仮) に保存されます。
+    *   **マイグレーション適用後の最新スキーマは `docs/db/schema.sql` に反映させます。**
+    *   ローカル開発環境やCIでマイグレーションを実行するために使用します。
 *   **`cargo test`**: 実装したコードが仕様（テストケース）を満たしているかを確認します。**CI環境でも自動実行されることを目指します。** コミット前には必ずローカルでも実行します。
 *   **`cargo fmt`**: コードスタイルを統一します。コミット前に実行します。
 *   **`cargo clippy`**: 静的解析により、潜在的な問題や改善点を指摘します。定期的に実行します。
@@ -265,13 +269,14 @@ graph TD
 *   **Git**: バージョン管理。コミットメッセージは **Conventional Commits** 規約 ([`docs/CONTRIBUTING.md`](./CONTRIBUTING.md) 等に規約詳細を記載することも検討) に従います。
     *   **フォーマット**: `<type>(<scope>): <subject>`
         *   `type`: コミットの種類 (例: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`)。
-        *   `scope` (任意): コミットが影響する範囲 (例: `domain`, `application`, `readme`)。
+        *   `scope` (任意): コミットが影響する範囲 (例: `domain`, `application`, `readme`, **`db`**)。
         *   `subject`: 変更内容の簡潔な説明（**日本語で記述**）。50文字以内が目安。
-    *   **例**:
+    *   **例**: 
         *   `feat(注文): 注文キャンセル機能を追加`
         *   `fix(domain): 価格計算時のオーバーフローを修正 (#123)`
         *   `docs: iteration_planning ガイドラインを作成`
         *   `refactor: 注文サービスの依存性注入方法を変更`
         *   `test(application): 注文受付サービスのテストケースを追加`
+        *   **`feat(db): プレゼント予約テーブルの初期スキーマ定義を追加`**
     *   詳細は [Conventional Commits](https://www.conventionalcommits.org/) を参照してください。
     *   コミット前に `cargo fmt` を実行し、コードがフォーマットされていることを確認します。
