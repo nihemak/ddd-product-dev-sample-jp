@@ -2,59 +2,101 @@
 
 // Define internal module and re-export
 pub mod core {
-    use uuid::Uuid;
-    use thiserror::Error;
+    use chrono::{DateTime, NaiveDate}; // Utc を復活 -> 再度削除
+    use chrono_tz::Tz;
     use std::collections::HashSet; // List<商品ID> の代わりに HashSet を使う例
-    use chrono::{NaiveDate, DateTime}; // Utc を復活 -> 再度削除
-    use chrono_tz::Tz; // Tz を use
+    use thiserror::Error;
+    use uuid::Uuid; // Tz を use
 
     // --- 値オブジェクト ---
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct 予約ID(Uuid);
     impl 予約ID {
-        pub fn new() -> Self { Self(Uuid::new_v4()) }
-        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
-        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+        pub fn new() -> Self {
+            Self(Uuid::new_v4())
+        }
+        #[allow(dead_code)]
+        pub fn from_uuid(id: Uuid) -> Self {
+            Self(id)
+        }
+        #[allow(dead_code)]
+        pub fn as_uuid(&self) -> &Uuid {
+            &self.0
+        }
     }
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct ユーザーID(Uuid); // 依頼者ID
     impl ユーザーID {
-        pub fn new() -> Self { Self(Uuid::new_v4()) }
-        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
-        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+        pub fn new() -> Self {
+            Self(Uuid::new_v4())
+        }
+        #[allow(dead_code)]
+        pub fn from_uuid(id: Uuid) -> Self {
+            Self(id)
+        }
+        #[allow(dead_code)]
+        pub fn as_uuid(&self) -> &Uuid {
+            &self.0
+        }
     }
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct 届け先ID(Uuid);
     impl 届け先ID {
-        pub fn new() -> Self { Self(Uuid::new_v4()) }
-        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
-        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+        pub fn new() -> Self {
+            Self(Uuid::new_v4())
+        }
+        #[allow(dead_code)]
+        pub fn from_uuid(id: Uuid) -> Self {
+            Self(id)
+        }
+        #[allow(dead_code)]
+        pub fn as_uuid(&self) -> &Uuid {
+            &self.0
+        }
     }
 
     // 商品IDはサンプルから流用、必要なら修正
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct 商品ID(Uuid);
     impl 商品ID {
-        pub fn new() -> Self { Self(Uuid::new_v4()) }
-        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
-        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+        pub fn new() -> Self {
+            Self(Uuid::new_v4())
+        }
+        #[allow(dead_code)]
+        pub fn from_uuid(id: Uuid) -> Self {
+            Self(id)
+        }
+        #[allow(dead_code)]
+        pub fn as_uuid(&self) -> &Uuid {
+            &self.0
+        }
     }
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub struct 支払いID(Uuid);
     impl 支払いID {
-        pub fn new() -> Self { Self(Uuid::new_v4()) }
-        #[allow(dead_code)] pub fn from_uuid(id: Uuid) -> Self { Self(id) }
-        #[allow(dead_code)] pub fn as_uuid(&self) -> &Uuid { &self.0 }
+        pub fn new() -> Self {
+            Self(Uuid::new_v4())
+        }
+        #[allow(dead_code)]
+        pub fn from_uuid(id: Uuid) -> Self {
+            Self(id)
+        }
+        #[allow(dead_code)]
+        pub fn as_uuid(&self) -> &Uuid {
+            &self.0
+        }
     }
 
     // 他の値オブジェクト（記念日、金額、メッセージ内容、ラッピングオプション、配送希望日時など）も必要に応じて追加
 
     #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-    pub struct 記念日 { pub value: NaiveDate } // String -> NaiveDate
+    pub struct 記念日 {
+        pub value: NaiveDate,
+    } // String -> NaiveDate
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)] // 金額型 (現在は日本円のみを扱う)
     pub struct 金額(u32);
@@ -66,7 +108,9 @@ pub mod core {
                 Ok(Self(value))
             }
         }
-        pub fn value(&self) -> u32 { self.0 }
+        pub fn value(&self) -> u32 {
+            self.0
+        }
     }
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -192,7 +236,10 @@ pub mod core {
 
     // 例: 状態遷移の関数
     impl 予約受付済みプレゼント予約型 {
-        pub fn 発送準備を開始する(self, 梱包担当者id: ユーザーID) -> Result<発送準備中プレゼント予約型, DomainError> {
+        pub fn 発送準備を開始する(
+            self,
+            梱包担当者id: ユーザーID,
+        ) -> Result<発送準備中プレゼント予約型, DomainError> {
             Ok(発送準備中プレゼント予約型 {
                 base: self.base,
                 梱包担当者id, // 受け取ったIDを設定
@@ -213,7 +260,10 @@ pub mod core {
     }
 
     impl 発送準備中プレゼント予約型 {
-        pub fn 発送を完了する(self, 配送伝票番号: String) -> Result<発送済みプレゼント予約型, DomainError> {
+        pub fn 発送を完了する(
+            self,
+            配送伝票番号: String,
+        ) -> Result<発送済みプレゼント予約型, DomainError> {
             Ok(発送済みプレゼント予約型 {
                 base: self.base,
                 配送伝票番号,
@@ -236,7 +286,7 @@ pub mod core {
     impl 発送済みプレゼント予約型 {
         pub fn 配送完了を記録する(
             self,
-            記録日時: DateTime<Tz> // Tokyo -> Tz
+            記録日時: DateTime<Tz>, // Tokyo -> Tz
         ) -> Result<配送完了プレゼント予約型, DomainError> {
             Ok(配送完了プレゼント予約型 {
                 base: self.base,
@@ -253,7 +303,10 @@ pub mod core {
     #[cfg_attr(test, mockall::automock)] // mockall を有効化
     pub trait プレゼント予約Repository: Send + Sync {
         fn save(&self, reservation: &プレゼント予約状態) -> Result<(), DomainError>;
-        fn find_by_id(&self, id: &予約ID) -> Result<Option<プレゼント予約状態>, DomainError>;
+        fn find_by_id(
+            &self,
+            id: &予約ID,
+        ) -> Result<Option<プレゼント予約状態>, DomainError>;
         // 必要に応じて他の検索メソッドを追加 (例: find_by_user_id)
     }
 
@@ -262,7 +315,6 @@ pub mod core {
     // pub trait 商品Repository: Send + Sync {
     //     fn find_by_id(&self, id: &商品ID) -> Result<Option<商品>, DomainError>;
     // }
-
 } // End of pub mod core
 
 // Re-export all public items from the core module
@@ -272,10 +324,10 @@ pub use core::*;
 #[cfg(test)]
 mod tests {
     use super::core::*; // Use items from the inner core module now
-    use std::collections::HashSet;
-    use uuid::Uuid;
     use chrono::{NaiveDate, TimeZone, Utc}; // TimeZone, Utc を削除
-    use chrono_tz::Asia::Tokyo; // Tokyo を use -> 削除
+    use chrono_tz::Asia::Tokyo;
+    use std::collections::HashSet;
+    use uuid::Uuid; // Tokyo を use -> 削除
 
     // --- 値オブジェクトのテスト ---
 
@@ -316,7 +368,9 @@ mod tests {
         let date_opt = NaiveDate::from_ymd_opt(2025, 12, 24);
         assert!(date_opt.is_some());
         let expected_date = date_opt.unwrap();
-        let kinenbi = 記念日 { value: expected_date };
+        let kinenbi = 記念日 {
+            value: expected_date,
+        };
         assert_eq!(kinenbi.value, expected_date);
     }
 
@@ -334,7 +388,10 @@ mod tests {
         let 金額_value = 0u32;
         let 金額_result = 金額::new(金額_value);
         assert!(金額_result.is_err());
-        assert_eq!(金額_result.err(), Some(DomainError::不正な金額エラー { value: 0 }));
+        assert_eq!(
+            金額_result.err(),
+            Some(DomainError::不正な金額エラー { value: 0 })
+        );
     }
 
     // --- 予約受付テスト ---
@@ -343,7 +400,9 @@ mod tests {
     fn test_予約を受け付ける_success() {
         let 依頼者 = ユーザーID::new();
         let 届け先 = 届け先ID::new();
-        let 記念日_obj = 記念日 { value: NaiveDate::from_ymd_opt(2025, 1, 1).unwrap() };
+        let 記念日_obj = 記念日 {
+            value: NaiveDate::from_ymd_opt(2025, 1, 1).unwrap(),
+        };
         let message = Some("お誕生日おめでとう！".to_string());
         let wrapping = ラッピング種類::特別;
         let delivery_time = Some(Tokyo.with_ymd_and_hms(2025, 1, 10, 10, 0, 0).unwrap()); // これは Tz::Asia__Tokyo::Tokyo で呼び出すのが正しい
@@ -383,7 +442,9 @@ mod tests {
     fn test_予約を受け付ける_fail_empty_items() {
         let 依頼者 = ユーザーID::new();
         let 届け先 = 届け先ID::new();
-        let 記念日_obj = 記念日 { value: NaiveDate::from_ymd_opt(2025, 1, 1).unwrap() };
+        let 記念日_obj = 記念日 {
+            value: NaiveDate::from_ymd_opt(2025, 1, 1).unwrap(),
+        };
         let message = None;
         let wrapping = ラッピング種類::なし;
         let delivery_time = None;
@@ -411,10 +472,16 @@ mod tests {
 
     #[test]
     fn test_予約受付済みから発送準備中へ遷移_success() {
-        let 記念日_obj = 記念日 { value: NaiveDate::from_ymd_opt(2025, 2, 14).unwrap() };
+        let 記念日_obj = 記念日 {
+            value: NaiveDate::from_ymd_opt(2025, 2, 14).unwrap(),
+        };
         let reservation_received_result = 予約を受け付ける(
-            ユーザーID::new(), 届け先ID::new(), 記念日_obj.clone(),
-            Some("Happy Valentine!".to_string()), ラッピング種類::標準, None,
+            ユーザーID::new(),
+            届け先ID::new(),
+            記念日_obj.clone(),
+            Some("Happy Valentine!".to_string()),
+            ラッピング種類::標準,
+            None,
             create_dummy_product_ids(),
             支払いID::new(),
             金額::new(5000).unwrap(),
@@ -428,21 +495,32 @@ mod tests {
         let reservation_preparing = result.unwrap();
         assert_eq!(reservation_preparing.base, original_base);
         assert_eq!(reservation_preparing.梱包担当者id, 梱包担当者); // 梱包担当者IDのアサーション
-        assert!(matches!( プレゼント予約状態::発送準備中(reservation_preparing), プレゼント予約状態::発送準備中(_) ));
+        assert!(matches!(
+            プレゼント予約状態::発送準備中(reservation_preparing),
+            プレゼント予約状態::発送準備中(_)
+        ));
     }
 
     #[test]
     fn test_発送準備中から発送済みへ遷移_success() {
-        let 記念日_obj = 記念日 { value: NaiveDate::from_ymd_opt(2025, 3, 14).unwrap() };
+        let 記念日_obj = 記念日 {
+            value: NaiveDate::from_ymd_opt(2025, 3, 14).unwrap(),
+        };
         let reservation_received = 予約を受け付ける(
-            ユーザーID::new(), 届け先ID::new(), 記念日_obj.clone(),
-            None, ラッピング種類::なし, None,
+            ユーザーID::new(),
+            届け先ID::new(),
+            記念日_obj.clone(),
+            None,
+            ラッピング種類::なし,
+            None,
             create_dummy_product_ids(),
             支払いID::new(),
             金額::new(8000).unwrap(),
-        ).unwrap();
+        )
+        .unwrap();
         let 梱包担当者 = ユーザーID::new(); // ダミーの梱包担当者ID
-        let reservation_preparing_result = reservation_received.発送準備を開始する(梱包担当者); // IDを渡す
+        let reservation_preparing_result =
+            reservation_received.発送準備を開始する(梱包担当者); // IDを渡す
         assert!(reservation_preparing_result.is_ok());
         let reservation_preparing = reservation_preparing_result.unwrap();
         let original_base = reservation_preparing.base.clone(); // base は変わらないはず
@@ -454,23 +532,35 @@ mod tests {
         let reservation_shipped = result.unwrap();
         assert_eq!(reservation_shipped.base, original_base); // base は引き継がれる
         assert_eq!(reservation_shipped.配送伝票番号, slip_number);
-        assert!(matches!( プレゼント予約状態::発送済み(reservation_shipped), プレゼント予約状態::発送済み(_) ));
+        assert!(matches!(
+            プレゼント予約状態::発送済み(reservation_shipped),
+            プレゼント予約状態::発送済み(_)
+        ));
     }
 
     #[test]
     fn test_発送済みから配送完了へ遷移_success() {
-        let 記念日_obj = 記念日 { value: NaiveDate::from_ymd_opt(2025, 4, 1).unwrap() };
+        let 記念日_obj = 記念日 {
+            value: NaiveDate::from_ymd_opt(2025, 4, 1).unwrap(),
+        };
         let reservation_received = 予約を受け付ける(
-            ユーザーID::new(), 届け先ID::new(), 記念日_obj.clone(),
-            Some("Test".to_string()), ラッピング種類::標準, None,
+            ユーザーID::new(),
+            届け先ID::new(),
+            記念日_obj.clone(),
+            Some("Test".to_string()),
+            ラッピング種類::標準,
+            None,
             create_dummy_product_ids(),
             支払いID::new(),
-            金額::new(3000).unwrap()
-        ).unwrap();
+            金額::new(3000).unwrap(),
+        )
+        .unwrap();
         let 梱包担当者 = ユーザーID::new(); // 梱包担当者IDを追加
         let reservation_preparing = reservation_received.発送準備を開始する(梱包担当者).unwrap(); // 引数を追加
         let slip_number = "9876-5432-1098".to_string();
-        let reservation_shipped = reservation_preparing.発送を完了する(slip_number.clone()).unwrap();
+        let reservation_shipped = reservation_preparing
+            .発送を完了する(slip_number.clone())
+            .unwrap();
         let original_base = reservation_shipped.base.clone();
         let completion_time = Utc::now().with_timezone(&Tokyo); // Utc::now() を経由
         let result = reservation_shipped.配送完了を記録する(completion_time.clone());
@@ -479,43 +569,65 @@ mod tests {
         assert_eq!(reservation_delivered.base, original_base);
         assert_eq!(reservation_delivered.配送伝票番号, slip_number);
         assert_eq!(reservation_delivered.配送完了日時, completion_time);
-        assert!(matches!( プレゼント予約状態::配送完了(reservation_delivered), プレゼント予約状態::配送完了(_) ));
+        assert!(matches!(
+            プレゼント予約状態::配送完了(reservation_delivered),
+            プレゼント予約状態::配送完了(_)
+        ));
     }
 
     #[test]
     fn test_予約受付済みからキャンセル済みへ遷移_success() {
-        let 記念日_obj = 記念日 { value: NaiveDate::from_ymd_opt(2025, 5, 1).unwrap() };
+        let 記念日_obj = 記念日 {
+            value: NaiveDate::from_ymd_opt(2025, 5, 1).unwrap(),
+        };
         let reservation_received = 予約を受け付ける(
-            ユーザーID::new(), 届け先ID::new(), 記念日_obj.clone(),
-            None, ラッピング種類::なし, None,
+            ユーザーID::new(),
+            届け先ID::new(),
+            記念日_obj.clone(),
+            None,
+            ラッピング種類::なし,
+            None,
             create_dummy_product_ids(),
             支払いID::new(),
-            金額::new(1000).unwrap()
-        ).unwrap();
+            金額::new(1000).unwrap(),
+        )
+        .unwrap();
         let original_base = reservation_received.base.clone();
         let reason = Some("顧客都合".to_string());
         let time = Some(Utc::now().with_timezone(&Tokyo)); // Utc::now() を経由
-        let result = reservation_received.予約をキャンセルする(reason.clone(), time.clone());
+        let result =
+            reservation_received.予約をキャンセルする(reason.clone(), time.clone());
         assert!(result.is_ok());
         let reservation_cancelled = result.unwrap();
         assert_eq!(reservation_cancelled.base, original_base);
         assert_eq!(reservation_cancelled.キャンセル理由, reason);
         assert_eq!(reservation_cancelled.キャンセル日時, time);
-        assert!(matches!( プレゼント予約状態::キャンセル済み(reservation_cancelled), プレゼント予約状態::キャンセル済み(_) ));
+        assert!(matches!(
+            プレゼント予約状態::キャンセル済み(reservation_cancelled),
+            プレゼント予約状態::キャンセル済み(_)
+        ));
     }
 
     #[test]
     fn test_発送準備中からキャンセル済みへ遷移_success() {
-        let 記念日_obj = 記念日 { value: NaiveDate::from_ymd_opt(2025, 5, 5).unwrap() };
+        let 記念日_obj = 記念日 {
+            value: NaiveDate::from_ymd_opt(2025, 5, 5).unwrap(),
+        };
         let reservation_received = 予約を受け付ける(
-            ユーザーID::new(), 届け先ID::new(), 記念日_obj.clone(),
-            Some("Msg".to_string()), ラッピング種類::標準, None,
+            ユーザーID::new(),
+            届け先ID::new(),
+            記念日_obj.clone(),
+            Some("Msg".to_string()),
+            ラッピング種類::標準,
+            None,
             create_dummy_product_ids(),
             支払いID::new(),
-            金額::new(2000).unwrap()
-        ).unwrap();
+            金額::new(2000).unwrap(),
+        )
+        .unwrap();
         let 梱包担当者 = ユーザーID::new(); // ダミーの梱包担当者ID
-        let reservation_preparing_result = reservation_received.発送準備を開始する(梱包担当者); // IDを渡す
+        let reservation_preparing_result =
+            reservation_received.発送準備を開始する(梱包担当者); // IDを渡す
         assert!(reservation_preparing_result.is_ok());
         let reservation_preparing = reservation_preparing_result.unwrap();
         let original_base = reservation_preparing.base.clone(); // base は変わらないはず
@@ -523,17 +635,21 @@ mod tests {
 
         let reason = None;
         let time = Some(Utc::now().with_timezone(&Tokyo)); // Utc::now() を経由
-        let result = reservation_preparing.予約をキャンセルする(reason.clone(), time.clone());
+        let result =
+            reservation_preparing.予約をキャンセルする(reason.clone(), time.clone());
         assert!(result.is_ok());
         let reservation_cancelled = result.unwrap();
         assert_eq!(reservation_cancelled.base, original_base); // base は引き継がれる
         assert_eq!(reservation_cancelled.キャンセル理由, reason);
         assert_eq!(reservation_cancelled.キャンセル日時, time);
-        assert!(matches!( プレゼント予約状態::キャンセル済み(reservation_cancelled), プレゼント予約状態::キャンセル済み(_) ));
+        assert!(matches!(
+            プレゼント予約状態::キャンセル済み(reservation_cancelled),
+            プレゼント予約状態::キャンセル済み(_)
+        ));
     }
 
     // Helper function to create a HashSet<商品ID> for tests
     fn create_dummy_product_ids() -> HashSet<商品ID> {
         vec![商品ID::new()].into_iter().collect()
     }
-} 
+}

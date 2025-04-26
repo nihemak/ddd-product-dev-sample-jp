@@ -1,14 +1,14 @@
-use std::net::{SocketAddr, TcpListener};
-use std::sync::Arc;
 use anyhow::Result;
-use axum::{Router, serve};
+use axum::{serve, Router};
 use ddd_sample_jp::application::プレゼント予約サービス;
 use ddd_sample_jp::infrastructure::InMemoryプレゼント予約Repository; // テストでは InMemory を使う
+use dotenv::dotenv;
 use reqwest;
-use tokio;
 use sqlx::PgPool; // DB接続も必要に応じて準備
 use std::env;
-use dotenv::dotenv;
+use std::net::{SocketAddr, TcpListener};
+use std::sync::Arc;
+use tokio;
 
 // テスト用のアプリケーションを起動し、アドレスとポートを返すヘルパー関数
 async fn spawn_test_app() -> String {
@@ -34,7 +34,10 @@ async fn spawn_test_app() -> String {
 
     // テスト用の Axum ルーター (main.rs と同様に設定)
     let app = Router::new()
-        .route("/health", axum::routing::get(|| async { axum::http::StatusCode::OK })) // health エンドポイントを定義
+        .route(
+            "/health",
+            axum::routing::get(|| async { axum::http::StatusCode::OK }),
+        ) // health エンドポイントを定義
         // .route("/", axum::routing::get(|| async { "Hello, Test!" })) // 必要なら他のルートも
         .with_state(reservation_service); // サービスを State として渡す
 
@@ -65,4 +68,4 @@ async fn health_check_works() {
     assert!(response.status().is_success());
     // ボディが空であることも確認 (axum::http::StatusCode::OK は空のボディを返す)
     assert_eq!(Some(0), response.content_length());
-} 
+}

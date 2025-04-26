@@ -1,12 +1,12 @@
 // use anyhow::Result; // anyhowは必須ではなくなるかも
 // use std::sync::Arc;
 // use std::net::TcpListener; // tokio を使うため不要
+use anyhow::Result;
 use std::env;
 use std::net::SocketAddr;
-use anyhow::Result;
 use std::sync::Arc;
 // use sqlx::PgPool; // DB接続はまだ不要なのでコメントアウト
-use axum::{routing::get, Router, serve};
+use axum::{routing::get, serve, Router};
 use dotenv::dotenv;
 use tokio;
 use tower_http::trace::{DefaultMakeSpan, TraceLayer};
@@ -79,7 +79,9 @@ async fn main() -> Result<()> {
 
     // --- サーバーの起動 ---
     let addr_str = env::var("LISTEN_ADDR").unwrap_or_else(|_| "0.0.0.0:3000".to_string());
-    let addr: SocketAddr = addr_str.parse().expect("Invalid address format in LISTEN_ADDR");
+    let addr: SocketAddr = addr_str
+        .parse()
+        .expect("Invalid address format in LISTEN_ADDR");
 
     tracing::info!("listening on {}", addr);
 
@@ -88,4 +90,4 @@ async fn main() -> Result<()> {
     axum::serve(listener, app.into_make_service()).await?;
 
     Ok(())
-} 
+}

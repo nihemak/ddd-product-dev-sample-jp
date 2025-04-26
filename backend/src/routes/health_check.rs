@@ -13,4 +13,4 @@ use axum::response::IntoResponse;
 // GET /health リクエストに対するハンドラ (Axum 版)
 pub async fn health_check() -> impl IntoResponse {
     StatusCode::OK // Axum では StatusCode を直接返せる
-} 
+}

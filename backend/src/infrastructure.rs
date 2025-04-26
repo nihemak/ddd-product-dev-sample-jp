@@ -1,6 +1,8 @@
+use crate::domain::{
+    DomainError, プレゼント予約Repository, プレゼント予約状態, 予約ID
+};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use crate::domain::{プレゼント予約Repository, プレゼント予約状態, 予約ID, DomainError};
 
 // --- インメモリリポジトリの実装 ---
 
@@ -80,14 +82,16 @@ pub struct InMemoryプレゼント予約Repository {
 
 impl InMemoryプレゼント予約Repository {
     pub fn new() -> Self {
-        Self { reservations: Arc::new(Mutex::new(HashMap::new())) }
+        Self {
+            reservations: Arc::new(Mutex::new(HashMap::new())),
+        }
     }
 }
 
 impl プレゼント予約Repository for InMemoryプレゼント予約Repository {
     fn save(&self, reservation: &プレゼント予約状態) -> Result<(), DomainError> {
         let mut reservations_map = self.reservations.lock().unwrap(); // Mutexをロック
-        
+
         // 予約状態からIDを取得 (どの状態でも base.id でアクセスできる)
         let id = match reservation {
             プレゼント予約状態::予約受付済み(r) => r.base.id,
@@ -97,15 +101,20 @@ impl プレゼント予約Repository for InMemoryプレゼント予約Repository
             プレゼント予約状態::キャンセル済み(r) => r.base.id,
         };
 
-        println!("InMemory: Saving reservation {:?} with state: {:?}", id, reservation);
+        println!(
+            "InMemory: Saving reservation {:?} with state: {:?}",
+            id, reservation
+        );
         reservations_map.insert(id, reservation.clone());
         Ok(())
     }
 
-    fn find_by_id(&self, id: &予約ID) -> Result<Option<プレゼント予約状態>, DomainError> {
+    fn find_by_id(
+        &self, id: &予約ID
+    ) -> Result<Option<プレゼント予約状態>, DomainError> {
         let reservations_map = self.reservations.lock().unwrap(); // Mutexをロック
         println!("InMemory: Finding reservation by id: {:?}", id);
         let found = reservations_map.get(id).cloned(); // 見つかったらクローンして返す
         Ok(found)
     }
-} 
+}
