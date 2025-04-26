@@ -17,6 +17,7 @@
 *   [ ] docs(architecture): ログ・監視戦略を決定する #decision #infra
 *   [ ] docs(architecture): Webアナリティクス導入を検討・決定する #decision #monitoring
 *   [x] docs(architecture): APIスキーマ定義・管理方法を決定する (OpenAPI?) #decision #api
+*   [ ] refactor(server): Axum の State 管理方法を改善する (AppState 構造体の導入検討) #architecture #backend
 
 ## 環境構築・CI/CD (Setup & Infra)
 
@@ -27,6 +28,8 @@
 *   [x] chore(devops): バックエンド開発環境を Docker Compose で構築する (Rust + PostgreSQL) #backend #dev-env #docker
 *   [ ] chore(infra): クラウド環境 (Render, Vercel) を構築・設定する #infra
 *   [ ] chore(security): Auth0の初期設定を行う #security
+*   [ ] chore(docker): Dockerfile のビルドキャッシュ効率とイメージサイズを最適化する #docker #performance
+*   [ ] chore(devops): sqlx-cli 実行時の DATABASE_URL 指定方法を改善する (ラッパースクリプト等) #dev-env #db
 
 ## 開発プロセス・ドキュメント (Process & Docs)
 
@@ -34,7 +37,7 @@
 *   [x] docs(frontend): UIコンポーネントライブラリを選定する #frontend #decision
 *   [ ] docs(ui): 主要画面の仕様（画面定義・遷移）をドキュメント化する (Storybook+MD) #documentation #ui
 *   [x] docs(process): 開発サイクルの計画・管理方法を定義する (イテレーション計画ドキュメント?) #process
-*   [ ] docs(process): テーブル設計（データモデリング）の記録方法を決定する #process
+*   [x] docs(process): テーブル設計（データモデリング）の記録方法を決定する #process
 *   [ ] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Jest/RTL?) #testing #frontend #process
 *   [ ] docs(testing): フロントエンドのE2Eテスト戦略・ツールを選定する (Playwright/Cypress?) #testing #frontend #process
 *   [ ] docs(testing): バックエンドの結合テスト戦略を決定する #testing #backend #process
@@ -46,6 +49,9 @@
 *   [x] refactor(domain): 状態を型で表現するアプローチを採用し、プレゼント予約ドメインに適用する #refactoring #architecture
 *   [ ] refactor(domain): 状態を型で表現するアプローチを採用し、支払いドメインに適用する #refactoring #architecture
 *   [ ] refactor(sample): サンプル実装コードをプロダクト定義に合わせて修正・削除する #implementation #refactoring
+*   [ ] refactor(infra): InMemoryRepository を PgRepository に置き換える #implementation #db #backend
+*   [ ] refactor(error): expect() の使用箇所を見直し、適切なエラーハンドリングに改善する #refactoring #backend #quality
+*   [ ] chore(lint): プロジェクト全体の警告（未使用import等）を修正する (`cargo fix`, `cargo clippy`) #quality #backend
 
 ## いつかやる (優先度 低)
 
@@ -53,4 +59,4 @@
 *   [ ] docs: ADRテンプレートを導入する #documentation
 *   [ ] chore(infra): 基本的なサーバー監視を設定する (Render/Vercel標準機能) #monitoring #infra
 *   [ ] docs: プロジェクトのセットアップ手順をREADMEに記述する #documentation
-*   [ ] refactor(db): イミュータブルデータモデリング（履歴テーブル等）の導入を検討・実施する (Ref: ADR 0004) #tech-debt #architecture 
+*   [ ] refactor(db): イミュータブルデータモデリング（履歴テーブル等）の導入を検討・実施する (Ref: ADR 0018) #tech-debt #architecture 
