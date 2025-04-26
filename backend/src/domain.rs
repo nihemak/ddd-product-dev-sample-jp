@@ -1,3 +1,5 @@
+#![allow(clippy::new_without_default)] // TODO: 各ID型に Default トレイトを実装する
+
 // src/domain.rs
 
 // Define internal module and re-export
@@ -204,6 +206,7 @@ pub mod core {
 
     // --- ドメインサービス / ロジック関数 ---
     // 例: 予約を受け付ける関数
+    #[allow(clippy::too_many_arguments)] // TODO: 引数が多いのでコマンドオブジェクト等でのリファクタリングを検討
     pub fn 予約を受け付ける(
         依頼者id: ユーザーID,
         届け先id: 届け先ID,

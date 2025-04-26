@@ -1,3 +1,5 @@
+#![allow(clippy::unnecessary_lazy_evaluations)] // TODO: ok_or_else を ok_or に修正する
+
 use crate::domain::{
     self, DomainError, プレゼント予約Repository, プレゼント予約状態, ユーザーID, ラッピング種類,
     予約ID, 商品ID, 届け先ID, 支払いID, 記念日, 金額,
@@ -39,6 +41,7 @@ impl プレゼント予約サービス {
     }
 
     /// プレゼント予約を受け付ける (MVP: 発送代行を想定)
+    #[allow(clippy::too_many_arguments)] // TODO: 引数が多いのでコマンドオブジェクト等でのリファクタリングを検討
     pub fn プレゼント予約受付(
         &self,
         依頼者id: ユーザーID,

@@ -1,3 +1,5 @@
+#![allow(clippy::single_component_path_imports)] // TODO: tokio::main を使う場合、`use tokio;` は不要
+
 // use anyhow::Result; // anyhowは必須ではなくなるかも
 // use std::sync::Arc;
 // use std::net::TcpListener; // tokio を使うため不要
@@ -8,7 +10,6 @@ use std::sync::Arc;
 // use sqlx::PgPool; // DB接続はまだ不要なのでコメントアウト
 use axum::{routing::get, Router};
 use dotenv::dotenv;
-use tokio;
 use tower_http::trace::{DefaultMakeSpan, TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use utoipa::OpenApi;
