@@ -45,6 +45,7 @@
 *   [ ] docs(testing): バックエンドの結合テスト戦略を決定する #testing #backend #process
 *   [ ] docs(adr): ADR 0001 (オニオンアーキテクチャ) の内容を現状に合わせて見直す #documentation
 *   [ ] docs(adr): ADR 0002 (mockall採用) の内容を現状に合わせて見直す #documentation
+*   [ ] chore(process): プロダクト戦略レビューを実施する (次回目安: MVPリリース後) #process #strategy
 
 ## 実装・リファクタリング (Implementation)
 
