@@ -742,7 +742,7 @@ impl プレゼント予約Repository for PgRepository {
 }
 
 // --- テスト ---
-#[cfg(test)]
+#[cfg(all(test, not(ci)))]
 mod tests {
     use super::*;
     use chrono::NaiveDate;
@@ -790,14 +790,7 @@ mod tests {
     }
 
     #[tokio::test]
-    #[ignore] // DB接続が必要なため、デフォルトでは無視する。CI等で実行する。
     async fn test_pg_save_and_find_by_id_received() {
-        // CI環境変数を確認し、設定されていればテストをスキップ
-        if env::var("CI").is_ok() {
-            println!("Skipping DB integration test in CI environment.");
-            return;
-        }
-
         let pool = setup_db_pool().await;
         let repository = PgRepository::new(pool.clone()); // PgRepository をインスタンス化
 
@@ -859,8 +852,6 @@ mod tests {
         .execute(&pool)
         .await
         .expect("Failed to clean up test reservation data (after test)");
-
-        // panic!("PgRepository とテストケースの実装が必要です"); // 実装したのでコメントアウト
     }
 
     // TODO: 他の状態 (発送準備中、発送済みなど) の save/find_by_id テストケースを追加

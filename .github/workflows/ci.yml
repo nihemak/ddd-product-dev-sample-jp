@@ -43,7 +43,5 @@ jobs:
         working-directory: ./backend
 
       - name: Run tests
-        env:
-          SQLX_OFFLINE: "true"
         run: cargo test
         working-directory: ./backend 
