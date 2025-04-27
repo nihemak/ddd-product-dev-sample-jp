@@ -27,3 +27,7 @@ dotenvy = "0.15" # 追加
 [dev-dependencies]
 mockall = "0.11"
 reqwest = { version = "0.12", features = ["json"] } # json feature を追加 (テストで必要になる可能性) 
+
+# lint設定を追加してカスタムcfg(ci)を許可
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(ci)'] }
