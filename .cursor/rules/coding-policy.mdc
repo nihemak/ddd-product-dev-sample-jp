@@ -27,10 +27,10 @@ alwaysApply: true
 - **依存性の逆転**: Application層はDomain層で定義されたインターフェース（トレイト）に依存する。Infrastructure層がこれらのトレイトを実装する。
 
 ### レイヤーの責務
-- **Domain**: ビジネスルール、エンティティ、値オブジェクト、ドメインイベント、リポジトリインターフェース（トレイト）
-- **Application**: ユースケースの実装、ドメインオブジェクトのオーケストレーション、トランザクション管理
-- **Infrastructure**: データベースアクセス、外部API連携、フレームワーク固有コード、リポジトリトレイトの実装
-- **Presentation**: UI、アプリケーションのエントリーポイント、依存性注入（`main.rs`）
+- **Domain**: ビジネスルール、エンティティ、値オブジェクト、ドメインイベント、リポジトリインターフェース（トレイト） ([src/domain.rs](mdc:src/domain.rs))
+- **Application**: ユースケースの実装、ドメインオブジェクトのオーケストレーション、トランザクション管理 ([src/application.rs](mdc:src/application.rs))
+- **Infrastructure**: データベースアクセス、外部API連携、フレームワーク固有コード、リポジトリトレイトの実装 ([src/infrastructure.rs](mdc:src/infrastructure.rs))
+- **Presentation**: UI、アプリケーションのエントリーポイント、依存性注入 (`main.rs`) ([src/main.rs](mdc:src/main.rs))
 
 ## エラーハンドリング
 
@@ -57,7 +57,7 @@ cargo test
 ## 依存性注入
 
 ### DIの実装
-- リポジトリなどの依存性は、`main.rs`でインスタンス化し、Application層のサービスに注入する。
+- リポジトリなどの依存性は、`main.rs` ([src/main.rs](mdc:src/main.rs)) でインスタンス化し、Application層のサービスに注入する。
 - 具象実装（Infrastructure層）ではなく、インターフェース（Domain層のトレイト）に対して依存する。
 
 ## コミットメッセージ

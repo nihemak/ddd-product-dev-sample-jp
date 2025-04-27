@@ -21,11 +21,11 @@ alwaysApply: true
 - Rustでの実践的なアプリケーション開発の例示
 
 ## 主要コンポーネント
-- `domain.rs`: ドメインモデル、ビジネスロジック、リポジトリインターフェース（トレイト）
-- `application.rs`: ユースケースの実装（ドメイン層のオーケストレーション）
-- `infrastructure.rs`: 永続化層の実装（リポジトリトレイトの実装）
-- `main.rs`: アプリケーションのエントリーポイント、依存性注入（DI）
-- `lib.rs`: ライブラリクレートのエントリーポイント、モジュール宣言
+- `domain.rs`: ドメインモデル、ビジネスロジック、リポジトリインターフェース（トレイト） ([src/domain.rs](mdc:src/domain.rs))
+- `application.rs`: ユースケースの実装（ドメイン層のオーケストレーション） ([src/application.rs](mdc:src/application.rs))
+- `infrastructure.rs`: 永続化層の実装（リポジトリトレイトの実装） ([src/infrastructure.rs](mdc:src/infrastructure.rs))
+- `main.rs`: アプリケーションのエントリーポイント、依存性注入（DI） ([src/main.rs](mdc:src/main.rs))
+- `lib.rs`: ライブラリクレートのエントリーポイント、モジュール宣言 ([src/lib.rs](mdc:src/lib.rs))
 
 ## 開発環境
 - Rust 2021 edition
@@ -37,11 +37,11 @@ alwaysApply: true
 
 ```
 src/
-├── domain.rs       # Domain層のコードとテスト
-├── application.rs  # Application層のコードとテスト
-├── infrastructure.rs # Infrastructure層のコード
-├── main.rs         # アプリケーションのエントリーポイント (バイナリクレート)
-└── lib.rs          # ライブラリクレートのエントリーポイント、モジュール宣言
+├── [domain.rs](mdc:src/domain.rs)       # Domain層のコードとテスト
+├── [application.rs](mdc:src/application.rs)  # Application層のコードとテスト
+├── [infrastructure.rs](mdc:src/infrastructure.rs) # Infrastructure層のコード
+├── [main.rs](mdc:src/main.rs)         # アプリケーションのエントリーポイント (バイナリクレート)
+└── [lib.rs](mdc:src/lib.rs)          # ライブラリクレートのエントリーポイント、モジュール宣言
 ```
 
 ## 実行方法
