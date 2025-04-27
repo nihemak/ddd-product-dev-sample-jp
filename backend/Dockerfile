@@ -29,7 +29,13 @@ RUN cargo fetch
 # Install sqlx-cli (After fetching dependencies)
 # Use --locked to ensure consistency with Cargo.lock if possible
 # Note: If cargo install fails with --locked, remove the flag and rebuild.
-RUN cargo install sqlx-cli --locked --target-dir /tmp/sqlx-install # Use a temporary target dir
+# Version and features aligned with CI and local setup
+RUN cargo install sqlx-cli \
+    --version=0.7.4 \
+    --features native-tls,postgres \
+    --no-default-features \
+    --locked \
+    --target-dir /tmp/sqlx-install # Use a temporary target dir
 # RUN cargo install sqlx-cli # Fallback without --locked
 
 # Copy the source code

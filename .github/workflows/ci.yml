@@ -22,14 +22,13 @@ jobs:
           toolchain: stable
           components: clippy, rustfmt
 
-      # TODO: sqlx-cliが必要になったらコメント解除する
-      # - name: Install sqlx-cli
-      #   run: \
-      #     cargo install sqlx-cli \
-      #       --version=0.7.3 \
-      #       --features rustls,postgres \
-      #       --no-default-features \
-      #       --locked
+      - name: Install sqlx-cli
+        run: |
+          cargo install sqlx-cli \
+            --version=0.7.4 \
+            --features native-tls,postgres \
+            --no-default-features \
+            --locked
 
       - name: Check formatting
         run: cargo fmt --check
@@ -37,6 +36,10 @@ jobs:
 
       - name: Run Clippy
         run: cargo clippy -- -D warnings
+        working-directory: ./backend
+
+      - name: Check SQLx query cache
+        run: cargo sqlx prepare --check --workspace
         working-directory: ./backend
 
       - name: Run tests
