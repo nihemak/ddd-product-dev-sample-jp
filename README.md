@@ -39,6 +39,38 @@
 *   [アーキテクチャ関連 (Architecture)](docs/architecture/) - 主要ファイル: [概要](docs/architecture/overview.md), [ADR](docs/architecture/adr/)
 *   [開発プロセス (Process)](docs/process/) - 主要ファイル: [イテレーション計画](docs/process/iteration_planning.md)
 
+## 環境設定 ✨
+
+ローカルでの開発やテスト実行のために、環境変数の設定が必要です。
+
+1.  **`.env` ファイルの作成:**
+    プロジェクトルートに `.env` という名前のファイルを作成します。
+    このファイルは `.gitignore` に記載されているため、Gitリポジトリにはコミットされません。
+
+2.  **`DATABASE_URL` の設定:**
+    `.env` ファイル内に、PostgreSQL データベースへの接続文字列を `DATABASE_URL` として設定します。
+    `docker-compose.yml` を使用してデータベースを起動する場合、ホストマシンからアクセスするための URL は通常以下のようになります。
+
+    ```env
+    # .env ファイルの内容例
+    DATABASE_URL=postgres://app_user:password123@localhost:5432/app_db
+    ```
+
+    ユーザー名 (`app_user`)、パスワード (`password123`)、ホスト名 (`localhost`)、ポート (`5432`)、データベース名 (`app_db`) は、`docker-compose.yml` の `db` サービスの設定に合わせてください。
+
+3.  **`sqlx` のオフライン準備 (任意ですが推奨):**
+    `sqlx` はコンパイル時にデータベースに接続してクエリを検証します。コンパイル時に毎回データベース接続を行わないように、以下のコマンドを実行してクエリ情報をファイル (`sqlx-data.json`) に保存できます。
+
+    ```bash
+    # backend ディレクトリに移動
+    cd backend
+    # DATABASE_URL を環境変数として設定して実行
+    DATABASE_URL="postgres://app_user:password123@localhost:5432/app_db" cargo sqlx prepare --merged
+    # 元のディレクトリに戻る
+    cd ..
+    ```
+    `sqlx-data.json` が生成されると、コンパイル時に `DATABASE_URL` 環境変数がなくても `sqlx::query!` マクロのエラーが発生しなくなります。
+
 ## 実行方法 (Docker Compose)
 
 1.  Docker および Docker Compose がインストールされていることを確認してください。

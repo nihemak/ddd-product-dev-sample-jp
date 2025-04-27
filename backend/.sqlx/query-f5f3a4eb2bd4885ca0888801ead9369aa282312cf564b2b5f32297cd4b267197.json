@@ -1,0 +1,106 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT\n                id, requester_id, recipient_id, anniversary_date, message,\n                wrapping_type, desired_delivery_date, total_amount, payment_id,\n                status,\n                -- 状態固有カラム\n                preparation_staff_id,\n                shipping_slip_number,\n                delivery_completed_at,\n                cancellation_reason,\n                cancelled_at\n            FROM reservations\n            WHERE id = $1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "requester_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "recipient_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "anniversary_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 4,
+        "name": "message",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "wrapping_type",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "desired_delivery_date",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 7,
+        "name": "total_amount",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 8,
+        "name": "payment_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 9,
+        "name": "status",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 10,
+        "name": "preparation_staff_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 11,
+        "name": "shipping_slip_number",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 12,
+        "name": "delivery_completed_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 13,
+        "name": "cancellation_reason",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 14,
+        "name": "cancelled_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "f5f3a4eb2bd4885ca0888801ead9369aa282312cf564b2b5f32297cd4b267197"
+}

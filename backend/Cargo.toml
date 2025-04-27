@@ -9,7 +9,7 @@ uuid = { version = "1.16", features = ["v4"] } # 一意なID生成のため # uu
 anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため
 # actix-web = "4" # Axum に変更したので削除
 tokio = { version = "1", features = ["full"] }
-sqlx = { version = "0.7", features = [ "runtime-tokio-rustls", "postgres", "uuid", "chrono", "json" ] }
+sqlx = { version = "0.7.4", features = [ "runtime-tokio-native-tls", "postgres", "uuid", "chrono", "json" ] }
 serde = { version = "1.0", features = ["derive"] } # データ構造のシリアライズ/デシリアライズ (utoipaで必要)
 utoipa = { version = "5", features = ["axum_extras", "chrono", "uuid"] } # アップグレード
 utoipa-swagger-ui = { version = "9", features = ["axum"] } # アップグレード
@@ -20,6 +20,9 @@ tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 dotenv = "0.15.0"
 axum = "0.8.3" # 0.8 系に戻す
+async-trait = "0.1" # 非同期トレイトメソッドのために追加
+futures-util = "0.3" # map_err など FutureExt のために追加
+dotenvy = "0.15" # 追加
 
 [dev-dependencies]
 mockall = "0.11"

@@ -15,4 +15,7 @@
 Thumbs.db
 
 # Scratch directory for local work
-.scratch/ 
+.scratch/
+
+# Environment variables file
+/.env 

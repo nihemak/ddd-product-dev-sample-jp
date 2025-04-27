@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                    UPDATE reservations SET\n                        status = $1,\n                        preparation_staff_id = $2,\n                        shipping_slip_number = NULL, -- Reset other state columns\n                        delivery_completed_at = NULL,\n                        cancellation_reason = NULL,\n                        cancelled_at = NULL,\n                        updated_at = NOW()\n                    WHERE id = $3\n                    ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a237d84e63808933ac3d64cf4ebf62d3ef6827eeeff2f2022ad61efe6950c600"
+}

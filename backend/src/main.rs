@@ -4,12 +4,12 @@
 // use std::sync::Arc;
 // use std::net::TcpListener; // tokio を使うため不要
 use anyhow::Result;
+use axum::{routing::get, Router};
+use dotenvy::dotenv;
+use sqlx::postgres::PgPoolOptions;
 use std::env;
 use std::net::SocketAddr;
 use std::sync::Arc;
-// use sqlx::PgPool; // DB接続はまだ不要なのでコメントアウト
-use axum::{routing::get, Router};
-use dotenv::dotenv;
 use tower_http::trace::{DefaultMakeSpan, TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use utoipa::OpenApi;
@@ -17,7 +17,7 @@ use utoipa_swagger_ui::SwaggerUi;
 
 // クレートから必要なモジュールや型をインポート (修正)
 use ddd_sample_jp::application::プレゼント予約サービス; // 正しいパスに修正
-use ddd_sample_jp::infrastructure::InMemoryプレゼント予約Repository; // 正しいパスに修正
+use ddd_sample_jp::infrastructure::PgRepository;
 use ddd_sample_jp::routes::health_check::health_check;
 
 // --- OpenAPI ドキュメント定義 ---
@@ -54,16 +54,17 @@ async fn main() -> Result<()> {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    /* // --- DB接続 (コメントアウト) ---
+    // --- DB接続 (有効化) ---
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    let pool = PgPool::connect(&database_url)
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect(&database_url)
         .await
         .expect("Failed to create Postgres connection pool.");
-    */
 
-    // --- 依存関係の構築 (DI) --- (インメモリに戻す)
-    let repository = Arc::new(InMemoryプレゼント予約Repository::new());
-    let reservation_service = Arc::new(プレゼント予約サービス::new(repository)); // 名前を修正
+    // --- 依存関係の構築 (DI) --- (PgRepository を使用)
+    let repository = Arc::new(PgRepository::new(pool.clone()));
+    let reservation_service = Arc::new(プレゼント予約サービス::new(repository));
 
     // --- OpenAPI ドキュメント生成 ---
     let openapi = ApiDoc::openapi();
@@ -71,12 +72,12 @@ async fn main() -> Result<()> {
     // --- ルーターの設定 --- (State を修正)
     let app = Router::new()
         .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", openapi.clone()))
-        .route("/health", get(health_check))
+        .route("/api/health", get(health_check))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(DefaultMakeSpan::default().include_headers(true)),
         )
-        .with_state(reservation_service); // インメモリサービスを State として渡す
+        .with_state(reservation_service);
 
     // --- サーバーの起動 ---
     let addr_str = env::var("LISTEN_ADDR").unwrap_or_else(|_| "0.0.0.0:3000".to_string());

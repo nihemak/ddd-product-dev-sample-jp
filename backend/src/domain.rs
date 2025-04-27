@@ -4,6 +4,7 @@
 
 // Define internal module and re-export
 pub mod core {
+    use async_trait::async_trait;
     use chrono::{DateTime, NaiveDate}; // Utc を復活 -> 再度削除
     use chrono_tz::Tz;
     use std::collections::HashSet; // List<商品ID> の代わりに HashSet を使う例
@@ -204,6 +205,16 @@ pub mod core {
         // 他に必要なドメイン固有のエラーを追加
     }
 
+    // --- インフラストラクチャエラー (リポジトリ操作のエラーを表現) ---
+    #[derive(Error, Debug, PartialEq)]
+    pub enum InfrastructureError {
+        #[error("データベース操作エラー: {0}")]
+        DatabaseError(String), // sqlx::Error などをラップすることを想定
+        #[error("接続エラー: {0}")]
+        ConnectionError(String),
+        // 必要に応じて他のインフラエラーを追加
+    }
+
     // --- ドメインサービス / ロジック関数 ---
     // 例: 予約を受け付ける関数
     #[allow(clippy::too_many_arguments)] // TODO: 引数が多いのでコマンドオブジェクト等でのリファクタリングを検討
@@ -303,14 +314,18 @@ pub mod core {
     // 他の状態遷移関数も同様に定義
 
     // --- リポジトリインターフェース (トレイト) ---
-    #[cfg_attr(test, mockall::automock)] // mockall を有効化
+    #[cfg_attr(test, mockall::automock)]
+    #[async_trait]
     pub trait プレゼント予約Repository: Send + Sync {
-        fn save(&self, reservation: &プレゼント予約状態) -> Result<(), DomainError>;
-        fn find_by_id(
+        async fn save(&self, reservation: &プレゼント予約状態) -> Result<(), DomainError>;
+        async fn find_by_id(
             &self,
             id: &予約ID,
         ) -> Result<Option<プレゼント予約状態>, DomainError>;
         // 必要に応じて他の検索メソッドを追加 (例: find_by_user_id)
+
+        /// リポジトリ（主にDB）への接続性を確認する
+        async fn check_db_connection(&self) -> Result<(), InfrastructureError>; // これで InfrastructureError が見つかるはず
     }
 
     // 商品リポジトリはシンプル化のため一旦コメントアウト or 削除しても良い

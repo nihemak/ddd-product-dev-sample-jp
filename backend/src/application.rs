@@ -1,8 +1,8 @@
 #![allow(clippy::unnecessary_lazy_evaluations)] // TODO: ok_or_else を ok_or に修正する
 
 use crate::domain::{
-    self, DomainError, プレゼント予約Repository, プレゼント予約状態, ユーザーID, ラッピング種類,
-    予約ID, 商品ID, 届け先ID, 支払いID, 記念日, 金額,
+    self, DomainError, InfrastructureError, プレゼント予約Repository, プレゼント予約状態,
+    ユーザーID, ラッピング種類, 予約ID, 商品ID, 届け先ID, 支払いID, 記念日, 金額,
 };
 use anyhow::Result; // anyhow::Result を使う想定
 use chrono::DateTime;
@@ -41,8 +41,8 @@ impl プレゼント予約サービス {
     }
 
     /// プレゼント予約を受け付ける (MVP: 発送代行を想定)
-    #[allow(clippy::too_many_arguments)] // TODO: 引数が多いのでコマンドオブジェクト等でのリファクタリングを検討
-    pub fn プレゼント予約受付(
+    #[allow(clippy::too_many_arguments)]
+    pub async fn プレゼント予約受付(
         &self,
         依頼者id: ユーザーID,
         届け先id: 届け先ID,
@@ -68,32 +68,33 @@ impl プレゼント予約サービス {
         );
 
         // 2. 結果を検証し、リポジトリで永続化
-        reservation_result
-            .map_err(ApplicationError::from) // DomainError を ApplicationError に変換
-            .and_then(|received_reservation| {
-                let reservation_id = received_reservation.base.id;
-                // 状態をEnumでラップして保存
-                let reservation_state =
-                    プレゼント予約状態::予約受付済み(received_reservation);
-                self.reservation_repo
-                    .save(&reservation_state)
-                    .map_err(|e| ApplicationError::Repository(e.to_string()))?; // Repository エラーをラップ
-                Ok(reservation_id)
-            })
+        let received_reservation = reservation_result.map_err(ApplicationError::from)?;
+
+        // ↓↓↓ await と map_err の順序変更 ↓↓↓
+        let reservation_id = received_reservation.base.id;
+        let reservation_state =
+            プレゼント予約状態::予約受付済み(received_reservation);
+        self.reservation_repo
+            .save(&reservation_state)
+            .await // await を追加
+            .map_err(|e| ApplicationError::Repository(e.to_string()))?; // Repository エラーをラップ
+        Ok(reservation_id)
     }
 
     /// 指定されたIDの予約詳細を取得する
-    pub fn 予約詳細取得(
+    pub async fn 予約詳細取得(
         &self,
         予約id: &予約ID,
     ) -> AppResult<Option<プレゼント予約状態>> {
+        // ↓↓↓ await と map_err の順序変更 ↓↓↓
         self.reservation_repo
             .find_by_id(予約id)
+            .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string())) // Repository エラーをラップ
     }
 
     /// 予約を発送準備中にする
-    pub fn 発送準備を開始する(
+    pub async fn 発送準備を開始する(
         &self,
         予約id: &予約ID,
         梱包担当者id: ユーザーID,
@@ -102,6 +103,7 @@ impl プレゼント予約サービス {
         let current_state = self
             .reservation_repo
             .find_by_id(予約id)
+            .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
             .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // 見つからない場合はエラー
 
@@ -117,6 +119,7 @@ impl プレゼント予約サービス {
                 let new_state = プレゼント予約状態::発送準備中(preparing_reservation);
                 self.reservation_repo
                     .save(&new_state)
+                    .await // await を追加
                     .map_err(|e| ApplicationError::Repository(e.to_string()))
             }
             // 他の状態からの遷移は不正とする
@@ -129,13 +132,16 @@ impl プレゼント予約サービス {
     }
 
     /// 予約を発送済みにする
-    pub fn 発送を完了する(
-        &self, 予約id: &予約ID, 配送伝票番号: String
+    pub async fn 発送を完了する(
+        &self,
+        予約id: &予約ID,
+        配送伝票番号: String,
     ) -> AppResult<()> {
         // 1. 予約をリポジトリから取得
         let current_state = self
             .reservation_repo
             .find_by_id(予約id)
+            .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
             .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // 見つからない場合はエラー
 
@@ -151,6 +157,7 @@ impl プレゼント予約サービス {
                 let new_state = プレゼント予約状態::発送済み(shipped_reservation);
                 self.reservation_repo
                     .save(&new_state)
+                    .await // await を追加
                     .map_err(|e| ApplicationError::Repository(e.to_string()))
             }
             // 他の状態からの遷移は不正とする
@@ -163,7 +170,7 @@ impl プレゼント予約サービス {
     }
 
     /// 予約をキャンセルする
-    pub fn 予約をキャンセルする(
+    pub async fn 予約をキャンセルする(
         &self,
         予約id: &予約ID,
         理由: Option<String>,
@@ -173,6 +180,7 @@ impl プレゼント予約サービス {
         let current_state = self
             .reservation_repo
             .find_by_id(予約id)
+            .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
             .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?;
 
@@ -180,11 +188,11 @@ impl プレゼント予約サービス {
         let cancelled_reservation_result = match current_state {
             プレゼント予約状態::予約受付済み(received) => received
                 .予約をキャンセルする(理由, 日時)
-                .map_err(ApplicationError::from),
+                .map_err(ApplicationError::from), // DomainError -> ApplicationError
             プレゼント予約状態::発送準備中(preparing) => preparing
                 .予約をキャンセルする(理由, 日時)
-                .map_err(ApplicationError::from),
-            // 発送済み、配送完了、キャンセル済みからのキャンセルは不可
+                .map_err(ApplicationError::from), // DomainError -> ApplicationError
+            // 他の状態からのキャンセルは ApplicationError::Domain を返す
             _ => Err(ApplicationError::Domain(
                 DomainError::不正な状態遷移 {
                     current_state_type: format!("{:?}", current_state),
@@ -193,17 +201,22 @@ impl プレゼント予約サービス {
         };
 
         // 3. ドメイン処理が成功した場合、新しい状態を保存
-        cancelled_reservation_result.and_then(|cancelled_reservation| {
-            let new_state =
-                プレゼント予約状態::キャンセル済み(cancelled_reservation);
-            self.reservation_repo
-                .save(&new_state)
-                .map_err(|e| ApplicationError::Repository(e.to_string()))
-        })
+        match cancelled_reservation_result {
+            Ok(cancelled_reservation) => {
+                let new_state =
+                    プレゼント予約状態::キャンセル済み(cancelled_reservation);
+                self.reservation_repo
+                    .save(&new_state)
+                    .await
+                    .map_err(|e| ApplicationError::Repository(e.to_string()))?;
+                Ok(())
+            }
+            Err(e) => Err(e), // エラーはそのまま返す (型は ApplicationError になっているはず)
+        }
     }
 
     /// 予約を配送完了として記録する
-    pub fn 配送完了を記録する(
+    pub async fn 配送完了を記録する(
         &self,
         予約id: &予約ID,
         記録日時: DateTime<Tz>,
@@ -212,6 +225,7 @@ impl プレゼント予約サービス {
         let current_state = self
             .reservation_repo
             .find_by_id(予約id)
+            .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
             .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?;
 
@@ -227,6 +241,7 @@ impl プレゼント予約サービス {
                 let new_state = プレゼント予約状態::配送完了(delivered_reservation);
                 self.reservation_repo
                     .save(&new_state)
+                    .await // await を追加
                     .map_err(|e| ApplicationError::Repository(e.to_string()))
             }
             // 他の状態からの遷移は不正とする
@@ -239,6 +254,22 @@ impl プレゼント予約サービス {
     }
 
     // 他のユースケースメソッド (発送準備開始、発送完了など) もここに追加していく
+
+    /// サービスのヘルスチェック (DB接続確認など)
+    pub async fn check_health(&self) -> Result<(), ApplicationError> {
+        self.reservation_repo
+            .check_db_connection()
+            .await
+            .map_err(|infra_err| match infra_err {
+                InfrastructureError::ConnectionError(msg) => {
+                    ApplicationError::Repository(format!("Health check failed: {}", msg))
+                }
+                InfrastructureError::DatabaseError(msg) => {
+                    // check_db_connection は ConnectionError しか返さない想定だが、念のため
+                    ApplicationError::Repository(format!("Health check DB error: {}", msg))
+                }
+            })
+    }
 }
 
 // --- Application Tests ---
@@ -246,12 +277,12 @@ impl プレゼント予約サービス {
 mod tests {
     use super::*; // 親モジュール(application)の要素を使う
     use crate::domain; // ドメイン層の型やモックを使う
+    use crate::domain::Mockプレゼント予約Repository; // Mock を use
     use chrono::NaiveDate;
+    use chrono::Utc; // Utc をインポート
+    use chrono_tz::Asia::Tokyo;
     use mockall::predicate::*; // mockall のマッチャーを使う
-    use std::sync::Arc;
-
-    // モックリポジトリを使うための準備
-    use crate::domain::Mockプレゼント予約Repository;
+    use std::sync::Arc; // Tokyo をインポート
 
     // --- テスト用のヘルパー関数やデータ ---
     fn create_dummy_ids() -> (ユーザーID, 届け先ID, 支払いID, HashSet<商品ID>) {
@@ -275,8 +306,9 @@ mod tests {
 
     // --- 予約受付ユースケースのテスト ---
 
-    #[test]
-    fn test_プレゼント予約受付_success() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_プレゼント予約受付_success() {
+        // fn -> async fn
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
@@ -319,29 +351,32 @@ mod tests {
                 }
             })
             .times(1) // 1回だけ呼ばれる
-            .returning(|_| Ok(())); // 成功を返す
+            .returning(|_| Ok(()));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.プレゼント予約受付(
-            依頼者id,
-            届け先id,
-            記念日,
-            メッセージ,
-            ラッピング,
-            配送日時,
-            商品idリスト,
-            支払いid,
-            金額,
-        );
+        let result = service
+            .プレゼント予約受付(
+                依頼者id,
+                届け先id,
+                記念日,
+                メッセージ,
+                ラッピング,
+                配送日時,
+                商品idリスト,
+                支払いid,
+                金額,
+            )
+            .await;
 
         // 結果が Ok であることを確認 (中の ID はドメイン層でテスト済みとする)
         assert!(result.is_ok());
         // assert!(matches!(result.unwrap(), domain::予約ID(_))); // フィールドがプライベートなため不可
     }
 
-    #[test]
-    fn test_プレゼント予約受付_fail_domain_error() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_プレゼント予約受付_fail_domain_error() {
+        // fn -> async fn
         let (依頼者id, 届け先id, 支払いid, _) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
@@ -355,17 +390,19 @@ mod tests {
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.プレゼント予約受付(
-            依頼者id,
-            届け先id,
-            記念日,
-            メッセージ,
-            ラッピング,
-            配送日時,
-            商品idリスト,
-            支払いid,
-            金額,
-        );
+        let result = service
+            .プレゼント予約受付(
+                依頼者id,
+                届け先id,
+                記念日,
+                メッセージ,
+                ラッピング,
+                配送日時,
+                商品idリスト,
+                支払いid,
+                金額,
+            )
+            .await;
 
         // 結果が Err で、中身が期待するドメインエラーと等しいことを確認
         assert!(result.is_err());
@@ -378,8 +415,9 @@ mod tests {
         // assert!(matches!(result.err().unwrap(), ApplicationError::Domain(DomainError::予約商品空エラー))); // PartialEq で比較する方が安全
     }
 
-    #[test]
-    fn test_プレゼント予約受付_fail_repo_error() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_プレゼント予約受付_fail_repo_error() {
+        // fn -> async fn
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
@@ -394,21 +432,23 @@ mod tests {
             Err(DomainError::必須項目不足 {
                 field: "テストエラー".to_string(),
             })
-        }); // 適当なドメインエラーを返す
+        });
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.プレゼント予約受付(
-            依頼者id,
-            届け先id,
-            記念日,
-            メッセージ,
-            ラッピング,
-            配送日時,
-            商品idリスト,
-            支払いid,
-            金額,
-        );
+        let result = service
+            .プレゼント予約受付(
+                依頼者id,
+                届け先id,
+                記念日,
+                メッセージ,
+                ラッピング,
+                配送日時,
+                商品idリスト,
+                支払いid,
+                金額,
+            )
+            .await;
 
         // 結果が Err で、中身が ApplicationError::Repository であることを確認
         assert!(result.is_err());
@@ -420,8 +460,9 @@ mod tests {
 
     // --- 予約詳細取得ユースケースのテスト ---
 
-    #[test]
-    fn test_予約詳細取得_success_found() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_予約詳細取得_success_found() {
+        // fn -> async fn
         let target_id = 予約ID::new();
         // 適当な予約状態を作成 (ここでは予約受付済みとする)
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
@@ -449,26 +490,27 @@ mod tests {
             プレゼント予約状態::予約受付済み(domain::予約受付済みプレゼント予約型 {
                 base: base_with_target_id,
             });
-        let expected_state_clone = expected_state.clone(); // クロージャ用にクローン
+        let expected_state_clone = expected_state.clone();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id)) // 特定のIDで呼ばれることを期待
             .times(1)
-            .returning(move |_| Ok(Some(expected_state_clone.clone()))); // Ok(Some(予約状態)) を返す
+            .returning(move |_| Ok(Some(expected_state_clone.clone())));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.予約詳細取得(&target_id);
+        let result = service.予約詳細取得(&target_id).await;
 
         // 結果が Ok(Some(期待する予約状態)) であることを確認
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), Some(expected_state));
     }
 
-    #[test]
-    fn test_予約詳細取得_success_not_found() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_予約詳細取得_success_not_found() {
+        // fn -> async fn
         let target_id = 予約ID::new();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
@@ -476,19 +518,20 @@ mod tests {
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(|_| Ok(None)); // Ok(None) を返す
+            .returning(|_| Ok(None));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.予約詳細取得(&target_id);
+        let result = service.予約詳細取得(&target_id).await;
 
         // 結果が Ok(None) であることを確認
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), None);
     }
 
-    #[test]
-    fn test_予約詳細取得_fail_repo_error() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_予約詳細取得_fail_repo_error() {
+        // fn -> async fn
         let target_id = 予約ID::new();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
@@ -496,11 +539,11 @@ mod tests {
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // move キーワードを追加
+            .returning(move |_| Err(DomainError::予約NotFound(target_id)));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.予約詳細取得(&target_id);
+        let result = service.予約詳細取得(&target_id).await;
 
         // 結果が Err で、中身が ApplicationError::Repository であることを確認
         assert!(result.is_err());
@@ -512,8 +555,9 @@ mod tests {
 
     // --- 発送準備開始ユースケースのテスト ---
 
-    #[test]
-    fn test_発送準備を開始する_success() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_発送準備を開始する_success() {
+        // fn -> async fn
         let target_id = 予約ID::new();
         let handler_id = ユーザーID::new();
         // find_by_id が返す予約受付済み状態を作成
@@ -552,14 +596,11 @@ mod tests {
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
 
         // save の期待値設定
-        // 渡される state が 発送準備中 で、データが引き継がれているか確認
-        let expected_handler_id = handler_id.clone();
         mock_repo
             .expect_save()
             .withf(move |state: &プレゼント予約状態| match state {
                 プレゼント予約状態::発送準備中(ref preparing) => {
-                    preparing.base == base_with_target_id
-                        && preparing.梱包担当者id == expected_handler_id
+                    preparing.base == base_with_target_id && preparing.梱包担当者id == handler_id
                 }
                 _ => false,
             })
@@ -568,13 +609,14 @@ mod tests {
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.発送準備を開始する(&target_id, handler_id);
+        let result = service.発送準備を開始する(&target_id, handler_id).await;
 
-        assert!(result.is_ok());
+        assert!(result.is_ok()); // Future ではなく Result に対して is_ok()
     }
 
-    #[test]
-    fn test_発送準備を開始する_fail_not_found() {
+    #[tokio::test] // #[test] -> #[tokio::test]
+    async fn test_発送準備を開始する_fail_not_found() {
+        // fn -> async fn
         let target_id = 予約ID::new();
         let handler_id = ユーザーID::new();
 
@@ -583,12 +625,12 @@ mod tests {
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(|_| Ok(None)); // 見つからない
-        mock_repo.expect_save().times(0); // save は呼ばれない
+            .returning(|_| Ok(None));
+        mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
 
-        let result = service.発送準備を開始する(&target_id, handler_id);
+        let result = service.発送準備を開始する(&target_id, handler_id).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -597,60 +639,69 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_発送準備を開始する_fail_invalid_state() {
+    #[tokio::test]
+    async fn test_発送準備を開始する_fail_invalid_state() {
         let target_id = 予約ID::new();
         let handler_id = ユーザーID::new();
-        // 不正な状態 (例: 発送準備中) を作成
+
+        // 不正な状態 (例: 発送済み) を返すようにモックを設定
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
+        let preparing = received.発送準備を開始する(handler_id).unwrap();
+        let shipped = preparing.発送を完了する("dummy-slip".to_string()).unwrap(); // 発送済み状態
+
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
-            ..received.base
+            ..shipped.base
         };
-        let invalid_initial_state =
-            プレゼント予約状態::発送準備中(domain::発送準備中プレゼント予約型 {
+        let invalid_state =
+            プレゼント予約状態::発送済み(domain::発送済みプレゼント予約型 {
                 base: base_with_target_id,
-                梱包担当者id: ユーザーID::new(),
+                配送伝票番号: shipped.配送伝票番号,
             });
-        let invalid_initial_state_clone = invalid_initial_state.clone();
+        let invalid_state_clone = invalid_state.clone();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Ok(Some(invalid_initial_state_clone.clone()))); // 不正な状態を返す
+            .returning(move |_| Ok(Some(invalid_state_clone.clone())));
         mock_repo.expect_save().times(0); // save は呼ばれない
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送準備を開始する(&target_id, handler_id);
+        let result = service.発送準備を開始する(&target_id, handler_id).await;
 
         assert!(result.is_err());
-        assert!(matches!(
-            result.err().unwrap(),
-            ApplicationError::Domain(DomainError::不正な状態遷移 { .. })
-        ));
+        match result.err().unwrap() {
+            ApplicationError::Domain(DomainError::不正な状態遷移 { current_state_type }) => {
+                assert!(current_state_type.contains("発送済み")); // 文字列に状態名が含まれるかチェック
+            }
+            e => panic!(
+                "Expected ApplicationError::Domain(不正な状態遷移), got {:?}",
+                e
+            ),
+        }
     }
 
-    #[test]
-    fn test_発送準備を開始する_fail_repo_save_error() {
+    #[tokio::test]
+    async fn test_発送準備を開始する_fail_repo_save_error() {
         let target_id = 予約ID::new();
         let handler_id = ユーザーID::new();
+
         // find_by_id が返す予約受付済み状態を作成
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
@@ -658,11 +709,11 @@ mod tests {
         let received_reservation = domain::予約を受け付ける(
             依頼者id,
             届け先id,
-            記念日,
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
+            商品idリスト.clone(),
             支払いid,
             金額,
         )
@@ -673,25 +724,32 @@ mod tests {
         };
         let initial_state =
             プレゼント予約状態::予約受付済み(domain::予約受付済みプレゼント予約型 {
-                base: base_with_target_id,
+                base: base_with_target_id.clone(),
             });
         let initial_state_clone = initial_state.clone();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
+
+        // find_by_id は成功
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
-        mock_repo.expect_save().times(1).returning(|_| {
-            Err(DomainError::必須項目不足 {
-                field: "Save Error".to_string(),
-            })
-        }); // save がエラーを返す
+
+        // save はエラーを返す
+        mock_repo
+            .expect_save()
+            // .withf(...) // 必要に応じて引数検証を追加
+            .times(1)
+            .returning(|_| {
+                Err(DomainError::必須項目不足 {
+                    field: "DB save error".to_string(),
+                })
+            }); // 仮のエラー
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送準備を開始する(&target_id, handler_id);
+        let result = service.発送準備を開始する(&target_id, handler_id).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -700,22 +758,23 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_発送準備を開始する_fail_repo_find_error() {
+    #[tokio::test]
+    async fn test_発送準備を開始する_fail_repo_find_error() {
         let target_id = 予約ID::new();
         let handler_id = ユーザーID::new();
-
         let mut mock_repo = Mockプレゼント予約Repository::new();
+
+        // find_by_id がエラーを返す
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // find_by_id がエラー
-        mock_repo.expect_save().times(0);
+            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // 仮のエラー
+
+        mock_repo.expect_save().times(0); // save は呼ばれない
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送準備を開始する(&target_id, handler_id);
+        let result = service.発送準備を開始する(&target_id, handler_id).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -726,28 +785,30 @@ mod tests {
 
     // --- 発送完了ユースケースのテスト ---
 
-    #[test]
-    fn test_発送を完了する_success() {
+    #[tokio::test]
+    async fn test_発送を完了する_success() {
         let target_id = 予約ID::new();
-        let slip_number = "123-456".to_string();
+        let handler_id = ユーザーID::new();
+        let slip_number = "slip-12345".to_string();
+
         // find_by_id が返す発送準備中状態を作成
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
-        let handler_id = ユーザーID::new();
-        let preparing = received.発送準備を開始する(handler_id).unwrap();
+        let preparing = received.発送準備を開始する(handler_id).unwrap(); // 発送準備中状態
+
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
             ..preparing.base
@@ -755,21 +816,20 @@ mod tests {
         let initial_state =
             プレゼント予約状態::発送準備中(domain::発送準備中プレゼント予約型 {
                 base: base_with_target_id.clone(),
-                梱包担当者id: handler_id,
+                梱包担当者id: preparing.梱包担当者id,
             });
         let initial_state_clone = initial_state.clone();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
 
-        // find_by_id の期待値設定
+        // find_by_id の期待値
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
 
-        // save の期待値設定
-        // 渡される state が 発送済み で、データと伝票番号が正しいか確認
+        // save の期待値 (発送済み状態になるはず)
         let expected_slip_number = slip_number.clone();
         mock_repo
             .expect_save()
@@ -784,28 +844,25 @@ mod tests {
             .returning(|_| Ok(()));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送を完了する(&target_id, slip_number);
+        let result = service.発送を完了する(&target_id, slip_number).await;
 
         assert!(result.is_ok());
     }
 
-    #[test]
-    fn test_発送を完了する_fail_not_found() {
+    #[tokio::test]
+    async fn test_発送を完了する_fail_not_found() {
         let target_id = 予約ID::new();
-        let slip_number = "123-456".to_string();
-
+        let slip_number = "slip-12345".to_string();
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(|_| Ok(None)); // 見つからない
+            .returning(|_| Ok(None));
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送を完了する(&target_id, slip_number);
+        let result = service.発送を完了する(&target_id, slip_number).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -814,11 +871,12 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_発送を完了する_fail_invalid_state() {
+    #[tokio::test]
+    async fn test_発送を完了する_fail_invalid_state() {
         let target_id = 予約ID::new();
-        let slip_number = "123-456".to_string();
-        // 不正な状態 (例: 予約受付済み) を作成
+        let slip_number = "slip-12345".to_string();
+
+        // 不正な状態 (例: 予約受付済み) を返すようにモックを設定
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
@@ -833,57 +891,63 @@ mod tests {
             支払いid,
             金額,
         )
-        .unwrap();
+        .unwrap(); // 予約受付済み状態
+
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
             ..received.base
         };
-        let invalid_initial_state =
+        let invalid_state =
             プレゼント予約状態::予約受付済み(domain::予約受付済みプレゼント予約型 {
                 base: base_with_target_id,
             });
-        let invalid_initial_state_clone = invalid_initial_state.clone();
+        let invalid_state_clone = invalid_state.clone();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Ok(Some(invalid_initial_state_clone.clone()))); // 不正な状態を返す
+            .returning(move |_| Ok(Some(invalid_state_clone.clone())));
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送を完了する(&target_id, slip_number);
+        let result = service.発送を完了する(&target_id, slip_number).await;
 
         assert!(result.is_err());
-        assert!(matches!(
-            result.err().unwrap(),
-            ApplicationError::Domain(DomainError::不正な状態遷移 { .. })
-        ));
+        match result.err().unwrap() {
+            ApplicationError::Domain(DomainError::不正な状態遷移 { current_state_type }) => {
+                assert!(current_state_type.contains("予約受付済み"));
+            }
+            e => panic!(
+                "Expected ApplicationError::Domain(不正な状態遷移), got {:?}",
+                e
+            ),
+        }
     }
 
-    #[test]
-    fn test_発送を完了する_fail_repo_save_error() {
+    #[tokio::test]
+    async fn test_発送を完了する_fail_repo_save_error() {
         let target_id = 予約ID::new();
-        let slip_number = "123-456".to_string();
-        // find_by_id が返す発送準備中状態を作成
+        let handler_id = ユーザーID::new();
+        let slip_number = "slip-12345".to_string();
+
+        // find_by_id が返す発送準備中状態を作成 (上と同様)
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
-        let handler_id = ユーザーID::new();
         let preparing = received.発送準備を開始する(handler_id).unwrap();
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
@@ -891,8 +955,8 @@ mod tests {
         };
         let initial_state =
             プレゼント予約状態::発送準備中(domain::発送準備中プレゼント予約型 {
-                base: base_with_target_id,
-                梱包担当者id: handler_id,
+                base: base_with_target_id.clone(),
+                梱包担当者id: preparing.梱包担当者id,
             });
         let initial_state_clone = initial_state.clone();
 
@@ -904,13 +968,12 @@ mod tests {
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
         mock_repo.expect_save().times(1).returning(|_| {
             Err(DomainError::必須項目不足 {
-                field: "Save Error".to_string(),
+                field: "DB save error".to_string(),
             })
-        }); // save がエラーを返す
+        }); // save でエラー
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送を完了する(&target_id, slip_number);
+        let result = service.発送を完了する(&target_id, slip_number).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -919,22 +982,20 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_発送を完了する_fail_repo_find_error() {
+    #[tokio::test]
+    async fn test_発送を完了する_fail_repo_find_error() {
         let target_id = 予約ID::new();
-        let slip_number = "123-456".to_string();
-
+        let slip_number = "slip-12345".to_string();
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // find_by_id がエラー
+            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // find_by_id でエラー
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.発送を完了する(&target_id, slip_number);
+        let result = service.発送を完了する(&target_id, slip_number).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -945,32 +1006,32 @@ mod tests {
 
     // --- 配送完了記録ユースケースのテスト ---
 
-    #[test]
-    fn test_配送完了を記録する_success() {
+    #[tokio::test]
+    async fn test_配送完了を記録する_success() {
         let target_id = 予約ID::new();
-        use chrono::Utc;
-        use chrono_tz::Asia::Tokyo;
-        let completion_time = Utc::now().with_timezone(&Tokyo);
+        let handler_id = ユーザーID::new();
+        let slip_number = "slip-12345".to_string();
+        let delivered_at = Utc::now().with_timezone(&Tokyo);
+
         // find_by_id が返す発送済み状態を作成
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
-        let handler_id = ユーザーID::new();
         let preparing = received.発送準備を開始する(handler_id).unwrap();
-        let slip_number = "slip-123".to_string();
-        let shipped = preparing.発送を完了する(slip_number.clone()).unwrap();
+        let shipped = preparing.発送を完了する(slip_number.clone()).unwrap(); // 発送済み状態
+
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
             ..shipped.base
@@ -978,7 +1039,7 @@ mod tests {
         let initial_state =
             プレゼント予約状態::発送済み(domain::発送済みプレゼント予約型 {
                 base: base_with_target_id.clone(),
-                配送伝票番号: slip_number.clone(),
+                配送伝票番号: shipped.配送伝票番号.clone(),
             });
         let initial_state_clone = initial_state.clone();
 
@@ -989,16 +1050,15 @@ mod tests {
             .times(1)
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
 
-        // save の期待値設定
-        // 渡される state が 配送完了 で、データと完了日時が正しいか確認
-        let expected_completion_time = completion_time.clone();
+        // save の期待値 (配送完了状態になるはず)
+        let expected_delivered_at = delivered_at;
         mock_repo
             .expect_save()
             .withf(move |state: &プレゼント予約状態| match state {
                 プレゼント予約状態::配送完了(ref delivered) => {
                     delivered.base == base_with_target_id
                         && delivered.配送伝票番号 == slip_number
-                        && delivered.配送完了日時 == expected_completion_time
+                        && delivered.配送完了日時 == expected_delivered_at
                 }
                 _ => false,
             })
@@ -1006,30 +1066,25 @@ mod tests {
             .returning(|_| Ok(()));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.配送完了を記録する(&target_id, completion_time);
+        let result = service.配送完了を記録する(&target_id, delivered_at).await;
 
         assert!(result.is_ok());
     }
 
-    #[test]
-    fn test_配送完了を記録する_fail_not_found() {
+    #[tokio::test]
+    async fn test_配送完了を記録する_fail_not_found() {
         let target_id = 予約ID::new();
-        use chrono::Utc;
-        use chrono_tz::Asia::Tokyo;
-        let completion_time = Utc::now().with_timezone(&Tokyo);
-
+        let delivered_at = Utc::now().with_timezone(&Tokyo);
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(|_| Ok(None)); // 見つからない
+            .returning(|_| Ok(None));
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.配送完了を記録する(&target_id, completion_time);
+        let result = service.配送完了を記録する(&target_id, delivered_at).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -1038,85 +1093,86 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_配送完了を記録する_fail_invalid_state() {
+    #[tokio::test]
+    async fn test_配送完了を記録する_fail_invalid_state() {
         let target_id = 予約ID::new();
-        use chrono::Utc;
-        use chrono_tz::Asia::Tokyo;
-        let completion_time = Utc::now().with_timezone(&Tokyo);
-        // 不正な状態 (例: 発送準備中) を作成
+        let delivered_at = Utc::now().with_timezone(&Tokyo);
+        // 不正な状態 (例: 発送準備中)
+        let handler_id = ユーザーID::new();
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
-        let handler_id = ユーザーID::new();
-        let preparing = received.発送準備を開始する(handler_id).unwrap();
+        let preparing = received.発送準備を開始する(handler_id).unwrap(); // 発送準備中状態
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
             ..preparing.base
         };
-        let invalid_initial_state =
+        let invalid_state =
             プレゼント予約状態::発送準備中(domain::発送準備中プレゼント予約型 {
-                base: base_with_target_id,
-                梱包担当者id: handler_id,
+                base: base_with_target_id.clone(),
+                梱包担当者id: preparing.梱包担当者id,
             });
-        let invalid_initial_state_clone = invalid_initial_state.clone();
+        let invalid_state_clone = invalid_state.clone();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Ok(Some(invalid_initial_state_clone.clone()))); // 不正な状態を返す
+            .returning(move |_| Ok(Some(invalid_state_clone.clone())));
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.配送完了を記録する(&target_id, completion_time);
+        let result = service.配送完了を記録する(&target_id, delivered_at).await;
 
         assert!(result.is_err());
-        assert!(matches!(
-            result.err().unwrap(),
-            ApplicationError::Domain(DomainError::不正な状態遷移 { .. })
-        ));
+        match result.err().unwrap() {
+            ApplicationError::Domain(DomainError::不正な状態遷移 { current_state_type }) => {
+                assert!(current_state_type.contains("発送準備中"));
+            }
+            e => panic!(
+                "Expected ApplicationError::Domain(不正な状態遷移), got {:?}",
+                e
+            ),
+        }
     }
 
-    #[test]
-    fn test_配送完了を記録する_fail_repo_save_error() {
+    #[tokio::test]
+    async fn test_配送完了を記録する_fail_repo_save_error() {
         let target_id = 予約ID::new();
-        use chrono::Utc;
-        use chrono_tz::Asia::Tokyo;
-        let completion_time = Utc::now().with_timezone(&Tokyo);
-        // find_by_id が返す発送済み状態を作成
+        let handler_id = ユーザーID::new();
+        let slip_number = "slip-12345".to_string();
+        let delivered_at = Utc::now().with_timezone(&Tokyo);
+
+        // find_by_id が返す発送済み状態を作成 (上と同様)
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
-        let handler_id = ユーザーID::new();
         let preparing = received.発送準備を開始する(handler_id).unwrap();
-        let slip_number = "slip-123".to_string();
         let shipped = preparing.発送を完了する(slip_number.clone()).unwrap();
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
@@ -1124,8 +1180,8 @@ mod tests {
         };
         let initial_state =
             プレゼント予約状態::発送済み(domain::発送済みプレゼント予約型 {
-                base: base_with_target_id,
-                配送伝票番号: slip_number,
+                base: base_with_target_id.clone(),
+                配送伝票番号: shipped.配送伝票番号.clone(),
             });
         let initial_state_clone = initial_state.clone();
 
@@ -1137,13 +1193,12 @@ mod tests {
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
         mock_repo.expect_save().times(1).returning(|_| {
             Err(DomainError::必須項目不足 {
-                field: "Save Error".to_string(),
+                field: "DB save error".to_string(),
             })
-        }); // save がエラー
+        }); // save でエラー
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.配送完了を記録する(&target_id, completion_time);
+        let result = service.配送完了を記録する(&target_id, delivered_at).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -1152,24 +1207,20 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_配送完了を記録する_fail_repo_find_error() {
+    #[tokio::test]
+    async fn test_配送完了を記録する_fail_repo_find_error() {
         let target_id = 予約ID::new();
-        use chrono::Utc;
-        use chrono_tz::Asia::Tokyo;
-        let completion_time = Utc::now().with_timezone(&Tokyo);
-
+        let delivered_at = Utc::now().with_timezone(&Tokyo);
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // find がエラー
+            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // find_by_id でエラー
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.配送完了を記録する(&target_id, completion_time);
+        let result = service.配送完了を記録する(&target_id, delivered_at).await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -1180,28 +1231,26 @@ mod tests {
 
     // --- 予約キャンセルユースケースのテスト ---
 
-    #[test]
-    fn test_予約をキャンセルする_success_from_予約受付済み() {
+    #[tokio::test]
+    async fn test_予約をキャンセルする_success_from_予約受付済み() {
         let target_id = 予約ID::new();
-        let reason = Some("テスト理由".to_string());
-        // Utc と Tokyo をテスト内で use します
-        use chrono::Utc;
-        use chrono_tz::Asia::Tokyo;
-        let time = Some(Utc::now().with_timezone(&Tokyo));
+        let reason = Some("気が変わった".to_string());
+        let cancelled_at = Some(Utc::now().with_timezone(&Tokyo));
+
         // find_by_id が返す予約受付済み状態を作成
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
         let base_with_target_id = domain::プレゼント予約ベース {
@@ -1221,59 +1270,54 @@ mod tests {
             .times(1)
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
 
-        // save の期待値設定
+        // save の期待値 (キャンセル済み状態になるはず)
         let expected_reason = reason.clone();
-        let expected_time = time.clone();
-        // base_with_target_id を move する必要があるので、ここで clone する
-        let expected_base = base_with_target_id.clone();
+        let expected_cancelled_at = cancelled_at;
         mock_repo
             .expect_save()
-            .withf(move |state: &プレゼント予約状態| {
-                match state {
-                    プレゼント予約状態::キャンセル済み(ref cancelled) => {
-                        // expected_base を move しないように参照で比較
-                        cancelled.base == expected_base
-                            && cancelled.キャンセル理由 == expected_reason
-                            && cancelled.キャンセル日時 == expected_time
-                    }
-                    _ => false,
+            .withf(move |state: &プレゼント予約状態| match state {
+                プレゼント予約状態::キャンセル済み(ref cancelled) => {
+                    cancelled.base == base_with_target_id &&
+                    cancelled.キャンセル理由 == expected_reason && // 理由 -> キャンセル理由
+                    cancelled.キャンセル日時 == expected_cancelled_at
                 }
+                _ => false,
             })
             .times(1)
             .returning(|_| Ok(()));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.予約をキャンセルする(&target_id, reason, time);
+        let result = service
+            .予約をキャンセルする(&target_id, reason, cancelled_at)
+            .await;
 
         assert!(result.is_ok());
     }
 
-    #[test]
-    fn test_予約をキャンセルする_success_from_発送準備中() {
+    #[tokio::test]
+    async fn test_予約をキャンセルする_success_from_発送準備中() {
         let target_id = 予約ID::new();
-        let reason = None; // 理由なしケース
-        use chrono::Utc;
-        use chrono_tz::Asia::Tokyo;
-        let time = Some(Utc::now().with_timezone(&Tokyo));
+        let handler_id = ユーザーID::new();
+        let reason = Some("準備中に問題発生".to_string());
+        let cancelled_at = Some(Utc::now().with_timezone(&Tokyo));
+
         // find_by_id が返す発送準備中状態を作成
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
-        let handler_id = ユーザーID::new();
-        let preparing = received.発送準備を開始する(handler_id).unwrap();
+        let preparing = received.発送準備を開始する(handler_id).unwrap(); // 発送準備中状態
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
             ..preparing.base
@@ -1281,7 +1325,7 @@ mod tests {
         let initial_state =
             プレゼント予約状態::発送準備中(domain::発送準備中プレゼント予約型 {
                 base: base_with_target_id.clone(),
-                梱包担当者id: handler_id,
+                梱包担当者id: preparing.梱包担当者id,
             });
         let initial_state_clone = initial_state.clone();
 
@@ -1292,51 +1336,47 @@ mod tests {
             .times(1)
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
 
-        // save の期待値設定
+        // save の期待値 (キャンセル済み状態になるはず)
         let expected_reason = reason.clone();
-        let expected_time = time.clone();
-        // base_with_target_id を move する必要があるので、ここで clone する
-        let expected_base = base_with_target_id.clone();
+        let expected_cancelled_at = cancelled_at;
         mock_repo
             .expect_save()
-            .withf(move |state: &プレゼント予約状態| {
-                match state {
-                    プレゼント予約状態::キャンセル済み(ref cancelled) => {
-                        // expected_base を move しないように参照で比較
-                        cancelled.base == expected_base
-                            && cancelled.キャンセル理由 == expected_reason
-                            && cancelled.キャンセル日時 == expected_time
-                    }
-                    _ => false,
+            .withf(move |state: &プレゼント予約状態| match state {
+                プレゼント予約状態::キャンセル済み(ref cancelled) => {
+                    cancelled.base == base_with_target_id &&
+                    cancelled.キャンセル理由 == expected_reason && // 理由 -> キャンセル理由
+                    cancelled.キャンセル日時 == expected_cancelled_at
                 }
+                _ => false,
             })
             .times(1)
             .returning(|_| Ok(()));
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.予約をキャンセルする(&target_id, reason, time);
+        let result = service
+            .予約をキャンセルする(&target_id, reason, cancelled_at)
+            .await;
 
         assert!(result.is_ok());
     }
 
-    #[test]
-    fn test_予約をキャンセルする_fail_not_found() {
+    #[tokio::test]
+    async fn test_予約をキャンセルする_fail_not_found() {
         let target_id = 予約ID::new();
         let reason = None;
-        let time = None;
-
+        let cancelled_at = None;
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(|_| Ok(None)); // 見つからない
+            .returning(|_| Ok(None));
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.予約をキャンセルする(&target_id, reason, time);
+        let result = service
+            .予約をキャンセルする(&target_id, reason, cancelled_at)
+            .await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -1345,79 +1385,87 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_予約をキャンセルする_fail_invalid_state() {
+    #[tokio::test]
+    async fn test_予約をキャンセルする_fail_invalid_state() {
         let target_id = 予約ID::new();
         let reason = None;
-        let time = None;
-        // 不正な状態 (例: 発送済み) を作成
+        let cancelled_at = None;
+        // 不正な状態 (例: 発送済み)
+        let handler_id = ユーザーID::new();
+        let slip_number = "slip-123".to_string();
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
-        let handler_id = ユーザーID::new();
         let preparing = received.発送準備を開始する(handler_id).unwrap();
-        let shipped = preparing.発送を完了する("slip".to_string()).unwrap();
+        let shipped = preparing.発送を完了する(slip_number.clone()).unwrap(); // 発送済み
         let base_with_target_id = domain::プレゼント予約ベース {
             id: target_id.clone(),
             ..shipped.base
         };
-        let invalid_initial_state =
+        let invalid_state =
             プレゼント予約状態::発送済み(domain::発送済みプレゼント予約型 {
-                base: base_with_target_id,
-                配送伝票番号: "slip".to_string(),
+                base: base_with_target_id.clone(),
+                配送伝票番号: shipped.配送伝票番号,
             });
-        let invalid_initial_state_clone = invalid_initial_state.clone();
+        let invalid_state_clone = invalid_state.clone();
 
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Ok(Some(invalid_initial_state_clone.clone()))); // 不正な状態を返す
+            .returning(move |_| Ok(Some(invalid_state_clone.clone())));
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.予約をキャンセルする(&target_id, reason, time);
+        let result = service
+            .予約をキャンセルする(&target_id, reason, cancelled_at)
+            .await;
 
         assert!(result.is_err());
-        assert!(matches!(
-            result.err().unwrap(),
-            ApplicationError::Domain(DomainError::不正な状態遷移 { .. })
-        ));
+        match result.err().unwrap() {
+            ApplicationError::Domain(DomainError::不正な状態遷移 { current_state_type }) => {
+                assert!(current_state_type.contains("発送済み"));
+            }
+            e => panic!(
+                "Expected ApplicationError::Domain(不正な状態遷移), got {:?}",
+                e
+            ),
+        }
     }
 
-    #[test]
-    fn test_予約をキャンセルする_fail_repo_save_error() {
+    #[tokio::test]
+    async fn test_予約をキャンセルする_fail_repo_save_error() {
         let target_id = 予約ID::new();
         let reason = None;
-        let time = None;
-        // find_by_id が返す予約受付済み状態を作成
+        let cancelled_at = None;
+
+        // find_by_id が返す予約受付済み状態を作成 (上と同様)
         let (依頼者id, 届け先id, 支払いid, 商品idリスト) = create_dummy_ids();
         let 記念日 = create_dummy_kinenbi();
         let 金額 = create_dummy_kingaku();
         let received = domain::予約を受け付ける(
-            依頼者id,
-            届け先id,
-            記念日,
+            依頼者id.clone(),
+            届け先id.clone(),
+            記念日.clone(),
             None,
             ラッピング種類::なし,
             None,
-            商品idリスト,
-            支払いid,
-            金額,
+            商品idリスト.clone(),
+            支払いid.clone(),
+            金額.clone(),
         )
         .unwrap();
         let base_with_target_id = domain::プレゼント予約ベース {
@@ -1426,7 +1474,7 @@ mod tests {
         };
         let initial_state =
             プレゼント予約状態::予約受付済み(domain::予約受付済みプレゼント予約型 {
-                base: base_with_target_id,
+                base: base_with_target_id.clone(),
             });
         let initial_state_clone = initial_state.clone();
 
@@ -1438,13 +1486,14 @@ mod tests {
             .returning(move |_| Ok(Some(initial_state_clone.clone())));
         mock_repo.expect_save().times(1).returning(|_| {
             Err(DomainError::必須項目不足 {
-                field: "Save Error".to_string(),
+                field: "DB save error".to_string(),
             })
-        }); // save がエラー
+        }); // save でエラー
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.予約をキャンセルする(&target_id, reason, time);
+        let result = service
+            .予約をキャンセルする(&target_id, reason, cancelled_at)
+            .await;
 
         assert!(result.is_err());
         assert!(matches!(
@@ -1453,23 +1502,23 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_予約をキャンセルする_fail_repo_find_error() {
+    #[tokio::test]
+    async fn test_予約をキャンセルする_fail_repo_find_error() {
         let target_id = 予約ID::new();
         let reason = None;
-        let time = None;
-
+        let cancelled_at = None;
         let mut mock_repo = Mockプレゼント予約Repository::new();
         mock_repo
             .expect_find_by_id()
             .with(eq(target_id))
             .times(1)
-            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // find がエラー
+            .returning(move |_| Err(DomainError::予約NotFound(target_id))); // find_by_id でエラー
         mock_repo.expect_save().times(0);
 
         let service = プレゼント予約サービス::new(Arc::new(mock_repo));
-
-        let result = service.予約をキャンセルする(&target_id, reason, time);
+        let result = service
+            .予約をキャンセルする(&target_id, reason, cancelled_at)
+            .await;
 
         assert!(result.is_err());
         assert!(matches!(
