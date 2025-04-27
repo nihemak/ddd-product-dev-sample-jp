@@ -1,0 +1,24 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# プロダクト開発プロセスガイド
+
+このルールは、プロジェクトのプロダクト開発プロセスに関する重要なドキュメントと流れをまとめたものです。
+
+## 概要
+
+プロジェクトは [PRODUCT_DEVELOPMENT_GUIDE.md](mdc:docs/PRODUCT_DEVELOPMENT_GUIDE.md) で定義されたプロセスに従います。これは「Why（なぜ作るか）」から「What（何を作るか）」、「How（どう作るか）」までを一貫して捉えることを目指しています。
+
+*   **Why (プロダクト定義):** [vision_strategy.md](mdc:docs/product/vision_strategy.md), [personas.md](mdc:docs/product/personas.md), [roadmap.md](mdc:docs/product/roadmap.md) で定義されます。
+*   **What (要求定義):** [eventstorming.md](mdc:docs/requirements/eventstorming.md) や [user_story_mapping.md](mdc:docs/requirements/user_story_mapping.md) で具体化されます。ユーザーストーリーマップは開発バックログの中心です。
+*   **How (開発サイクル):** [iteration_planning.md](mdc:docs/process/iteration_planning.md) に基づく1週間のイテレーションで進められます。計画、設計（ADR含む）、実装（TDD）、レビューのサイクルを回します。
+*   **共通言語とモデル:** [ubiquitous-language.md](mdc:docs/domain/ubiquitous-language.md) と [domain-model.md](mdc:docs/domain/domain-model.md) は全プロセスを通じて洗練され、重要なインプットとなります。
+*   **技術タスク:** [technical_tasks.md](mdc:docs/technical_tasks.md) で管理されます。
+
+## プロダクト改善サイクル (戦略レベル)
+
+開発イテレーションとは別に、より大きな視点での**プロダクト戦略レビュープロセス** ([PRODUCT_DEVELOPMENT_GUIDE.md](mdc:docs/PRODUCT_DEVELOPMENT_GUIDE.md) 内で定義) が存在します。これは、市場、ユーザー、データからの学びに基づき、プロダクトの方向性 (Why, What) を定期的に見直すための重要なループです。
+
+*   イテレーションの振り返り ([iteration_template.md](mdc:docs/process/iteration_template.md)) や技術タスク ([technical_tasks.md](mdc:docs/technical_tasks.md)) に、この戦略レビューを意識するための仕組みが組み込まれています。
