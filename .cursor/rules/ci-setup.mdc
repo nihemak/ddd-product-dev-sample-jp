@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# CI設定とsqlxの取り扱い
+
+このプロジェクトはCIにGitHub Actionsを使用しています ([.github/workflows/ci.yml](mdc:.github/workflows/ci.yml))。主な考慮事項は以下の通りです:
+
+*   **sqlx オフラインモード:** CIはライブデータベースなしで実行されます。`sqlx::query!` マクロは事前に生成されたクエリキャッシュ (`backend/.sqlx` ディレクトリ) に依存します。
+    *   `sqlx-cli` がCI環境にインストールされます。
+    *   `cargo sqlx prepare --check --workspace` コマンドが `cargo test` の *前* に実行され、キャッシュとコードの整合性を検証します。
+    *   **重要:** `sqlx::query!` を使用するSQLクエリを追加・変更した場合、**必ず** ローカルでキャッシュを再生成し (DBを起動した状態で `cargo sqlx prepare` を実行、Docker経由での `docker-compose run --rm backend cargo sqlx prepare` を推奨)、更新された `backend/.sqlx` ディレクトリをコミットしてください。
+*   **DBテストの条件付きコンパイル:** データベース接続が必要なテスト (主に `backend/src/infrastructure.rs` ([mdc:backend/src/infrastructure.rs]) 内の結合テスト) は、`#[cfg(not(ci))]` を使用してCI環境でのコンパイル対象から除外されます。
+*   **`cfg(ci)` フラグ:**
+    *   `cfg(ci)` フラグは、`CI` 環境変数を確認する `backend/build.rs` ([mdc:backend/build.rs]) によってCIビルド中に有効化されます。
+    *   カスタムフラグ `cfg(ci)` は、Clippyエラーを防ぐために `backend/Cargo.toml` ([mdc:backend/Cargo.toml]) の `[lints.rust] unexpected_cfgs` でコンパイラに既知のものとして宣言されています。
+*   **フォーマットとリント:** CIは `cargo fmt --check` と `cargo clippy -- -D warnings` を強制します。コミット前にローカルでこれらのチェックが通ることを確認してください。
