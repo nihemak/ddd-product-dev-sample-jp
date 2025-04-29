@@ -1,14 +1,15 @@
-# DDDプロダクト開発 サンプル (Rustバックエンド, 日本語UL)
+# DDDプロダクト開発 サンプル (Rustバックエンド & Next.jsフロントエンド, 日本語UL)
 
 これは、ドメイン駆動設計 (DDD) の原則と軽量なプロダクト開発プロセスを組み合わせたサンプルアプリケーションです。
 **具体的には、「記念日プレゼント予約・配送サービス」を題材としています。**
-バックエンド (`backend/`) はRustで実装され、以下の特徴を持っています：
+バックエンド (`backend/`) はRustで実装され、**フロントエンド (`frontend/`) は Next.js (React + TypeScript) で実装されています。**
+開発環境は Docker Compose で構築されています。
 
+**バックエンドの特徴:**
 *   **Webフレームワーク**: `axum` を使用。
 *   **非同期ランタイム**: `tokio` を使用。
 *   **データベースアクセス**: `sqlx` を使用 (PostgreSQL)。
 *   **APIドキュメント**: `utoipa` を使用して OpenAPI 仕様を生成し、Swagger UI で表示。
-*   **開発環境**: `Docker Compose` で構築。
 *   **関数型スタイル**: ドメインロジックは副作用を極力排した関数として実装。
 *   **Railway Oriented Programming (ROP)**: `Result` 型を活用。
 *   **オニオンアーキテクチャ**: Domain, Application, Infrastructure の層分離。
@@ -83,12 +84,18 @@
     ```bash
     docker compose up -d --build
     ```
-4.  バックエンドAPIは `http://localhost:8080` で利用可能になります。
-    *   APIドキュメント (Swagger UI): `http://localhost:8080/swagger-ui/`
+4.  各サービスは以下のURLで利用可能になります:
+    *   **フロントエンド:** `http://localhost:3000`
+    *   **バックエンドAPIドキュメント (Swagger UI):** `http://localhost:8080/swagger-ui/`
 
-*   **ログの確認:** `docker compose logs -f backend`
+*   **ログの確認:**
+    *   フロントエンド: `docker compose logs -f frontend`
+    *   バックエンド: `docker compose logs -f backend`
+    *   データベース: `docker compose logs -f db`
 *   **コンテナの停止:** `docker compose down`
-*   **開発時のホットリロード:** Dockerfile の CMD で `cargo watch` が設定されているため、`backend/src` 以下のコードを変更すると自動で再ビルド・再起動されます。
+*   **開発時のホットリロード:**
+    *   バックエンド: `backend/src` 以下のコードを変更すると自動で再ビルド・再起動されます。
+    *   フロントエンド: `frontend/src` 以下のコードを変更すると自動で反映されます (HMR)。
 
 ## テスト
 
@@ -130,6 +137,10 @@ docker compose exec backend cargo test
 │       ├── application.rs # Application層
 │       ├── infrastructure.rs # Infrastructure層
 │       └── routes/     # (Axum 用に再構成予定) APIルートハンドラ
+├── frontend/           # フロントエンド Next.js プロジェクト
+│   ├── Dockerfile      # フロントエンド用 Dockerfile
+│   ├── package.json    # 依存関係、スクリプト等
+│   └── src/            # ソースコード (App Router ベース)
 ├── docs/               # ドキュメントルート
 │   ├── product/        # プロダクト定義
 │   ├── requirements/   # 要求/仕様
