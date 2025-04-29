@@ -22,13 +22,11 @@
 ## 環境構築・CI/CD (Setup & Infra)
 
 *   [ ] docs(devops): CI/CDパイプラインを構築する #ci-cd
-*   [ ] chore(devops): フロントエンド開発環境を構築する #frontend #dev-env
-*   [ ] chore(frontend): Shadcn/ui (Tailwind CSS, Radix UI) をセットアップする #frontend #dev-env #ui
-*   [ ] chore(storybook): Storybook をセットアップする #frontend #dev-env #documentation
+*   [x] chore(devops): フロントエンド開発環境を構築する #frontend #dev-env
 *   [x] chore(devops): バックエンド開発環境を Docker Compose で構築する (Rust + PostgreSQL) #backend #dev-env #docker
 *   [ ] chore(infra): クラウド環境 (Render, Vercel) を構築・設定する #infra
 *   [ ] chore(security): Auth0の初期設定を行う #security
-*   [ ] chore(docker): Dockerfile のビルドキャッシュ効率とイメージサイズを最適化する #docker #performance
+*   [x] chore(docker): Dockerfile のビルドキャッシュ効率とイメージサイズを最適化する #docker #performance
 *   [ ] chore(devops): sqlx-cli 実行時の DATABASE_URL 指定方法を改善する (ラッパースクリプト等) #dev-env #db
 *   [ ] chore(ci): GitHub Actions のキャッシュを設定してビルド時間を短縮する #ci-cd #performance
 *   [ ] chore(ci): backend ディレクトリ配下の変更時のみ CI を実行するようトリガーを最適化する #ci-cd #monorepo
@@ -43,9 +41,10 @@
 *   [ ] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Jest/RTL?) #testing #frontend #process
 *   [ ] docs(testing): フロントエンドのE2Eテスト戦略・ツールを選定する (Playwright/Cypress?) #testing #frontend #process
 *   [ ] docs(testing): バックエンドの結合テスト戦略を決定する #testing #backend #process
-*   [ ] docs(adr): ADR 0001 (オニオンアーキテクチャ) の内容を現状に合わせて見直す #documentation
-*   [ ] docs(adr): ADR 0002 (mockall採用) の内容を現状に合わせて見直す #documentation
+*   [x] docs(adr): ADR 0001 (オニオンアーキテクチャ) の内容を現状に合わせて見直す #documentation
+*   [x] docs(adr): ADR 0002 (mockall採用) の内容を現状に合わせて見直す #documentation
 *   [ ] chore(process): プロダクト戦略レビューを実施する (次回目安: MVPリリース後) #process #strategy
+*   [x] docs: プロジェクトのセットアップ手順をREADMEに記述する #documentation
 
 ## 実装・リファクタリング (Implementation)
 
@@ -59,6 +58,8 @@
 *   [ ] refactor(domain): 各ID型に Default トレイトを実装する (clippy::new_without_default) #tech-debt #quality
 *   [ ] refactor(main): 不要な use tokio; を削除する (clippy::single_component_path_imports) #tech-debt #quality
 *   [ ] refactor(functions): 引数が多い関数をリファクタリングする (コマンドオブジェクト等, clippy::too_many_arguments) #tech-debt #architecture
+*   [ ] chore(deps): バックエンドの依存クレート(Rust)のバージョンを定期的に確認・更新する #tech-debt #quality #backend
+*   [ ] chore(deps): フロントエンドの依存パッケージ(npm)のバージョンを定期的に確認・更新する #tech-debt #quality #frontend
 *   [ ] chore(deps): 依存クレートのバージョンを定期的に確認・更新する #tech-debt #quality
 
 ## いつかやる (優先度 低)
@@ -66,5 +67,6 @@
 *   [ ] chore: リポジトリ全体のlintルールを最新化する #tech-debt
 *   [ ] docs: ADRテンプレートを導入する #documentation
 *   [ ] chore(infra): 基本的なサーバー監視を設定する (Render/Vercel標準機能) #monitoring #infra
-*   [ ] docs: プロジェクトのセットアップ手順をREADMEに記述する #documentation
-*   [ ] refactor(db): イミュータブルデータモデリング（履歴テーブル等）の導入を検討・実施する (Ref: ADR 0018) #tech-debt #architecture 
+*   [ ] refactor(db): イミュータブルデータモデリング（履歴テーブル等）の導入を検討・実施する (Ref: ADR 0018) #tech-debt #architecture
+*   [ ] chore(frontend): Shadcn/ui (Tailwind CSS, Radix UI) をセットアップする (React 18を使用中) #frontend #dev-env #ui
+*   [ ] chore(frontend): Shadcn/ui が React 19 に対応したら React を 19 にアップグレードする #frontend #deps #tech-debt 
