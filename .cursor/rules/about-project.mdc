@@ -3,16 +3,23 @@ description: DDD Sample Projectの概要と構造
 globs: ["**/*.rs"]
 alwaysApply: true
 ---
-# DDD Sample Project 概要
+# プロジェクト概要: DDD サンプル (Rustバックエンド & Next.jsフロントエンド)
 
-このプロジェクトは、ドメイン駆動設計（DDD）の原則に基づき、Rustを用いて実装されたサンプルアプリケーションです。
-以下の特徴を持っています：
+このプロジェクトは、ドメイン駆動設計 (DDD) の原則と軽量なプロダクト開発プロセスを組み合わせたサンプルアプリケーションです。「記念日プレゼント予約・配送サービス」を題材としています。
 
-*   **関数型スタイル**: ドメインロジックは副作用を極力排した純粋関数として実装されています。
-*   **Railway Oriented Programming (ROP)**: `Result` 型と `and_then`, `map_err` などを活用し、エラー処理を含むワークフローを直線的に記述しています。
-*   **オニオンアーキテクチャ**: 関心事を Domain, Application, Infrastructure の層に分離し、依存関係は常に外側から内側（Infrastructure → Application → Domain）へ向かいます。
-*   **依存性の逆転**: Application層はDomain層で定義されたリポジトリのインターフェース（トレイト）に依存し、具体的な実装（Infrastructure層）は起動時に注入されます。
-*   **日本語ユビキタス言語**: ドメイン層の型名や関数名には、日本語（またはそのローマ字表記）を積極的に採用しています（例: `注文`, `商品ID`, `注文を受け付ける`, `mark_as_preparing`）。
+## 主要なアーキテクチャ特徴:
+
+*   **バックエンド (`backend/`)**: Rust で実装され、`axum`, `tokio`, `sqlx` (PostgreSQL), `utoipa` (OpenAPI) を使用しています。詳細は [README.md](mdc:README.md) を参照してください。
+*   **フロントエンド (`frontend/`)**: Next.js (React + TypeScript) で実装されています。詳細は [frontend/README.md](mdc:frontend/README.md) を参照してください。
+*   **ドメイン駆動設計 (DDD)**: エンティティ、値オブジェクト、集約、リポジトリといった概念を適用しています。
+*   **オニオンアーキテクチャ**: Domain, Application, Infrastructure 層に分離し、依存関係は内側に向かいます。詳細は [docs/architecture/overview.md](mdc:docs/architecture/overview.md) および [ADR 0001](mdc:docs/architecture/adr/0001-use-onion-architecture.md) を参照してください。
+*   **日本語ユビキタス言語**: ドメイン層の型名や関数名に日本語（またはローマ字）を積極的に使用しています。詳細は [docs/domain/ubiquitous-language.md](mdc:docs/domain/ubiquitous-language.md) を参照してください。
+*   **関数型スタイル & ROP**: ドメインロジックは純粋関数を重視し、エラー処理には `Result` と Railway Oriented Programming (ROP) を活用します。
+*   **SPA + API**: システムはバックエンドAPIを利用するシングルページアプリケーション (SPA) 構成です。詳細は [ADR 0005](mdc:docs/architecture/adr/0005-adopt-spa-api-architecture.md) を参照してください。
+*   **Docker開発環境**: 開発環境全体 (バックエンド, フロントエンド, DB) は Docker Compose で管理されます。詳細は [docker-compose.yml](mdc:docker-compose.yml) および [ADR 0015](mdc:docs/architecture/adr/0015-adopt-docker-for-development-environment.md) を参照してください。
+*   **デプロイ**: バックエンド/DB は Render、フロントエンドは Vercel へのデプロイを想定しています。詳細は [ADR 0008](mdc:docs/architecture/adr/0008-adopt-render-vercel-as-platform.md) を参照してください。
+
+より包括的な詳細については、ルートの [README.md](mdc:README.md) および [プロダクト開発ガイドライン](mdc:docs/PRODUCT_DEVELOPMENT_GUIDE.md) を参照してください。
 
 ## プロジェクトの目的
 - DDDの実践的な理解と学習

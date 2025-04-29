@@ -3,111 +3,39 @@ description: DDD Sample Projectのコーディング規約
 globs: ["**/*.rs"]
 alwaysApply: true
 ---
-# DDD Sample Project コーディングガイドライン
+# コーディングポリシー
 
-このガイドラインは、DDD Sample Projectで守るべき開発ルールです。
-あなたはこちらに準拠して提案してください。
+このルールは、プロジェクトの主要なコーディング標準とプラクティスを概説します。
 
 ## 言語とスタイル
 
-### Rustの使用
-- Rust 2021 editionを使用
-- `cargo fmt`による標準的なフォーマットに従う
-- 変数名はスネークケースを使用
-- 型名はキャメルケースを使用
-
-### 日本語ユビキタス言語
-- ドメイン層の型名や関数名には、日本語（またはそのローマ字表記）を積極的に使用する。
+*   **Rust (バックエンド)**: Rust 2021 edition を使用します。標準フォーマット (`cargo fmt`) に従います。変数名はスネークケース、型名はキャメルケースを使用します。
+*   **TypeScript (フロントエンド)**: Next.js のデフォルトに従います。ESLint と Prettier をリンティングとフォーマットに使用します (`npm run lint`, `npm run format`)。詳細は [frontend/README.md](mdc:frontend/README.md) を参照してください。
+*   **日本語ユビキタス言語**: **ドメイン層** (`backend/src/domain.rs`) の型名や関数名には、日本語（またはローマ字）を積極的に使用します。
 
 ## アーキテクチャ
 
-### オニオンアーキテクチャ
-- Domain, Application, Infrastructure の層構造を維持する。
-- **依存関係の方向**: 常に外側から内側へ（Infrastructure → Application → Domain）。Domain層は他の層に依存しない。
-- **依存性の逆転**: Application層はDomain層で定義されたインターフェース（トレイト）に依存する。Infrastructure層がこれらのトレイトを実装する。
+*   **オニオンアーキテクチャ**: Domain, Application, Infrastructure 層間の厳密な分離を維持します。依存関係は必ず内側に向かうようにします (Infra -> App -> Domain)。Domain 層は他の層に依存しません。
+*   **依存性の逆転**: Application 層は Domain 層で定義されたインターフェース (Trait) に依存します。Infrastructure 層がこれらの Trait を実装します。
 
-### レイヤーの責務
-- **Domain**: ビジネスルール、エンティティ、値オブジェクト、ドメインイベント、リポジトリインターフェース（トレイト） ([src/domain.rs](mdc:src/domain.rs))
-- **Application**: ユースケースの実装、ドメインオブジェクトのオーケストレーション、トランザクション管理 ([src/application.rs](mdc:src/application.rs))
-- **Infrastructure**: データベースアクセス、外部API連携、フレームワーク固有コード、リポジトリトレイトの実装 ([src/infrastructure.rs](mdc:src/infrastructure.rs))
-- **Presentation**: UI、アプリケーションのエントリーポイント、依存性注入 (`main.rs`) ([src/main.rs](mdc:src/main.rs))
+## エラーハンドリング (バックエンド)
 
-## エラーハンドリング
-
-### エラー処理
-- `anyhow::Result`や`Result`型を活用し、Railway Oriented Programming (ROP) の考え方に沿ってエラー処理を記述する。
-- エラーメッセージは日本語で記述する。
-- ドメイン固有のエラーは`DomainError`、アプリケーション固有のエラーは`ApplicationError`のように区別する。
+*   `Result` 型（Application/Infrastructure 層では `anyhow::Result` を使用することが多い）と Railway Oriented Programming (ROP) の原則を活用します。
+*   `DomainError` や `ApplicationError` のような具体的なエラー型を使用します。
+*   エラーメッセージは日本語で記述します。
 
 ## テスト
 
-### テスト戦略
-- 各モジュールにテストモジュール (`#[cfg(test)] mod tests { ... }`) を配置する。
-- **Domain層**: ドメインロジックの純粋性をテストする。
-- **Application層**: `mockall`クレートを使用してリポジトリインターフェースをモック化し、ユースケースの振る舞いをテストする。
-- テストケースは日本語で記述する。
-- コード修正後は必ず `cargo test` を実行し、テストがパスすることを確認してください。テストが通る状態のコードのみをコミットします。
+*   各モジュール内に `#[cfg(test)] mod tests { ... }` を配置します。
+*   **Domain層テスト**: 純粋なロジックの検証に焦点を当てます。
+*   **Application層テスト**: モック（例: リポジトリトレイトに対する `mockall`）を使用してユースケースをテストします。詳細は [ADR 0002](mdc:docs/architecture/adr/0002-use-mockall-for-testing.md) を参照してください。
+*   **テスト記述**: テストケースの説明は日本語で記述します。
+*   **テスト実行**: `docker compose exec backend cargo test` を使用します。
 
-### テスト実行
-- プロジェクトのルートディレクトリで以下のコマンドを実行する。
-```bash
-cargo test
-```
+## コミット
 
-## 依存性注入
+*   **Conventional Commits** 仕様に従います。
+*   **件名 (Subject) は必ず日本語で記述します。**
+*   例: `feat(注文): 注文キャンセル機能を追加`
 
-### DIの実装
-- リポジトリなどの依存性は、`main.rs` ([src/main.rs](mdc:src/main.rs)) でインスタンス化し、Application層のサービスに注入する。
-- 具象実装（Infrastructure層）ではなく、インターフェース（Domain層のトレイト）に対して依存する。
-
-## コミットメッセージ
-
-### コミット規約 (Conventional Commits)
-
-コミットメッセージは [Conventional Commits](mdc:https:/www.conventionalcommits.org) 規約に従います。
-**件名 (Subject) は日本語で記述してください。**
-
-**フォーマット**:
-
-```
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-*   **Type**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore` など。
-*   **Scope** (任意): コミットが影響する範囲 (例: `domain`, `application`, `readme`)。
-*   **Description (Subject)**: 変更内容の簡潔な説明（**日本語**）。50文字以内目安。
-*   **Body** (任意): 変更の動機や詳細。
-*   **Footer** (任意): 破壊的変更 (`BREAKING CHANGE:`) や関連するIssue (`Refs #123`, `Fixes #123`)。
-
-**例**:
-
-```
-feat(注文): 注文キャンセル機能を追加
-
-注文状態が「発送済み」以外の場合にキャンセルできるようにする。
-
-Fixes #45
-```
-
-```
-fix(domain): 価格計算時のオーバーフローを修正
-
-合計金額計算時にu32の最大値を超えた場合にエラーを返すようにした。
-
-Refs #123
-```
-
-**その他**:
-
-*   コミット前に `cargo fmt` を実行し、コードがフォーマットされていることを確認してください。
-
-## その他
-
-### コード品質
-- ドキュメントコメントは日本語で記述する。
-- 複雑なロジックにはコメントを追加する。
-- 定期的に`cargo clippy`を実行してコード品質を維持する。
+詳細なガイドラインについては、完全版の [プロダクト開発ガイドライン](mdc:docs/PRODUCT_DEVELOPMENT_GUIDE.md) を参照してください。
