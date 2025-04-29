@@ -1,0 +1,61 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# フロントエンド開発環境 (Next.js + Docker)
+
+このプロジェクトのフロントエンド ([frontend/](mdc:frontend)) は Next.js (React + TypeScript) で構築されています。
+
+## 主要技術スタック
+
+*   Framework: [Next.js](mdc:https:/nextjs.org) (App Router)
+*   Language: [TypeScript](mdc:https:/www.typescriptlang.org)
+*   Styling: [Tailwind CSS](mdc:https:/tailwindcss.com)
+*   Linting/Formatting: ESLint, Prettier
+*   Package Manager: npm
+*   UI Components: Storybook ([http://localhost:6006](mdc:http:/localhost:6006)) で開発・確認可能
+
+## Docker 開発環境 (推奨)
+
+開発は Docker Compose ([docker-compose.yml](mdc:docker-compose.yml)) を使用してコンテナ化された環境で行うことを **強く推奨** します (ADR 0015)。
+
+*   **起動コマンド:** プロジェクトルートで以下を実行します。
+    ```bash
+    # フロントエンドとStorybookを起動
+    docker compose up -d frontend storybook
+    ```
+*   **アクセス:**
+    *   Next.js アプリ: [http://localhost:3000](mdc:http:/localhost:3000)
+    *   Storybook: [http://localhost:6006](mdc:http:/localhost:6006)
+*   **ホットリロード:** 有効です (`./frontend:/app` ボリュームマウントと `WATCHPACK_POLLING=true` による)。
+*   **停止:** `docker compose down`
+
+## Docker 設定のポイント
+
+*   **Dockerfile ([frontend/Dockerfile](mdc:frontend/Dockerfile))**:
+    *   マルチステージビルドを採用し、最終イメージサイズを最適化。
+    *   依存関係のインストールには `npm ci` を使用し、ビルドの再現性を確保。
+*   **Docker Compose ([docker-compose.yml](mdc:docker-compose.yml))**:
+    *   `frontend_node_modules` という名前付きボリュームを `frontend` と `storybook` サービスで共有。これにより、ホストの `node_modules` とのコンフリクトを防ぎ、依存関係を効率的に管理。
+    *   `frontend_next` で Next.js のビルドキャッシュを永続化。
+*   **Docker Ignore ([frontend/.dockerignore](mdc:frontend/.dockerignore))**:
+    *   `node_modules`, `.next` などをビルドコンテキストから除外し、ビルド効率を向上。
+
+詳細な手順やローカル環境でのセットアップについては [frontend/README.md](mdc:frontend/README.md) を参照してください。
+
+## フロントエンドディレクトリ構成 (主要部分)
+```
+frontend/
+├── public/
+├── src/
+│   ├── app/             # Next.js App Router (ルーティング、ページ、レイアウト)
+│   ├── components/      # 再利用可能なUIコンポーネント
+│   ├── lib/
+│   └── styles/
+├── .dockerignore
+├── Dockerfile
+├── next.config.mjs
+├── package.json
+└── tsconfig.json
+```
