@@ -82,20 +82,29 @@
     ```
 3.  以下のコマンドでコンテナをビルドしてバックグラウンドで起動します。
     ```bash
+    # 全てのサービス (backend, frontend, db) を起動
     docker compose up -d --build
     ```
 4.  各サービスは以下のURLで利用可能になります:
     *   **フロントエンド:** `http://localhost:3000`
     *   **バックエンドAPIドキュメント (Swagger UI):** `http://localhost:8080/swagger-ui/`
+    *   **Storybook (UIコンポーネントカタログ):** `http://localhost:6006` (フロントエンドと一緒に `docker compose up -d frontend storybook` などで起動した場合)
 
+*   **特定のサービスの起動:**
+    *   例: フロントエンドのみ: `docker compose up -d frontend`
+    *   例: フロントエンドと Storybook: `docker compose up -d frontend storybook` (初回は `--build` が必要かもしれません)
 *   **ログの確認:**
     *   フロントエンド: `docker compose logs -f frontend`
     *   バックエンド: `docker compose logs -f backend`
     *   データベース: `docker compose logs -f db`
-*   **コンテナの停止:** `docker compose down`
+    *   Storybook: `docker compose logs -f storybook`
+*   **コンテナの停止:**
+    *   全サービス: `docker compose down`
+    *   特定のサービス: `docker compose stop storybook` など
 *   **開発時のホットリロード:**
     *   バックエンド: `backend/src` 以下のコードを変更すると自動で再ビルド・再起動されます。
     *   フロントエンド: `frontend/src` 以下のコードを変更すると自動で反映されます (HMR)。
+    *   Storybook: `frontend/src` 以下のコンポーネントや Story を変更すると自動で反映されます (HMR)。
 
 ## テスト
 

@@ -1,15 +1,27 @@
-# Use the official Node.js LTS (currently 22.x) Alpine image
-FROM node:22-alpine AS base
+# Stage 1: Build dependencies
+FROM node:22-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy package files
 COPY package.json ./
 COPY package-lock.json ./
+
+# Use npm ci for reproducible builds
 RUN npm ci
 
-# Copy source code
+# Stage 2: Build the final image
+FROM node:22-alpine AS final
+
+WORKDIR /app
+
+# Copy installed node_modules from the builder stage
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy package.json (optional, but good practice)
+COPY --from=builder /app/package.json ./
+
+# Copy source code from the host (respecting .dockerignore)
 COPY . .
 
 # Expose port

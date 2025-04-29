@@ -46,8 +46,29 @@ services:
       - NODE_ENV=development
       # Required for Next.js hot reloading to work properly with Docker
       - WATCHPACK_POLLING=true
+    # The default command is likely `npm run dev` from the Dockerfile
+    # No need to specify command here unless overriding
     depends_on:
       - backend # Optional: if frontend needs backend API during development startup
+
+  # Add a new service for Storybook
+  storybook:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "6006:6006" # Expose Storybook port
+    volumes:
+      # Mount the source code, excluding node_modules (built into the image)
+      - ./frontend:/app
+      # Use the same named volume as the frontend service
+      - frontend_node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      # WATCHPACK_POLLING might not be strictly necessary but doesn't hurt
+      - WATCHPACK_POLLING=true
+    # Specify the command to run Storybook using npx
+    command: npx storybook dev --no-open --port 6006
 
   db:
     image: postgres:16-alpine # Use a specific version
