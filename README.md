@@ -84,6 +84,9 @@
     ```bash
     # 全てのサービス (backend, frontend, db) を起動
     docker compose up -d --build
+
+    # 初回起動時やスキーマ変更時には、データベースマイグレーションを実行
+    docker compose exec backend sqlx migrate run
     ```
 4.  各サービスは以下のURLで利用可能になります:
     *   **フロントエンド:** `http://localhost:3000`
