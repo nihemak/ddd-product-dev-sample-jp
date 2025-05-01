@@ -118,7 +118,8 @@ impl プレゼント予約サービス {
                 self.reservation_repo
                     .save(&new_state)
                     .await // await を追加
-                    .map_err(|e| ApplicationError::Repository(e.to_string()))
+                    .map_err(|e| ApplicationError::Repository(e.to_string()))?; // Repository エラーをラップ
+                Ok(()) // 成功時は Ok(()) を返す
             }
             // 他の状態からの遷移は不正とする
             _ => Err(ApplicationError::Domain(
@@ -156,7 +157,8 @@ impl プレゼント予約サービス {
                 self.reservation_repo
                     .save(&new_state)
                     .await // await を追加
-                    .map_err(|e| ApplicationError::Repository(e.to_string()))
+                    .map_err(|e| ApplicationError::Repository(e.to_string()))?; // Repository エラーをラップ
+                Ok(()) // 成功時は Ok(()) を返す
             }
             // 他の状態からの遷移は不正とする
             _ => Err(ApplicationError::Domain(
@@ -240,7 +242,8 @@ impl プレゼント予約サービス {
                 self.reservation_repo
                     .save(&new_state)
                     .await // await を追加
-                    .map_err(|e| ApplicationError::Repository(e.to_string()))
+                    .map_err(|e| ApplicationError::Repository(e.to_string()))?; // Repository エラーをラップ
+                Ok(()) // 成功時は Ok(()) を返す
             }
             // 他の状態からの遷移は不正とする
             _ => Err(ApplicationError::Domain(
