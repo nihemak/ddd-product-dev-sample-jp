@@ -28,11 +28,11 @@ alwaysApply: true
 - Rustでの実践的なアプリケーション開発の例示
 
 ## 主要コンポーネント (バックエンド)
-- `domain.rs`: ドメインモデル、ビジネスロジック、リポジトリインターフェース（トレイト） ([src/domain.rs](mdc:backend/src/domain.rs))
-- `application.rs`: ユースケースの実装（ドメイン層のオーケストレーション） ([src/application.rs](mdc:backend/src/application.rs))
-- `infrastructure.rs`: 永続化層の実装（リポジトリトレイトの実装） ([src/infrastructure.rs](mdc:backend/src/infrastructure.rs))
-- `main.rs`: アプリケーションのエントリーポイント、依存性注入（DI） ([src/main.rs](mdc:backend/src/main.rs))
-- `lib.rs`: ライブラリクレートのエントリーポイント、モジュール宣言 ([src/lib.rs](mdc:backend/src/lib.rs))
+- `domain.rs`: ドメインモデル、ビジネスロジック、リポジトリインターフェース（トレイト） ([backend/src/domain.rs](mdc:backend/src/domain.rs))
+- `application.rs`: ユースケースの実装（ドメイン層のオーケストレーション） ([backend/src/application.rs](mdc:backend/src/application.rs))
+- `infrastructure.rs`: 永続化層の実装（リポジトリトレイトの実装） ([backend/src/infrastructure.rs](mdc:backend/src/infrastructure.rs))
+- `main.rs`: アプリケーションのエントリーポイント、依存性注入（DI） ([backend/src/main.rs](mdc:backend/src/main.rs))
+- `lib.rs`: ライブラリクレートのエントリーポイント、モジュール宣言 ([backend/src/lib.rs](mdc:backend/src/lib.rs))
 
 ## バックエンド開発環境
 - Rust 2021 edition
