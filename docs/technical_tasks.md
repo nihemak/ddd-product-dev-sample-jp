@@ -18,6 +18,7 @@
 *   [ ] docs(architecture): Webアナリティクス導入を検討・決定する #decision #monitoring
 *   [x] docs(architecture): APIスキーマ定義・管理方法を決定する (OpenAPI?) #decision #api
 *   [ ] refactor(server): Axum の State 管理方法を改善する (AppState 構造体の導入検討) #architecture #backend
+*   [ ] feat(openapi): /api/health 以外のエンドポイントのスキーマ定義を OpenAPI 仕様に追加する #api #backend
 
 ## 環境構築・CI/CD (Setup & Infra)
 
@@ -46,6 +47,7 @@
 *   [x] docs(adr): ADR 0002 (mockall採用) の内容を現状に合わせて見直す #documentation
 *   [ ] chore(process): プロダクト戦略レビューを実施する (次回目安: MVPリリース後) #process #strategy
 *   [x] docs: プロジェクトのセットアップ手順をREADMEに記述する #documentation
+*   [ ] docs(process): CONTRIBUTING.md を作成し、コミット規約や開発フローの詳細を記述する #documentation #process
 
 ## 実装・リファクタリング (Implementation)
 
@@ -59,6 +61,8 @@
 *   [ ] refactor(domain): 各ID型に Default トレイトを実装する (clippy::new_without_default) #tech-debt #quality
 *   [ ] refactor(main): 不要な use tokio; を削除する (clippy::single_component_path_imports) #tech-debt #quality
 *   [ ] refactor(functions): 引数が多い関数をリファクタリングする (コマンドオブジェクト等, clippy::too_many_arguments) #tech-debt #architecture
+*   [ ] refactor(infra): PgRepository の DB エラーマッピングを改善する (sqlx::Error -> DomainError/InfrastructureError) #tech-debt #quality #backend
+*   [ ] test(infra): PgRepository のテストケースを拡充する (異常系、境界値など) #testing #quality #backend
 *   [ ] chore(deps): バックエンドの依存クレート(Rust)のバージョンを定期的に確認・更新する #tech-debt #quality #backend
 *   [ ] chore(deps): フロントエンドの依存パッケージ(npm)のバージョンを定期的に確認・更新する #tech-debt #quality #frontend
 *   [ ] chore(deps): 依存クレートのバージョンを定期的に確認・更新する #tech-debt #quality
