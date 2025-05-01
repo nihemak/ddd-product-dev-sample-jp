@@ -1,5 +1,3 @@
-#![allow(clippy::unnecessary_lazy_evaluations)] // TODO: ok_or_else を ok_or に修正する
-
 use crate::domain::{
     self, DomainError, InfrastructureError, プレゼント予約Repository, プレゼント予約状態,
     ユーザーID, ラッピング種類, 予約ID, 商品ID, 届け先ID, 支払いID, 記念日, 金額,
@@ -105,7 +103,7 @@ impl プレゼント予約サービス {
             .find_by_id(予約id)
             .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
-            .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // 見つからない場合はエラー
+            .ok_or(ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // ok_or_else を ok_or に修正
 
         // 2. 現在の状態を確認し、ドメインロジックを呼び出す
         match current_state {
@@ -143,7 +141,7 @@ impl プレゼント予約サービス {
             .find_by_id(予約id)
             .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
-            .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // 見つからない場合はエラー
+            .ok_or(ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // ok_or_else を ok_or に修正
 
         // 2. 現在の状態を確認し、ドメインロジックを呼び出す
         match current_state {
@@ -182,7 +180,7 @@ impl プレゼント予約サービス {
             .find_by_id(予約id)
             .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
-            .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?;
+            .ok_or(ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // ok_or_else を ok_or に修正
 
         // 2. 現在の状態に応じてキャンセル処理を実行
         let cancelled_reservation_result = match current_state {
@@ -227,7 +225,7 @@ impl プレゼント予約サービス {
             .find_by_id(予約id)
             .await // await を追加
             .map_err(|e| ApplicationError::Repository(e.to_string()))?
-            .ok_or_else(|| ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?;
+            .ok_or(ApplicationError::Domain(DomainError::予約NotFound(*予約id)))?; // ok_or_else を ok_or に修正
 
         // 2. 現在の状態を確認し、ドメインロジックを呼び出す
         match current_state {
