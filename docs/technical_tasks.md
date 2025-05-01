@@ -51,11 +51,11 @@
 
 *   [x] refactor(domain): 状態を型で表現するアプローチを採用し、プレゼント予約ドメインに適用する #refactoring #architecture
 *   [ ] refactor(domain): 状態を型で表現するアプローチを採用し、支払いドメインに適用する #refactoring #architecture
-*   [ ] refactor(sample): サンプル実装コードをプロダクト定義に合わせて修正・削除する #implementation #refactoring
-*   [ ] refactor(infra): InMemoryRepository を PgRepository に置き換える #implementation #db #backend
+*   [x] refactor(sample): サンプル実装コードをプロダクト定義に合わせて修正・削除する #implementation #refactoring
+*   [x] refactor(infra): InMemoryRepository を PgRepository に置き換える #implementation #db #backend
 *   [ ] refactor(error): expect() の使用箇所を見直し、適切なエラーハンドリングに改善する #refactoring #backend #quality
 *   [ ] chore(lint): プロジェクト全体の警告（未使用import等）を修正する (`cargo fix`, `cargo clippy`) #quality #backend
-*   [ ] refactor(application): ok_or_else を ok_or に修正する (clippy::unnecessary_lazy_evaluations) #tech-debt #quality
+*   [x] refactor(application): ok_or_else を ok_or に修正する (clippy::unnecessary_lazy_evaluations) #tech-debt #quality
 *   [ ] refactor(domain): 各ID型に Default トレイトを実装する (clippy::new_without_default) #tech-debt #quality
 *   [ ] refactor(main): 不要な use tokio; を削除する (clippy::single_component_path_imports) #tech-debt #quality
 *   [ ] refactor(functions): 引数が多い関数をリファクタリングする (コマンドオブジェクト等, clippy::too_many_arguments) #tech-debt #architecture
