@@ -28,8 +28,8 @@
 *   [ ] chore(security): Auth0の初期設定を行う #security
 *   [x] chore(docker): Dockerfile のビルドキャッシュ効率とイメージサイズを最適化する #docker #performance
 *   [ ] chore(devops): sqlx-cli 実行時の DATABASE_URL 指定方法を改善する (ラッパースクリプト等) #dev-env #db
-*   [ ] chore(ci): GitHub Actions のキャッシュを設定してビルド時間を短縮する #ci-cd #performance
-*   [ ] chore(ci): backend ディレクトリ配下の変更時のみ CI を実行するようトリガーを最適化する #ci-cd #monorepo
+*   [x] chore(ci): GitHub Actions のキャッシュを設定してビルド時間を短縮する #ci-cd #performance
+*   [x] chore(ci): backend ディレクトリ配下の変更時のみ CI を実行するようトリガーを最適化する #ci-cd #monorepo
 *   [ ] chore(devops): コンテナ起動時にDBマイグレーションを自動実行する仕組みを検討・導入する #dev-env #db #docker
 
 ## 開発プロセス・ドキュメント (Process & Docs)
