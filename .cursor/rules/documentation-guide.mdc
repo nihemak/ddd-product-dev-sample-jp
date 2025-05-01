@@ -1,0 +1,37 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# ドキュメント構成ガイド
+
+`docs/` ディレクトリには、プロジェクトの目的、要求、設計、プロセスに関する重要なドキュメントが格納されています。
+
+## 主要ディレクトリと内容
+
+*   **[`docs/product/`](mdc:docs/product)**: プロダクトの "Why" を定義します。
+    *   [vision_strategy.md](mdc:docs/product/vision_strategy.md): プロダクトビジョン、戦略、ターゲット顧客など。
+    *   [roadmap.md](mdc:docs/product/roadmap.md): 中長期的な開発計画。
+*   **[`docs/requirements/`](mdc:docs/requirements)**: プロダクトの "What" (具体的な機能や仕様) を定義します。
+    *   [user_story_mapping.md](mdc:docs/requirements/user_story_mapping.md): ユーザーストーリーとリリース計画。
+    *   [eventstorming.md](mdc:docs/requirements/eventstorming.md): ビジネスプロセスやイベントの洗い出し結果。
+*   **[`docs/domain/`](mdc:docs/domain)**: ドメイン駆動設計 (DDD) の中核となる成果物を管理します。
+    *   [ubiquitous-language.md](mdc:docs/domain/ubiquitous-language.md): **最重要。** プロジェクト共通の用語集。常に参照・更新します。
+    *   [domain-model.md](mdc:docs/domain/domain-model.md): 主要なドメイン概念とその関係性を表現するモデル図 (Mermaid)。
+*   **[`docs/architecture/`](mdc:docs/architecture)**: システムアーキテクチャに関するドキュメント。
+    *   [overview.md](mdc:docs/architecture/overview.md): アーキテクチャ全体の概要図と説明。
+    *   [`adr/`](mdc:docs/architecture/adr): アーキテクチャ上の重要な意思決定の記録 (Architecture Decision Records)。
+*   **[`docs/process/`](mdc:docs/process)**: 開発プロセスに関するドキュメント。
+    *   [iteration_planning.md](mdc:docs/process/iteration_planning.md): イテレーションの計画・実行・レビュープロセス。
+    *   [`iterations/`](mdc:docs/process/iterations): 各イテレーションのバックログと記録。
+*   **[`docs/db/`](mdc:docs/db)**: データベーススキーマ関連。
+    *   [schema.sql](mdc:docs/db/schema.sql): 最新のDBスキーマ。
+    *   [er-diagram.md](mdc:docs/db/er-diagram.md): ER図 (Mermaid)。
+
+## その他重要ドキュメント
+
+*   [README.md](mdc:README.md): プロジェクトの入り口。概要、セットアップ方法、主要ドキュメントへのリンク。
+*   [PRODUCT_DEVELOPMENT_GUIDE.md](mdc:docs/PRODUCT_DEVELOPMENT_GUIDE.md): **最初に読むべきガイド。** プロダクト開発全体の流れ、ドキュメントの役割、連携方法を定義。
+*   [technical_tasks.md](mdc:docs/technical_tasks.md): 技術的な改善タスクのバックログ。
+
+これらのドキュメントは、コードと並んでプロジェクトの重要な構成要素であり、常に最新の状態を保つことが目指されます。

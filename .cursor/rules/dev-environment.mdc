@@ -1,0 +1,38 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 開発環境とワークフロー
+
+## Docker Compose
+開発環境全体 (バックエンド, フロントエンド, DB) は Docker Compose で管理されます。
+*   設定ファイル: [docker-compose.yml](mdc:docker-compose.yml)
+*   起動: `docker compose up -d --build`
+*   関連ADR: [ADR 0015](mdc:docs/architecture/adr/0015-adopt-docker-for-development-environment.md)
+*   サービスURL:
+    *   フロントエンド: `http://localhost:3000`
+    *   バックエンドAPIドキュメント (Swagger UI): `http://localhost:8080/swagger-ui/`
+    *   Storybook: `http://localhost:6006`
+*   詳細は [README.md](mdc:README.md) の "実行方法 (Docker Compose)" セクションを参照。
+
+## 環境変数
+データベース接続情報などを環境変数で設定します。
+*   プロジェクトルートに `.env` ファイルを作成します ([.env.sample](mdc:.env.sample) をコピー)。
+*   主要な変数: `DATABASE_URL`
+*   詳細は [README.md](mdc:README.md) の "環境設定" セクションを参照。
+
+## データベース (PostgreSQL)
+*   Docker Compose で `db` サービスとして起動されます。
+*   マイグレーション: `sqlx-cli` を使用します。
+    *   マイグレーション実行: `docker compose exec backend sqlx migrate run`
+    *   スキーマ定義 (参考): [docs/db/schema.sql](mdc:docs/db/schema.sql)
+    *   ER図 (参考): [docs/db/er-diagram.md](mdc:docs/db/er-diagram.md)
+*   `sqlx prepare` (任意): コンパイル時チェックのためにクエリ情報を [backend/sqlx-data.json](mdc:backend/sqlx-data.json) に保存できます。詳細は [README.md](mdc:README.md) の "環境設定" セクションを参照。
+
+## CI/CD (GitHub Actions)
+継続的インテグレーションは GitHub Actions で実行されます。
+*   ワークフローファイル: [.github/workflows/ci.yml](mdc:.github/workflows/ci.yml)
+*   トリガー: `main` ブランチへの push/pull_request 時で、かつ `backend/**` または `.github/workflows/ci.yml` に変更があった場合。
+*   主なジョブ: フォーマットチェック (`cargo fmt --check`), Lint (`cargo clippy`), SQLxクエリチェック (`sqlx prepare --check`), テスト (`cargo test`)。
+*   キャッシュ: `cargo` のビルドキャッシュが利用されます。
