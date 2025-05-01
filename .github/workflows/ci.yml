@@ -3,11 +3,19 @@ name: Rust CI
 on:
   push:
     branches: [ "main" ]
+    paths: # Trigger only when backend code or the workflow itself changes
+      - '.github/workflows/ci.yml'
+      - 'backend/**'
   pull_request:
     branches: [ "main" ]
+    paths: # Trigger only when backend code or the workflow itself changes
+      - '.github/workflows/ci.yml'
+      - 'backend/**'
 
 env:
   CARGO_TERM_COLOR: always
+  # Define cache key prefix for easier invalidation if needed
+  CACHE_PREFIX: v1
 
 jobs:
   build_and_test:
@@ -22,7 +30,30 @@ jobs:
           toolchain: stable
           components: clippy, rustfmt
 
+      - name: Cache cargo registry and index
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{ runner.os }}-cargo-registry-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-registry-${{ env.CACHE_PREFIX }}-
+
+      - name: Cache cargo build target directory
+        uses: actions/cache@v4
+        with:
+          # Cache target directory relative to backend
+          path: backend/target
+          key: ${{ runner.os }}-cargo-build-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-build-${{ env.CACHE_PREFIX }}-
+
       - name: Install sqlx-cli
+        # Run only if not cached in ~/.cargo/bin/
+        # Consider caching sqlx-cli binary specifically if installation is slow
         run: |
           cargo install sqlx-cli \
             --version=0.7.4 \
@@ -43,5 +74,6 @@ jobs:
         working-directory: ./backend
 
       - name: Run tests
+        # Build steps will leverage cached target directory if possible
         run: cargo test
         working-directory: ./backend 
