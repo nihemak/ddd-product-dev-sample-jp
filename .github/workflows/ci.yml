@@ -62,7 +62,7 @@ jobs:
 
       # Install sqlx-cli to the default location if cache missed
       - name: Install sqlx-cli
-        if: steps.cache-sqlx-cli.outputs.cache-hit != 'true'
+        # if: steps.cache-sqlx-cli.outputs.cache-hit != 'true' # Always run install
         run: |
           cargo install sqlx-cli \
             --version=0.7.4 \
