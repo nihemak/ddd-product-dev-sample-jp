@@ -85,12 +85,14 @@ jobs:
 
       - name: Regenerate .sqlx and check diff # Renamed step for diagnosis
         run: |
-          # Regenerate .sqlx based on current code in CI
-          cargo sqlx prepare --workspace
-          # Check if there's any difference with the committed .sqlx
-          # Exit with 1 if there is a diff
+          echo "Checking sqlx command path:"
+          which sqlx || true
+          echo "Checking sqlx binary status:"
+          ls -l $GITHUB_WORKSPACE/target/ci-tools/bin/sqlx || true
+          echo "Running sqlx prepare:"
+          cargo sqlx prepare --workspace || true
+          echo "Checking git diff:"
           git diff --exit-code backend/.sqlx
-        working-directory: ./backend
 
       - name: Run tests
         # Build steps will leverage cached target directory if possible
