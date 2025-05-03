@@ -75,6 +75,14 @@ jobs:
       - name: Add sqlx-cli dir to PATH
         run: echo "$GITHUB_WORKSPACE/target/ci-tools/bin" >> $GITHUB_PATH
 
+      # Debug: Verify PATH and cargo's awareness of sqlx subcommand
+      - name: Verify PATH and cargo subcommands
+        run: |
+          echo "Current PATH:"
+          echo $PATH
+          echo "Listing available cargo commands:"
+          cargo --list
+
       - name: Check formatting
         run: cargo fmt --check
         working-directory: ./backend
@@ -83,8 +91,8 @@ jobs:
         run: cargo clippy -- -D warnings
         working-directory: ./backend
 
-      - name: Check SQLx query cache # Reverted to original check step
-        run: cargo sqlx prepare --check --workspace
+      - name: Check SQLx query cache
+        run: cargo sqlx prepare --check --workspace # Keep the check flag
         working-directory: ./backend
 
       - name: Run tests
