@@ -73,9 +73,13 @@ jobs:
       - name: Add sqlx-cli dir to PATH
         run: echo "$GITHUB_WORKSPACE/target/ci-tools/bin" >> $GITHUB_PATH
 
-      # Add step to check if sqlx-cli exists after installation
-      - name: Check sqlx-cli existence after install
-        run: ls -l ./target/ci-tools/bin/sqlx-cli
+      # Debug: List contents of install directory
+      - name: List ci-tools directory contents
+        run: |
+          echo "Listing ./target/ci-tools:"
+          ls -la ./target/ci-tools || echo "Directory ./target/ci-tools not found or empty"
+          echo "Listing ./target/ci-tools/bin:"
+          ls -la ./target/ci-tools/bin || echo "Directory ./target/ci-tools/bin not found or empty"
 
       - name: Check formatting
         run: cargo fmt --check
