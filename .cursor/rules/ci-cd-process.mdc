@@ -1,5 +1,34 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: false
 ---
+# CI/CD と開発プロセス
+
+## CI/CD (GitHub Actions)
+
+*   **ワークフロー定義:** [`.github/workflows/ci.yml`](mdc:.github/workflows/ci.yml)
+*   **トリガー:** `main` ブランチへの `push` または `pull_request` 時 (ただし `backend/` またはワークフロー自体の変更時のみ)。
+*   **主要ステップ:**
+    1.  Rust ツールチェイン設定 (`stable`, `clippy`, `rustfmt`)
+    2.  キャッシュ復元 (cargo registry/index, cargo build target, sqlx-cli)
+    3.  `sqlx-cli` インストール (`--force` 付きで常に実行)
+    4.  フォーマットチェック (`cargo fmt --check`)
+    5.  Lint チェック (`cargo clippy -- -D warnings`)
+    6.  SQLx クエリチェック (`cargo sqlx prepare --check --workspace`)
+    7.  テスト実行 (`cargo test`)
+*   **キャッシュ戦略:**
+    *   `cargo registry/index`: `Cargo.lock` ベース。
+    *   `cargo build target`: `Cargo.lock` ベース。
+    *   `sqlx-cli`: バージョン (`0.7.4`) ベース。
+
+## 開発プロセス (イテレーション)
+
+*   **期間:** 1週間 (目安: 日曜開始、土曜終了)
+*   **計画・管理:** 各イテレーションの計画、レビュー、振り返りは `docs/process/iterations/` 配下の Markdown ファイル ([例: 2025-W18.md](mdc:docs/process/iterations/2025-W18.md)) で管理します。
+*   **計画インプット:**
+    *   技術タスク: [`docs/technical_tasks.md`](mdc:docs/technical_tasks.md)
+    *   ユーザーストーリー: [`docs/requirements/user_story_mapping.md`](mdc:docs/requirements/user_story_mapping.md)
+    *   ロードマップ: [`docs/product/roadmap.md`](mdc:docs/product/roadmap.md)
+*   **主要ガイドライン:** [`docs/PRODUCT_DEVELOPMENT_GUIDE.md`](mdc:docs/PRODUCT_DEVELOPMENT_GUIDE.md), [`docs/process/iteration_planning.md`](mdc:docs/process/iteration_planning.md)
+*   **完了の定義 (DoD):** コード実装、テストパス (CI含む)、Lintチェック、関連ドキュメント更新など ([`iteration_planning.md`](mdc:docs/process/iteration_planning.md) 参照)。
