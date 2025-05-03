@@ -66,6 +66,7 @@
 *   [ ] chore(deps): バックエンドの依存クレート(Rust)のバージョンを定期的に確認・更新する #tech-debt #quality #backend
 *   [ ] chore(deps): フロントエンドの依存パッケージ(npm)のバージョンを定期的に確認・更新する #tech-debt #quality #frontend
 *   [ ] chore(deps): 依存クレートのバージョンを定期的に確認・更新する #tech-debt #quality
+*   [ ] chore(ci): "potentially unused queries" 警告の原因を調査し修正する #tech-debt #quality #ci
 
 ## いつかやる (優先度 低)
 
