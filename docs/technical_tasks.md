@@ -59,7 +59,7 @@
 *   [ ] chore(lint): プロジェクト全体の警告（未使用import等）を修正する (`cargo fix`, `cargo clippy`) #quality #backend
 *   [x] refactor(application): ok_or_else を ok_or に修正する (clippy::unnecessary_lazy_evaluations) #tech-debt #quality
 *   [ ] refactor(domain): 各ID型に Default トレイトを実装する (clippy::new_without_default) #tech-debt #quality
-*   [ ] refactor(main): 不要な use tokio; を削除する (clippy::single_component_path_imports) #tech-debt #quality
+*   [x] refactor(main): #![allow(clippy::single_component_path_imports)] を削除し use 文を整理 #tech-debt #quality
 *   [ ] refactor(functions): 引数が多い関数をリファクタリングする (コマンドオブジェクト等, clippy::too_many_arguments) #tech-debt #architecture
 *   [ ] refactor(infra): PgRepository の DB エラーマッピングを改善する (sqlx::Error -> DomainError/InfrastructureError) #tech-debt #quality #backend
 *   [ ] test(infra): PgRepository のテストケースを拡充する (異常系、境界値など) #testing #quality #backend

@@ -15,8 +15,9 @@ RUN cargo install cargo-watch
 # Set the working directory
 WORKDIR /usr/src/app
 
-# Copy the Cargo manifests
-COPY Cargo.toml Cargo.lock ./
+# Copy the Cargo manifests and toolchain file
+# Note: Paths are relative to the build context (./backend)
+COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
 
 # Create a dummy src/main.rs so that cargo fetch can determine the package type
 # This will be overwritten by the subsequent COPY src ./src

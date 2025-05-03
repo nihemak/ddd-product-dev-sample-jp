@@ -1,5 +1,3 @@
-#![allow(clippy::single_component_path_imports)] // TODO: tokio::main を使う場合、`use tokio;` は不要
-
 // use anyhow::Result; // anyhowは必須ではなくなるかも
 // use std::sync::Arc;
 // use std::net::TcpListener; // tokio を使うため不要
@@ -7,18 +5,18 @@ use anyhow::Result;
 use axum::{routing::get, Router};
 use dotenvy::dotenv;
 use sqlx::postgres::PgPoolOptions;
-use std::env;
-use std::net::SocketAddr;
-use std::sync::Arc;
+use std::{env, net::SocketAddr, sync::Arc};
 use tower_http::trace::{DefaultMakeSpan, TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 
 // クレートから必要なモジュールや型をインポート (修正)
-use ddd_sample_jp::application::プレゼント予約サービス; // 正しいパスに修正
-use ddd_sample_jp::infrastructure::PgRepository;
-use ddd_sample_jp::routes::health_check::health_check;
+use ddd_sample_jp::{
+    application::プレゼント予約サービス,
+    infrastructure::PgRepository,
+    routes::health_check::health_check,
+};
 
 // --- OpenAPI ドキュメント定義 ---
 #[derive(OpenApi)]
