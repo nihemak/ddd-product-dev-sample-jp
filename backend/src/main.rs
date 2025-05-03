@@ -13,8 +13,7 @@ use utoipa_swagger_ui::SwaggerUi;
 
 // クレートから必要なモジュールや型をインポート (修正)
 use ddd_sample_jp::{
-    application::プレゼント予約サービス,
-    infrastructure::PgRepository,
+    application::プレゼント予約サービス, infrastructure::PgRepository,
     routes::health_check::health_check,
 };
 
