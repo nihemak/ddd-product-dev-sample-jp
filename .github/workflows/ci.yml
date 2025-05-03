@@ -45,7 +45,7 @@ jobs:
       - name: Cache sqlx-cli binary
         uses: actions/cache@v4
         with:
-          path: ~/.cargo/bin/sqlx-cli
+          path: ./target/ci-tools/bin/sqlx-cli # Cache the binary in the new location
           key: ${{ runner.os }}-sqlx-cli-0.7.4-${{ env.CACHE_PREFIX }} # Include sqlx-cli version
           restore-keys: |
             ${{ runner.os }}-sqlx-cli-0.7.4-${{ env.CACHE_PREFIX }}
@@ -60,18 +60,22 @@ jobs:
             ${{ runner.os }}-cargo-build-${{ env.CACHE_PREFIX }}-
 
       - name: Install sqlx-cli
-        # Run only if not cached in ~/.cargo/bin/
-        # Consider caching sqlx-cli binary specifically if installation is slow
+        # Install to a specific directory using --root
         run: |
           cargo install sqlx-cli \
             --version=0.7.4 \
             --features native-tls,postgres \
-            --no-default-features
+            --no-default-features \
+            --root ./target/ci-tools
             # --locked # Remove --locked flag
+
+      # Add the installation directory to PATH
+      - name: Add sqlx-cli dir to PATH
+        run: echo "$GITHUB_WORKSPACE/target/ci-tools/bin" >> $GITHUB_PATH
 
       # Add step to check if sqlx-cli exists after installation
       - name: Check sqlx-cli existence after install
-        run: ls -l ~/.cargo/bin/sqlx-cli
+        run: ls -l ./target/ci-tools/bin/sqlx-cli
 
       - name: Check formatting
         run: cargo fmt --check
