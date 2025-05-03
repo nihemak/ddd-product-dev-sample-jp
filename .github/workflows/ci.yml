@@ -83,16 +83,9 @@ jobs:
         run: cargo clippy -- -D warnings
         working-directory: ./backend
 
-      - name: Regenerate .sqlx and check diff # Renamed step for diagnosis
-        run: |
-          echo "Checking sqlx command path:"
-          which sqlx || true
-          echo "Checking sqlx binary status:"
-          ls -l $GITHUB_WORKSPACE/target/ci-tools/bin/sqlx || true
-          echo "Running sqlx prepare:"
-          cargo sqlx prepare --workspace || true
-          echo "Checking git diff:"
-          git diff --exit-code backend/.sqlx
+      - name: Check SQLx query cache # Reverted to original check step
+        run: cargo sqlx prepare --check --workspace
+        working-directory: ./backend
 
       - name: Run tests
         # Build steps will leverage cached target directory if possible
