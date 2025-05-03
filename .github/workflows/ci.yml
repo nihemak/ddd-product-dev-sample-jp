@@ -67,9 +67,9 @@ jobs:
           cargo install sqlx-cli \
             --version=0.7.4 \
             --features native-tls,postgres \
-            --no-default-features
-            # No --root needed, installs to ~/.cargo/bin by default
-            # --locked # Removed
+            --no-default-features \
+            --force
+          # No --root needed, installs to ~/.cargo/bin by default
 
       - name: Check formatting
         run: cargo fmt --check
