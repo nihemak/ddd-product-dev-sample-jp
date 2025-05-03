@@ -34,13 +34,21 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.cargo/bin/
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
           key: ${{ runner.os }}-cargo-registry-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-registry-${{ env.CACHE_PREFIX }}-
+
+      # Separate cache step for sqlx-cli binary
+      - name: Cache sqlx-cli binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/sqlx-cli
+          key: ${{ runner.os }}-sqlx-cli-0.7.4-${{ env.CACHE_PREFIX }} # Include sqlx-cli version
+          restore-keys: |
+            ${{ runner.os }}-sqlx-cli-0.7.4-${{ env.CACHE_PREFIX }}
 
       - name: Cache cargo build target directory
         uses: actions/cache@v4
