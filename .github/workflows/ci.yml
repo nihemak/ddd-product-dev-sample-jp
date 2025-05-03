@@ -69,6 +69,10 @@ jobs:
             --no-default-features
             # --locked # Remove --locked flag
 
+      # Add step to check if sqlx-cli exists after installation
+      - name: Check sqlx-cli existence after install
+        run: ls -l ~/.cargo/bin/sqlx-cli
+
       - name: Check formatting
         run: cargo fmt --check
         working-directory: ./backend
