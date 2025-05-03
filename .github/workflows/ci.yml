@@ -71,18 +71,6 @@ jobs:
             --root ./target/ci-tools
             # --locked # Remove --locked flag
 
-      # Add the installation directory to PATH
-      - name: Add sqlx-cli dir to PATH
-        run: echo "$GITHUB_WORKSPACE/target/ci-tools/bin" >> $GITHUB_PATH
-
-      # Debug: Verify PATH and cargo's awareness of sqlx subcommand
-      - name: Verify PATH and cargo subcommands
-        run: |
-          echo "Current PATH:"
-          echo $PATH
-          echo "Listing available cargo commands:"
-          cargo --list
-
       - name: Check formatting
         run: cargo fmt --check
         working-directory: ./backend
@@ -92,7 +80,8 @@ jobs:
         working-directory: ./backend
 
       - name: Check SQLx query cache
-        run: cargo sqlx prepare --check --workspace # Keep the check flag
+        # Execute sqlx binary directly using full path
+        run: $GITHUB_WORKSPACE/target/ci-tools/bin/sqlx prepare --check --workspace
         working-directory: ./backend
 
       - name: Run tests
