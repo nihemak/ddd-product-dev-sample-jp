@@ -43,10 +43,11 @@ jobs:
 
       # Separate cache step for sqlx-cli binary
       - name: Cache sqlx-cli binary
+        id: cache-sqlx-cli
         uses: actions/cache@v4
         with:
           path: ./target/ci-tools/bin/sqlx # Correct binary name is 'sqlx'
-          key: ${{ runner.os }}-sqlx-cli-0.7.4-${{ env.CACHE_PREFIX }} # Keep key as is, referencing the crate
+          key: ${{ runner.os }}-sqlx-cli-0.7.4-${{ env.CACHE_PREFIX }}
           restore-keys: |
             ${{ runner.os }}-sqlx-cli-0.7.4-${{ env.CACHE_PREFIX }}
 
@@ -59,8 +60,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-build-${{ env.CACHE_PREFIX }}-
 
+      # Install sqlx-cli only if the cache didn't hit
       - name: Install sqlx-cli
-        # Install to a specific directory using --root
+        if: steps.cache-sqlx-cli.outputs.cache-hit != 'true'
         run: |
           cargo install sqlx-cli \
             --version=0.7.4 \
