@@ -79,16 +79,10 @@ jobs:
         run: cargo clippy -- -D warnings
         working-directory: ./backend
 
-      # No generation step needed as sqlx-data.json is committed
-      # - name: Generate SQLx query data
-      #   run: cargo sqlx prepare --workspace --merged
-      #   working-directory: ./backend
-
       - name: Check SQLx query cache
         run: cargo sqlx prepare --check --workspace
         working-directory: ./backend
 
       - name: Run tests
-        # Build steps will leverage cached target directory if possible
         run: cargo test
         working-directory: ./backend 
