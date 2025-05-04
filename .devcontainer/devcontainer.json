@@ -1,0 +1,80 @@
+{
+  "name": "DDD Product Dev Sample JP",
+
+  // docker-compose.yml を利用する設定
+  "dockerComposeFile": ["../docker-compose.yml"], // devcontainer.json から見た相対パス
+
+  // VSCode が接続するサービス名を指定
+  "service": "frontend",
+
+  // コンテナ内のワークスペースのパスを指定
+  // docker-compose.yml の volumes でマウントしているパスに合わせる
+  "workspaceFolder": "/app",
+
+  // コンテナ起動後に実行するコマンド (例: 依存関係インストールなど)
+  // docker-compose 経由の場合は通常不要 (docker-compose up で実行されるため)
+  // "postCreateCommand": "npm install",
+
+  // コンテナに含める機能 (Features)
+  "features": {
+        // Git 機能を追加 (必須に近い)
+        "ghcr.io/devcontainers/features/git:1": {}
+        // 必要に応じて他の機能を追加 (例: Node.js, Rust など)
+        // "ghcr.io/devcontainers/features/node:1": {} // frontend サービスに Node があれば不要かも
+        // "ghcr.io/devcontainers/features/rust:1": {} // backend 用途で必要なら
+  },
+
+  // コンテナ内で有効にする VSCode 拡張機能
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // 推奨される基本拡張機能
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-vscode.vscode-docker",
+        "EditorConfig.EditorConfig",
+        // フロントエンド関連
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-japanese",
+        // Storybook 関連 (もしあれば)
+        // "storybookjs.storyook-vscode-addon",
+        // Rust 関連 (バックエンド作業時にも有効にする場合)
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "serayuzgur.crates",
+        // Mermaid 関連
+        "bierner.markdown-mermaid",
+        // Draw.io 関連
+        "hediet.vscode-drawio"
+      ],
+      "settings": {
+        // コンテナ内のターミナル設定など
+        "terminal.integrated.defaultProfile.linux": "bash", // または zsh など
+        // ESLint/Prettier の自動フォーマット設定など
+        "editor.formatOnSave": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        // Rust Analyzer の設定 (backend 作業時)
+        "rust-analyzer.check.command": "clippy"
+      }
+    }
+  }
+
+  // コンテナへのポートフォワーディング設定 (必要に応じて)
+  // 通常は docker-compose.yml の ports が優先されるが、明示的に指定も可能
+  // "forwardPorts": [3000, 6006, 8080, 5432],
+
+  // コンテナを常に最新で起動するかどうか
+  // "runServices": ["frontend", "storybook", "backend", "db"] // 必要に応じて起動するサービスを指定
+
+  // コンテナユーザーを指定 (デフォルトは root)
+  // "remoteUser": "node" // frontend コンテナのユーザーに合わせる
+} 
