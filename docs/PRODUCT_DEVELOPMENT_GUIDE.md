@@ -180,10 +180,14 @@ graph TD
 *   **アウトプット**: イテレーションバックログ ([`docs/process/iterations/`](./process/iterations/YYYY-WW.md) など)。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) 参照。
 
 ### 2. アーキテクチャ設計 (必要に応じて)
-*   **目的**: 計画されたタスクを実現するために必要なアーキテクチャ上の判断や設計を行う。オニオンアーキテクチャの原則に従い、各レイヤーの責務や依存関係を維持・改善する。**ユビキタス言語とドメインモデルをガイドとして設計を進める。データベーススキーマに関する設計もここで行う。**
-*   **インプット**: 計画されたタスク、[`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md)、[`docs/domain/domain-model.md`](./domain/domain-model.md)、既存の [`docs/architecture/`](./architecture/)、**[`docs/db/schema.sql`](./db/schema.sql)**、**[`docs/db/er-diagram.md`](./db/er-diagram.md)**
-*   **アクティビティ**: 新しいパターンの導入検討、インターフェースの定義・変更（**ドメインモデルとの整合性を確認**）、ライブラリ選定、非機能要件の考慮、**データベースのテーブル設計や変更**など。重要な決定は ADR (Architecture Decision Record) として **[`docs/architecture/adr/`](./architecture/adr/)** に記録する。
-*   **成果物**: 更新された設計ドキュメント（例: [`docs/architecture/overview.md`](./architecture/overview.md)）、ADR ([`docs/architecture/adr/`](./architecture/adr/))、**更新された [`docs/db/schema.sql`](./db/schema.sql) および [`docs/db/er-diagram.md`](./db/er-diagram.md) (スキーマ変更時)**。
+*   **目的**: 計画されたタスクを実現するために必要なアーキテクチャ上の判断や設計を行う。オニオンアーキテクチャの原則に従い、各レイヤーの責務や依存関係を維持・改善する。**ユビキタス言語とドメインモデルをガイドとして設計を進める。データベーススキーマやUI（画面仕様）に関する設計もここで行う。**
+*   **インプット**: 計画されたタスク、[`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md)、[`docs/domain/domain-model.md`](./domain/domain-model.md)、既存の [`docs/architecture/`](./architecture/)、**[`docs/db/schema.sql`](./db/schema.sql)**、**[`docs/db/er-diagram.md`](./db/er-diagram.md)**、**関連する要求定義 (`docs/requirements/`)**
+*   **アクティビティ**:
+    *   新しいパターンの導入検討、インターフェースの定義・変更（**ドメインモデルとの整合性を確認**）、ライブラリ選定、非機能要件の考慮。
+    *   **データベースのテーブル設計や変更** (必要な場合)。
+    *   **画面仕様の設計:** 該当ユーザーストーリーを実装する前に、**`docs/ui/screen-template.md` を基に画面仕様ドキュメント (`docs/ui/*.md`) を作成・レビューする。** 主要コンポーネント、レイアウト、ルール、振る舞いを定義し、Storybookとの連携（リンク）も考慮する。
+    *   重要な決定は ADR (Architecture Decision Record) として **[`docs/architecture/adr/`](./architecture/adr/)** に記録する。
+*   **成果物**: 更新された設計ドキュメント（例: [`docs/architecture/overview.md`](./architecture/overview.md)）、ADR ([`docs/architecture/adr/`](./architecture/adr/))、**更新された [`docs/db/schema.sql`](./db/schema.sql) および [`docs/db/er-diagram.md`](./db/er-diagram.md) (スキーマ変更時)**、**作成/更新された画面仕様ドキュメント (`docs/ui/*.md`)**。
 
 ### 3. 実装 (テスト駆動開発 - TDD)
 *   **目的**: 設計や仕様に基づき、テストファーストで動作するコードを記述する。**コード内の命名（変数、関数、型など）はユビキタス言語に従う。**
