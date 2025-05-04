@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { Loader2 } from 'lucide-react';
 
 import { Button } from './button';
 
@@ -24,6 +25,9 @@ const meta = {
       options: ['default', 'sm', 'lg', 'icon'],
     },
     asChild: {
+      control: 'boolean',
+    },
+    disabled: {
       control: 'boolean',
     },
   },
@@ -87,6 +91,27 @@ export const Small: Story = {
   args: {
     children: 'Small Button',
     size: 'sm',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    children: 'Disabled',
+    variant: 'default',
+    disabled: true,
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    variant: 'default',
+    disabled: true,
+    children: (
+      <>
+        <Loader2 className="animate-spin" />
+        Loading...
+      </>
+    ),
   },
 };
 
