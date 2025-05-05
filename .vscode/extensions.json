@@ -1,15 +1,14 @@
 {
   "recommendations": [
+    // Dev Container利用の推奨
+    "ms-vscode-remote.remote-containers",
     // Rust開発の必須拡張機能
     "rust-lang.rust-analyzer",
-
     // MarkdownプレビューでのMermaidサポート
     "bierner.markdown-mermaid",
-
     // Draw.ioファイル(.drawio, .drawio.svg)の編集
     "hediet.vscode-drawio"
-
     // 他にもチームで推奨する拡張機能があればここに追加
     // "username.extension-name"
   ]
-} 
+}

@@ -1,6 +1,39 @@
 version: '3.8'
 
 services:
+  # develop サービスを追加
+  develop:
+    # 専用の Dockerfile.dev を使用
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      # プロジェクトルートを /workspace にマウント
+      - ./:/workspace
+      # node_modules は develop サービス固有で持つ (必要なら frontend と共有も検討)
+      - develop_node_modules:/workspace/frontend/node_modules
+      # backend の target ディレクトリを固定名の共有ボリュームにマウント
+      - backend_target:/workspace/backend/target
+      # ホストの Docker ソケットをマウント (DooD)
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /workspace
+    # コンテナが終了しないように sleep infinity を設定
+    command: sleep infinity
+    # 必要な環境変数を設定
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true # frontend 開発用
+      - RUST_BACKTRACE=1 # backend 開発用
+      # DATABASE_URL は backend/db サービスが利用
+    # コンテナ内ユーザー (vscode) がホストの Docker グループに所属するように GID を追加 (DooD)
+    # -> 環境変数 DOCKER_GROUP_ID を使用するように変更
+    # group_add:
+    #   - "${DOCKER_GROUP_ID:-1000}" # ホストのDocker GID (未設定時 1000)
+    # DBへの依存を削除
+    # depends_on:
+    #   db:
+    #     condition: service_healthy # DB起動後に develop を起動
+
   backend:
     build:
       context: ./backend
@@ -8,10 +41,10 @@ services:
     ports:
       - "8080:3000" # Map host port 8080 to container port 3000 (Check backend Dockerfile/main.rs for actual port)
     volumes:
-      # Mount the entire backend directory for full sync
-      - ./backend:/usr/src/app
-      # Exclude the target directory to avoid build conflicts
-      - /usr/src/app/target
+      # ★ LOCAL_WORKSPACE_FOLDER を使用してホストパスをマウント
+      - ${LOCAL_WORKSPACE_FOLDER}/backend:/usr/src/app
+      # target は共有ボリュームを使用 (変更なし)
+      - backend_target:/usr/src/app/target
     environment:
       # Ensure Rust backtraces are enabled for easier debugging
       - RUST_BACKTRACE=1
@@ -37,9 +70,11 @@ services:
     ports:
       - "3000:3000" # Map host port 3000 to container port 3000
     volumes:
-      # Mount the source code, excluding node_modules and .next
-      - ./frontend:/app
-      - frontend_node_modules:/app/node_modules
+      # ★ LOCAL_WORKSPACE_FOLDER を使用してホストパスをマウント
+      - ${LOCAL_WORKSPACE_FOLDER}/frontend:/app
+      # node_modules は共有ボリュームを使用 (変更なし)
+      - develop_node_modules:/app/node_modules
+      # .next は専用ボリュームを使用 (変更なし)
       - frontend_next:/app/.next
     environment:
       - NODE_ENV=development
@@ -58,9 +93,12 @@ services:
     ports:
       - "6006:6006" # Expose Storybook port
     volumes:
+      # ★ LOCAL_WORKSPACE_FOLDER を使用してホストパスをマウント
+      - ${LOCAL_WORKSPACE_FOLDER}/frontend:/app
       # Mount the source code, excluding node_modules (built into the image)
-      - ./frontend:/app
-      - frontend_node_modules:/app/node_modules
+      # ソースは develop サービス経由でマウントされるためコメントアウト or 削除
+      # - ./frontend:/app
+      - develop_node_modules:/app/node_modules
     environment:
       - NODE_ENV=development
       # WATCHPACK_POLLING might not be strictly necessary but doesn't hurt
@@ -89,5 +127,15 @@ services:
 volumes:
   # Define the named volumes
   postgres_data:
-  frontend_node_modules:
-  frontend_next: 
+  frontend_next:
+  develop_node_modules: # develop 用 node_modules ボリューム
+    name: myapp_shared_node_modules # ★ プロジェクト名プレフィックスがつかない固定名を指定
+  backend_target: # backend 用 target ボリューム
+    name: myapp_shared_backend_target # ★ 固定名を追加
+# frontend_node_modules: # ← この行を削除 
+
+# ★ ネットワークを明示的に定義
+networks:
+  default:
+    name: myapp_network # 固定のネットワーク名を指定
+    external: true     # <--- ここに追加します 

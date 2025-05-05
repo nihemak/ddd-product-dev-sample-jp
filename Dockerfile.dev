@@ -1,0 +1,45 @@
+# Use a base image with Rust pre-installed
+FROM mcr.microsoft.com/devcontainers/rust:1-bullseye
+
+# Avoid warnings by switching to noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Node.js (LTS) and npm
+RUN apt-get update \
+   && apt-get install -y curl \
+   && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+   && apt-get install -y nodejs \
+   && apt-get clean \
+   && rm -rf /var/lib/apt/lists/*
+
+# Install Docker CLI
+RUN apt-get update \
+   && apt-get install -y --no-install-recommends \
+   ca-certificates \
+   gnupg \
+   && install -m 0755 -d /etc/apt/keyrings \
+   && curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc \
+   && chmod a+r /etc/apt/keyrings/docker.asc \
+   && echo \
+   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+   tee /etc/apt/sources.list.d/docker.list > /dev/null \
+   && apt-get update \
+   && apt-get install -y --no-install-recommends docker-ce-cli \
+   && apt-get clean \
+   && rm -rf /var/lib/apt/lists/*
+
+# Switch back to dialog for any ad-hoc use of apt-get
+ENV DEBIAN_FRONTEND=dialog
+
+# (Optional) You can add other common tools here if needed
+# RUN apt-get update && apt-get install -y git zsh ... 
+
+# --- ★ sqlx-cli をインストール ---
+# backend/Dockerfile と同じバージョン、同じ方法でインストール
+RUN cargo install sqlx-cli \
+   --version=0.7.4 \
+   --features native-tls,postgres \
+   --no-default-features \
+   # --locked # CI以外では不要な場合が多い
+   --root /usr/local # システムワイドにインストール (オプション) 

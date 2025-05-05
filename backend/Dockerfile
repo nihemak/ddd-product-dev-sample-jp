@@ -54,7 +54,7 @@ EXPOSE 3000
 # -c: clear screen before each run
 # -w ./ : watch the whole project directory (mounted)
 # -x run: execute 'cargo run' when changes are detected
-CMD ["cargo", "watch", "-q", "-c", "-w", ".", "-x", "run"] # Watch the whole directory
+CMD cargo watch -q -c -w . -x run # シェル形式に変更
 
 # -q: quiet mode for cargo watch itself
 # -c: clear screen before each run
