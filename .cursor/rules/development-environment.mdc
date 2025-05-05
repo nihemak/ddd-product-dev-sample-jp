@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 開発環境セットアップ (Docker + Dev Containers)
+
+このプロジェクトは、Docker Compose と VS Code Dev Containers を使用して、一貫した開発環境を提供します。
+
+## 主要ファイル:
+
+*   `[docker-compose.yml](mdc:docker-compose.yml)`: 全てのサービス (`develop`, `backend`, `frontend`, `db`, `storybook`) を定義します。
+*   `[.devcontainer/devcontainer.json](mdc:.devcontainer/devcontainer.json)`: `develop` サービスを使用して Dev Container 環境を設定します。
+
+## 標準的なワークフロー:
+
+1.  VS Code でプロジェクトフォルダを開くと、Dev Container で再度開くよう促されます。
+2.  Dev Container のターミナル (`/workspace`) で、必要なサービスを起動します:
+    ```bash
+    docker compose up -d db backend frontend storybook
+    ```
+3.  データベースマイグレーションを実行します (必要な場合):
+    ```bash
+    ./migrate-db.sh
+    ```
+4.  `sqlx` オフラインデータを準備します (バックエンドの SQL クエリを変更した場合):
+    ```bash
+    ./prepare-sqlx.sh
+    ```
+5.  アプリケーションにアクセスします:
+    *   フロントエンド: `http://localhost:3000`
+    *   バックエンド API ドキュメント (Swagger UI): `http://localhost:8080/swagger-ui/`
+    *   Storybook: `http://localhost:6006`
+
+## 重要事項:
+
+*   **Docker-outside-of-Docker (DooD):** Dev Container (`develop` サービス) はホストの Docker ソケットをマウントし、コンテナ内から `docker compose` コマンドを実行できます。
+*   **ホットリロード:** バックエンド (`backend/src`)、フロントエンド (`frontend/src`)、Storybook のコード変更は、実行中のコンテナに自動的に反映されます (バックエンドはコンパイル時間が必要、Swagger UI は手動リロードが必要)。
+*   **共有ボリューム:** `node_modules` と `backend/target` は、`develop` コンテナとそれぞれのサービスコンテナ間で共有される名前付きボリュームを使用します (`[docker-compose.yml](mdc:docker-compose.yml)` で定義)。
+
+詳細なセットアップ手順やトラブルシューティングについては、`[README.md](mdc:README.md)` を参照してください。
