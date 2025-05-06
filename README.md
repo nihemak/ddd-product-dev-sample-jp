@@ -180,7 +180,8 @@ graph LR
 
 ### トラブルシューティング
 
-- **共有ボリュームの権限エラー:** Dev Container 内で `cargo check`/`build` や `npm install` などを実行した際に、`/workspace/backend/target` や `/workspace/frontend/node_modules` といった共有ボリュームへの書き込み権限エラーが発生することがあります。その場合、一時的な対処として Dev Container のターミナルで `sudo chown -R vscode:vscode /path/to/volume` (例: `/workspace/backend/target`) を実行する必要があるかもしれません。根本的な原因と恒久対策については、[`docs/technical_tasks.md`](docs/technical_tasks.md) の関連タスクを参照してください。
+- **Docker コマンド実行時のパーミッションエラー (Linux ホストの場合):** Dev Container 内から `docker` や `docker compose` コマンドを実行しようとした際にパーミッションエラーが発生する場合、ホストが Linux 環境である可能性があります。その際は、`.devcontainer/devcontainer.json` ファイル内の `runArgs` セクションにある Docker Group ID (`DOCKER_GROUP_ID`) を設定する行のコメントアウトを解除し、Dev Container をリビルドしてみてください。詳細はファイル内のコメントを参照してください。macOS や Windows の Docker Desktop 環境では、この行はコメントアウトしたままにしてください。
+- **共有ボリューム/ツールチェインディレクトリの権限エラー:** Dev Container 内で `cargo check`/`build` や `npm install`、あるいは `rustup` によるツールチェイン更新などを実行した際に、`/workspace/backend/target` や `/workspace/frontend/node_modules`、`/usr/local/rustup` といった共有ボリュームやコンテナ内ディレクトリへの書き込み権限エラーが発生することがあります。これは、ホストとコンテナ間の UID/GID 不一致などが原因と考えられます。その場合、一時的な対処として Dev Container のターミナルで `sudo chown -R vscode:vscode /path/to/problematic/directory` (例: `/workspace/frontend/node_modules`, `/usr/local/rustup`) を実行する必要があるかもしれません。根本的な原因と恒久対策については、[`docs/technical_tasks.md`](docs/technical_tasks.md) の関連タスクを参照してください。
 - **`cargo clean` の失敗:** Dev Container 内で `cargo clean` を実行すると "Device or resource busy" エラーで失敗することがあります。これは共有ボリュームのマウントポイントが原因と考えられますが、`cargo build`/`check` などは問題なく動作するため、現状は許容しています。詳細は [`docs/technical_tasks.md`](docs/technical_tasks.md) の関連タスクを参照してください。
 
 ### 環境変数 (.env ファイル)

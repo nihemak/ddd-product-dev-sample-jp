@@ -48,10 +48,16 @@
       }
     }
   },
-  // コンテナ起動時にホストのDocker GIDを環境変数として渡す
+  // コンテナ起動時にホストのDocker GIDを環境変数として渡す -> Linux ホスト向け設定 (下記参照)
   "runArgs": [
-    "--env", "DOCKER_GROUP_ID=$(grep docker /etc/group | cut -d: -f3 || getent group $(id -gn) | cut -d: -f3)",
-    "--network", "myapp_network"
+    // --- Docker Group ID for Linux Hosts ---
+    // On Linux hosts, uncomment the following line to pass the host's docker group GID.
+    // This allows the container user (vscode) to access the Docker socket via the DooD feature.
+    // On macOS/Windows with Docker Desktop, this line should remain commented out as it can cause permission issues.
+    // "--env", "DOCKER_GROUP_ID=$(grep docker /etc/group | cut -d: -f3 || getent group $(id -gn) | cut -d: -f3)",
+    // -----------------------------------------
+    "--network",
+    "myapp_network" // Network setting for docker-compose services
   ],
   // Dev Container 起動時に develop を起動 (dbは別途起動)
   // 他のサービスは develop コンテナ内のターミナルから手動で起動
