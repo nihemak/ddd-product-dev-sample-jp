@@ -18,7 +18,14 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      options: [
+        'default',
+        'destructive',
+        'outline',
+        'secondary',
+        'ghost',
+        'link',
+      ],
     },
     size: {
       control: 'select',
@@ -39,22 +46,55 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
   args: {
-    children: 'Button',
-    variant: 'default',
-    size: 'default',
+    children: 'デフォルトボタン',
   },
 };
 
-export const Secondary: Story = {
+export const PrimaryAction: Story = {
   args: {
-    children: 'Secondary',
+    children: '予約を確定する',
+    variant: 'default', // shadcn/ui のデフォルトがプライマリ相当
+  },
+};
+
+export const PrimaryActionDisabled: Story = {
+  args: {
+    children: '予約を確定する',
+    variant: 'default',
+    disabled: true,
+  },
+};
+
+export const PrimaryActionLoading: Story = {
+  args: {
+    children: (
+      <>
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        予約処理中...
+      </>
+    ),
+    variant: 'default',
+    disabled: true, // ローディング中は通常 disabled
+  },
+};
+
+export const CancelAction: Story = {
+  args: {
+    children: 'キャンセル',
+    variant: 'outline', // 仕様に合わせて outline を選択
+  },
+};
+
+export const SecondaryAction: Story = {
+  args: {
+    children: '戻る',
     variant: 'secondary',
   },
 };
 
-export const Destructive: Story = {
+export const DestructiveAction: Story = {
   args: {
-    children: 'Destructive',
+    children: '削除する',
     variant: 'destructive',
   },
 };
@@ -122,4 +162,4 @@ export const Loading: Story = {
 //     size: 'icon',
 //     children: <svg>...</svg>, // Replace with your icon component
 //   },
-// }; 
+// };

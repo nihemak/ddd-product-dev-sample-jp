@@ -1,0 +1,25 @@
+{
+  // Default formatter for most languages
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Use Markdownlint specifically for Markdown files
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  // Enable format on save for consistency
+  "editor.formatOnSave": true,
+  // Prettier settings for TS/TSX (already present in devcontainer.json, but explicit here is fine)
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // Optional: Configure Markdownlint rules (example: disable rule for multiple blanks)
+  "markdownlint.config": {
+    "default": true, // Enable all rules by default
+    "MD012": false // Disable MD012: Multiple consecutive blank lines
+    // Add other rules to disable as needed, e.g., MD033 (inline HTML) if necessary
+  },
+  // Rust Analyzer settings (already present in devcontainer.json)
+  "rust-analyzer.check.command": "clippy"
+}

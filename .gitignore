@@ -8,6 +8,7 @@
 .idea/
 /.vscode/*
 !/.vscode/extensions.json
+!/.vscode/settings.json
 
 # OS generated files
 .DS_Store
