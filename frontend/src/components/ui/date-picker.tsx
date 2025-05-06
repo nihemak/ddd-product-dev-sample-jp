@@ -23,7 +23,8 @@ export interface DatePickerProps {
   placeholder?: string; // プレースホルダーの Props を追加
 }
 
-export function DatePicker({ // Props を受け取るように変更
+export function DatePicker({
+  // Props を受け取るように変更
   value,
   onValueChange,
   disabled,
@@ -43,13 +44,17 @@ export function DatePicker({ // Props を受け取るように変更
             'w-[280px] justify-start text-left font-normal',
             !value && 'text-muted-foreground',
             // isError が true ならエラー時のスタイルを適用 (ring を利用)
-            isError && 'ring-2 ring-destructive ring-offset-2'
+            isError && 'ring-destructive ring-2 ring-offset-2',
           )}
           aria-invalid={isError} // アクセシビリティのために追加
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {/* format 関数に locale を指定 */}
-          {value ? format(value, 'PPP', { locale: ja }) : <span>{placeholder}</span>}
+          {value ? (
+            format(value, 'PPP', { locale: ja })
+          ) : (
+            <span>{placeholder}</span>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -64,4 +69,4 @@ export function DatePicker({ // Props を受け取るように変更
       </PopoverContent>
     </Popover>
   );
-} 
+}
