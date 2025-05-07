@@ -1,0 +1,71 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Storybook と Next.js: 設定に関する注意点
+
+このルールは、本プロジェクトで Storybook と Next.js を使用する際の一般的な設定箇所とトラブルシューティングのヒントを概説します。
+
+## 主要な設定ファイル
+- **Next.js 設定**: [`frontend/next.config.mjs`](mdc:frontend/next.config.mjs) (または `.js`/`.ts`)
+- **Storybook メイン設定**: [`frontend/.storybook/main.ts`](mdc:frontend/.storybook/main.ts)
+- **Tailwind 設定**: [`frontend/tailwind.config.ts`](mdc:frontend/tailwind.config.ts)
+- **PostCSS 設定**: [`frontend/postcss.config.mjs`](mdc:frontend/postcss.config.mjs)
+
+## 一般的な問題と解決策
+
+### 1. Storybook ビルド中の `next.config.mjs` 構文エラー
+   - **問題**: Storybook のビルドが `SyntaxError: Unexpected token '{'` のようなエラーで失敗する。これは Node.js の ESM モジュール読み込みに起因することが多い。
+   - **原因**: [`frontend/next.config.mjs`](mdc:frontend/next.config.mjs) が `.mjs` 拡張子でありながら TypeScript 構文 (例: `import type`, 型注釈) を使用している可能性がある。
+   - **解決策**: 
+     - [`frontend/next.config.mjs`](mdc:frontend/next.config.mjs) がプレーンな JavaScript (ESM) 構文を使用するようにする。型ヒントは必要であれば JSDoc コメントで提供可能。
+       ```javascript
+       // frontend/next.config.mjs の例
+       /** @type {import('next').NextConfig} */
+       const nextConfig = {
+         /* config options here */
+       };
+       export default nextConfig;
+       ```
+     - または、`next.config.ts` にリネームし、`tsconfig.json` がそれを正しく扱えるように設定する。
+
+### 2. `React.forwardRef` 警告とコンポーネントのインタラクション問題
+   - **問題**: DatePicker のようなコンポーネントとインタラクションする際に、ブラウザコンソールに `Warning: Function components cannot be given refs. Did you mean to use React.forwardRef()?` と表示され、UI要素が期待通りに機能しないことがある (例: ポップオーバーが開かない)。
+   - **原因**: `ref` を渡す必要がある別のコンポーネント (例: Radix UI の `PopoverTrigger`) 内で使用されているコンポーネント (多くは `shadcn/ui` の `Button` など) が、`React.forwardRef` で正しくラップされていない。
+   - **解決策**: 
+     - 警告に記載されているコンポーネントを特定する (例: [`frontend/src/components/ui/button.tsx`](mdc:frontend/src/components/ui/button.tsx) 内の `Button`)。
+     - このコンポーネントが `React.forwardRef` を使用して `ref` を正しく受け取り、基になる DOM 要素または `Slot` に転送していることを確認する。
+       ```typescript
+       // frontend/src/components/ui/button.tsx の例
+       import * as React from "react"
+       import { Slot } from "@radix-ui/react-slot"
+       // ... 他のインポートと cva セットアップ ...
+
+       export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> /*, ...*/ {
+         asChild?: boolean
+       }
+
+       const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+         ({ /* props */ }, ref) => {
+           const Comp = asChild ? Slot : "button"
+           return (
+             <Comp
+               // ... 他の props
+               ref={ref} 
+             />
+           )
+         }
+       )
+       Button.displayName = "Button"
+       export { Button /*, ... */ }
+       ```
+
+### 3. スタイリングの問題 (例: DatePicker)
+   - **問題**: DatePicker のようなコンポーネントが Storybook で正しくスタイリングされないことがある。特に Next.js や Tailwind CSS のバージョン変更後。
+   - **原因**: Next.js, Tailwind CSS, PostCSS, Autoprefixer, および `shadcn/ui` (またはその基になる Radix UI コンポーネント) 間のバージョン非互換性。
+   - **解決策**: 
+     - 既知の安定した組み合わせにバージョンを合わせることを検討する。このプロジェクトでは、例えば Next.js v14 と Tailwind CSS v3 に戻してこのような問題を解決した (詳細は `docs/process/iterations/2025-W19.md` のタスク6を参照)。
+     - [`frontend/tailwind.config.ts`](mdc:frontend/tailwind.config.ts) と [`frontend/postcss.config.mjs`](mdc:frontend/postcss.config.mjs) が、選択した Tailwind/PostCSS バージョンと互換性があることを確認する。
+
+設定変更後は、`storybook` サービスを再ビルド (`docker compose up -d --build storybook`) することを忘れないでください。

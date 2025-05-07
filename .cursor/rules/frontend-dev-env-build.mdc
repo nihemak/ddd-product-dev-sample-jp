@@ -1,0 +1,38 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# フロントエンド開発環境とビルドプロセス
+
+このプロジェクトでは、フロントエンド開発にDev Container（[`docker-compose.yml`](mdc:docker-compose.yml) 内の `develop` サービス）を使用します。これは [`Dockerfile.dev`](mdc:Dockerfile.dev) を用いてビルドされます。
+
+## 主要サービス
+- **`develop`**: 主要な開発コンテナ。フロントエンドの依存関係は通常ここで管理されます。
+- **`frontend`**: Next.js アプリケーションを実行します。Dockerイメージは [`frontend/Dockerfile`](mdc:frontend/Dockerfile) を用いてビルドされます。
+- **`storybook`**: Storybook を実行します。多くの場合、`frontend` サービスと同様のビルドコンテキストまたは Dockerfile を共有します。
+
+## 依存関係管理 (`npm install` 対 `npm ci`)
+
+- **初期セットアップ / 主要な依存関係の変更時**:
+    1. 必要に応じて [`frontend/package.json`](mdc:frontend/package.json) を変更します。
+    2. `frontend/package-lock.json` を削除します（存在し、競合を引き起こす可能性がある場合）。
+    3. `develop` コンテナ内で `frontend` ディレクトリ（`cd frontend`）に移動します。
+    4. `npm install` を実行し、依存関係を解決して `frontend/package-lock.json` を生成・更新します。
+- **`frontend` / `storybook` サービスのビルド時**:
+    これらのサービスは通常、Dockerfile（例: [`frontend/Dockerfile`](mdc:frontend/Dockerfile)）内で `npm ci` を使用します。`npm ci` は再現可能なビルドのために有効な `package-lock.json` に依存します。
+    したがって、これらのサービスイメージをビルドする前に `package-lock.json` が最新かつ正しい状態であることが重要です。
+
+## 依存関係問題のワークフロー
+
+`frontend` または `storybook` の Docker ビルド中に `npm ci` が失敗した場合:
+1. `develop` コンテナが実行中であることを確認します。
+2. `develop` コンテナのシェルに入ります。
+3. `/workspace/frontend` に移動します。
+4. `npm install` を試行し、エラーが発生するかどうか、および `package-lock.json` を再生成するかどうかを確認します。
+5. `npm install` からのエラーに対処します（例については `frontend-dependency-unrs-resolver.mdc` を参照）。
+6. `develop` コンテナ内での `npm install` が成功すると、新しい `package-lock.json` が作成されます。
+7. `frontend`/`storybook` サービスの再ビルドを試みます（例: `docker compose up -d --build frontend storybook`）。`npm ci` ステップは新しく生成されたロックファイルを使用するはずです。
+
+## ボリュームマウント
+フロントエンドの `node_modules` は、コンテナの再ビルド後も永続化し、`develop`、`frontend`、`storybook` サービス間で共有するために、名前付きDockerボリューム（[`docker-compose.yml`](mdc:docker-compose.yml) 内の `develop_node_modules`）を介して管理されることが多いことに注意してください。徹底的なクリーンアップが必要な場合、このボリュームを削除する必要があるかもしれません（`docker compose down -v`）。

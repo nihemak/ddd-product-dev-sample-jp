@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# フロントエンド依存関係: unrs-resolver と eslint-config-next
+
+## 問題
+
+フロントエンド開発において、`npm install` コマンド (または Docker ビルド内の `npm ci`) が `unrs-resolver` に関連するエラーで失敗することがあります。これは通常、`unrs-resolver` のために `napi-postinstall` を実行しようとした際の `Permission denied` エラー、または `napi-postinstall` のリンク先ファイルが見つからない問題として現れます。
+
+##根本原因分析
+
+`unrs-resolver` パッケージは間接的な依存関係です。依存関係の連鎖は通常以下の通りです:
+`eslint-config-next` -> `eslint-import-resolver-typescript` -> `unrs-resolver`.
+
+`unrs-resolver` はネイティブモジュール (おそらくRustベース) を含んでおり、インストールスクリプトに `napi-postinstall` を使用します。このスクリプトは Dev Container 環境 (Linux) で問題があることが示されており、ネイティブバインディングの正しいインストールまたはセットアップに失敗します。
+
+関連ファイル:
+- [`frontend/package.json`](mdc:frontend/package.json) (`eslint-config-next` の確認のため)
+- `package-lock.json` (依存ツリーの追跡のため)
+
+## 回避策 (一時的)
+
+現在の回避策は、[`frontend/package.json`](mdc:frontend/package.json) の `devDependencies` から `eslint-config-next` を削除またはコメントアウトすることです。
+これにより、`npm install` / `npm ci` が正常に完了します。
+
+## 長期的な解決策
+
+適切な解決策を調査する必要があります。これは [`docs/technical_tasks.md`](mdc:docs/technical_tasks.md) の技術的負債項目として追跡されています。考えられる解決策は以下の通りです:
+- `unrs-resolver` の問題のあるバージョンに依存しない `eslint-config-next` のバージョンを見つける。
+- Dev Container 環境で `unrs-resolver` が正しくインストールされるようにする方法を調査・対応する (例: `Dockerfile.dev` に必要なビルドツールが存在することを確認する)。
+- `eslint-config-next` または `eslint-import-resolver-typescript` の代替手段を見つける。
