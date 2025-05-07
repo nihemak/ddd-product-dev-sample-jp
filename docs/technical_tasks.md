@@ -78,6 +78,17 @@
 - [ ] chore(deps): フロントエンドの依存パッケージ(npm)のバージョンを定期的に確認・更新する #tech-debt #quality #frontend
 - [ ] chore(deps): 依存クレートのバージョンを定期的に確認・更新する #tech-debt #quality
 - [ ] chore(ci): "potentially unused queries" 警告の原因を調査し修正する #tech-debt #quality #ci
+- [x] chore(frontend): Next.js 14 / Tailwind CSS v3 へダウングレードする #tech-debt #frontend #compatibility
+  - **目的**: StorybookでのDatePicker等のスタイリング問題を解消するため、より安定し `shadcn/ui` との互換性情報が多いバージョン構成に戻す。
+  - **背景**: イテレーション 2025-W19 の Task 5 実施中に Next.js 15 + Tailwind v4 環境でスタイリングが崩れる問題が発生。Canary版対応は存在するが、安定性を優先。
+  - **作業内容**: `package.json` 編集、`node_modules` 再生成、Tailwind設定ファイル調整など。
+- [ ] chore(frontend): eslint-config-next の扱いを再検討する #tech-debt #frontend #lint
+  - **背景**: Next.js/Tailwindダウングレード時に `unrs-resolver` (間接的依存) が原因で `npm install` が失敗したため、一時的に `eslint-config-next` を無効化して回避した。
+  - **目的**: Next.jsプロジェクト向けの適切なESLint設定を再度有効にする。
+  - **対応案**:
+    - `eslint-config-next` の `unrs-resolver` に依存しないバージョンを探す/待つ。
+    - `unrs-resolver` がDevContainer(Linux)環境で正しくインストールされる方法を調査・対応する。
+    - 代替のESLint設定 (例: `eslint-plugin-react` 等の手動設定) を導入する。
 
 ## いつかやる (優先度 低)
 
