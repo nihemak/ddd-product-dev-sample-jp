@@ -44,7 +44,7 @@ export function DatePicker({
             'w-[280px] justify-start text-left font-normal',
             !value && 'text-muted-foreground',
             // isError が true ならエラー時のスタイルを適用 (ring を利用)
-            isError && 'ring-destructive ring-2 ring-offset-2',
+            isError && 'ring-2 ring-destructive ring-offset-2',
           )}
           aria-invalid={isError} // アクセシビリティのために追加
         >
@@ -57,7 +57,7 @@ export function DatePicker({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent className="w-auto border bg-popover">
         <Calendar
           mode="single"
           locale={ja} // Calendar コンポーネントに locale を指定

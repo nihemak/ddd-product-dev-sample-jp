@@ -89,6 +89,19 @@
     - `eslint-config-next` の `unrs-resolver` に依存しないバージョンを探す/待つ。
     - `unrs-resolver` がDevContainer(Linux)環境で正しくインストールされる方法を調査・対応する。
     - 代替のESLint設定 (例: `eslint-plugin-react` 等の手動設定) を導入する。
+- [ ] fix(frontend): Storybook/アプリで shadcn/ui コンポーネントのスタイルが正しく適用されない問題を調査・修正する #tech-debt #frontend #ui-styling
+  - **現象**:
+    - `DatePicker` のカレンダーや `Select` のドロップダウンで背景が透過してしまう。
+    - その他、コンポーネントの枠線や背景色が意図通りに表示されない場合がある。
+  - **原因(推測)**:
+    - Tailwind CSS の設定またはビルドプロセスの不備。
+    - グローバルなCSSの競合、詳細度の問題。
+    - Next.js または Storybook 環境における特有のスタイル適用の問題。
+    - 依存パッケージ間のバージョン不整合。
+  - **対応方針(検討)**:
+    - ブラウザ開発者ツールでの詳細なスタイル調査。
+    - Tailwind CSS, PostCSS, Next.js, Storybook の設定ファイルの再確認と修正。
+    - 必要であれば、フロントエンド環境のクリーンな状態からの再構築（Next.js, Tailwind, shadcn/ui, Storybook の再セットアップ）。
 
 ## いつかやる (優先度 低)
 
