@@ -31,6 +31,12 @@ alwaysApply: true
 *   **Application層テスト**: モック（例: リポジトリトレイトに対する `mockall`）を使用してユースケースをテストします。詳細は [ADR 0002](mdc:docs/architecture/adr/0002-use-mockall-for-testing.md) を参照してください。
 *   **テスト記述**: テストケースの説明は日本語で記述します。
 *   **テスト実行**: `docker compose exec backend cargo test` を使用します。
+*   **フロントエンド ユニット/コンポーネントテスト**:
+    *   戦略: Vitest + React Testing Library (RTL) を主軸とし、Storybook Interaction Tests を補完的に使用します。
+    *   詳細は [ADR 0020: フロントエンドのユニットテスト戦略・ツールの選定](mdc:docs/architecture/adr/0020-use-vitest-rtl-storybook-for-frontend-unit-testing.md) を参照してください。
+*   **フロントエンド E2Eテスト**:
+    *   戦略: Playwright を使用し、主要なユーザージャーニーのテストに限定します。CIではスケジュール実行を基本とします。
+    *   詳細は [ADR 0021: フロントエンドのE2Eテスト戦略・ツールの選定](mdc:docs/architecture/adr/0021-use-playwright-for-frontend-e2e-testing.md) を参照してください。
 
 ## コミット
 

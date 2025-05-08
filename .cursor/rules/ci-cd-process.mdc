@@ -1,5 +1,5 @@
 ---
-description: 
+description:         プロジェクトのCI/CDパイプライン構成、ビルド、テスト、デプロイメントのプロセス、および関連ツールに関する情報。
 globs: 
 alwaysApply: false
 ---
@@ -21,14 +21,3 @@ alwaysApply: false
     *   `cargo registry/index`: `Cargo.lock` ベース。
     *   `cargo build target`: `Cargo.lock` ベース。
     *   `sqlx-cli`: バージョン (`0.7.4`) ベース。
-
-## 開発プロセス (イテレーション)
-
-*   **期間:** 1週間 (目安: 日曜開始、土曜終了)
-*   **計画・管理:** 各イテレーションの計画、レビュー、振り返りは `docs/process/iterations/` 配下の Markdown ファイル ([例: 2025-W18.md](mdc:docs/process/iterations/2025-W18.md)) で管理します。
-*   **計画インプット:**
-    *   技術タスク: [`docs/technical_tasks.md`](mdc:docs/technical_tasks.md)
-    *   ユーザーストーリー: [`docs/requirements/user_story_mapping.md`](mdc:docs/requirements/user_story_mapping.md)
-    *   ロードマップ: [`docs/product/roadmap.md`](mdc:docs/product/roadmap.md)
-*   **主要ガイドライン:** [`docs/PRODUCT_DEVELOPMENT_GUIDE.md`](mdc:docs/PRODUCT_DEVELOPMENT_GUIDE.md), [`docs/process/iteration_planning.md`](mdc:docs/process/iteration_planning.md)
-*   **完了の定義 (DoD):** コード実装、テストパス (CI含む)、Lintチェック、関連ドキュメント更新など ([`iteration_planning.md`](mdc:docs/process/iteration_planning.md) 参照)。

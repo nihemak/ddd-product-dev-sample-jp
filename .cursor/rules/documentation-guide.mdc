@@ -1,5 +1,5 @@
 ---
-description: 
+description:         プロジェクト内ドキュメント（設計書、仕様書、README等）の作成規約、スタイルガイド、推奨フォーマット、管理方法に関する指針。
 globs: 
 alwaysApply: false
 ---

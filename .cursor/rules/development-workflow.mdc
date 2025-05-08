@@ -1,5 +1,5 @@
 ---
-description: 
+description:         プロジェクトにおける開発全体のワークフロー、ブランチ戦略、コードレビュープロセス、タスク管理方法に関する基本方針。
 globs: 
 alwaysApply: false
 ---
@@ -10,10 +10,11 @@ alwaysApply: false
 ## セットアップ
 
 1.  Docker と Docker Compose がインストールされていることを確認してください。
-2.  `.env.sample` を `.env` にコピーし、必要に応じて `DATABASE_URL` を設定します。
-    ```bash
-    cp .env.sample .env
-    ```
+2.  <!-- `.env.sample` を `.env` にコピーし、必要に応じて `DATABASE_URL` を設定します。 -->
+    <!-- 現在のプロジェクトでは `.env` ファイルは必須ではなく、DB接続情報等は `docker-compose.yml` やスクリプトで管理されています ([README.md](mdc:README.md) 参照)。 -->
+    <!-- ```bash -->
+    <!-- cp .env.sample .env -->
+    <!-- ``` -->
 
 ## アプリケーションの実行
 
