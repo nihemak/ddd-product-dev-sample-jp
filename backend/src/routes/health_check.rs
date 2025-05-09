@@ -1,6 +1,8 @@
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
+use axum::Json;
+use serde_json;
 use std::sync::Arc;
 
 use crate::application::プレゼント予約サービス;
@@ -26,11 +28,14 @@ pub async fn health_check(
     match reservation_service.check_health().await {
         Ok(_) => {
             tracing::debug!("Health check successful.");
-            StatusCode::OK
+            (StatusCode::OK, Json(serde_json::json!({"status": "OK"})))
         }
         Err(e) => {
             tracing::error!("Health check failed: {:?}", e);
-            StatusCode::SERVICE_UNAVAILABLE
+            (
+                StatusCode::SERVICE_UNAVAILABLE,
+                Json(serde_json::json!({ "error": e.to_string() })),
+            )
         }
     }
 }

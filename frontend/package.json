@@ -10,13 +10,15 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\" --ignore-path .prettierignore",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "generate:api": "openapi --input http://backend:3000/api-docs/openapi.json --output ./src/lib/api/generated --client axios"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.6",
     "@radix-ui/react-popover": "^1.1.11",
     "@radix-ui/react-select": "^2.2.4",
     "@radix-ui/react-slot": "^1.2.2",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -26,6 +28,7 @@
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
+    "@tanstack/react-query": "^5.51.1",
     "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -48,6 +51,7 @@
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-storybook": "^0.12.0",
+    "openapi-typescript-codegen": "^0.29.0",
     "playwright": "^1.52.0",
     "postcss": "^8.4.0",
     "prettier": "^3.5.3",

@@ -6,6 +6,7 @@ use axum::{routing::get, Router};
 use dotenvy::dotenv;
 use sqlx::postgres::PgPoolOptions;
 use std::{env, net::SocketAddr, sync::Arc};
+use tower_http::cors::CorsLayer;
 use tower_http::trace::{DefaultMakeSpan, TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use utoipa::OpenApi;
@@ -32,7 +33,7 @@ use ddd_sample_jp::{
         (name = "Health", description = "Health check endpoint")
     ),
     servers(
-        (url = "/api", description = "Local server")
+        (url = "http://localhost:8080/api", description = "Local development server")
     ),
 )]
 struct ApiDoc;
@@ -74,6 +75,7 @@ async fn main() -> Result<()> {
             TraceLayer::new_for_http()
                 .make_span_with(DefaultMakeSpan::default().include_headers(true)),
         )
+        .layer(CorsLayer::very_permissive())
         .with_state(reservation_service);
 
     // --- サーバーの起動 ---

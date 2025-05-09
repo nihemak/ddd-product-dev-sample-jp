@@ -11,11 +11,12 @@ anyhow = "1.0" # main関数でのエラーハンドリング簡略化のため
 tokio = { version = "1", features = ["full"] }
 sqlx = { version = "0.7.4", features = [ "runtime-tokio-native-tls", "postgres", "uuid", "chrono", "json" ] }
 serde = { version = "1.0", features = ["derive"] } # データ構造のシリアライズ/デシリアライズ (utoipaで必要)
+serde_json = "1.0" # ★ serde_json を追加
 utoipa = { version = "5", features = ["axum_extras", "chrono", "uuid"] } # アップグレード
 utoipa-swagger-ui = { version = "9", features = ["axum"] } # アップグレード
 chrono = { version = "0.4", features = ["serde"] }
 chrono-tz = "0.8"
-tower-http = { version = "0.6.2", features = ["trace"] } # 0.6 系に戻す
+tower-http = { version = "0.6.2", features = ["trace", "cors"] } # 0.6 系に戻す
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 dotenv = "0.15.0"
