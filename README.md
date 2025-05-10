@@ -121,58 +121,69 @@ graph LR
 
 ### 初回セットアップ
 
-1.  **リポジトリのクローン:**
+1. **リポジトリのクローン:**
+
     ```bash
     git clone https://github.com/nihemak/ddd-product-dev-sample-jp
     cd ddd-product-dev-sample-jp
     ```
-2.  **VS Code で開く:**
+
+2. **VS Code で開く:**
     VS Code でプロジェクトフォルダ (`ddd-product-dev-sample-jp`) を開きます。
-3.  **Dev Container で開く:**
+3. **Dev Container で開く:**
     VS Code 右下の通知、またはコマンドパレット (Cmd/Ctrl+Shift+P) で `Dev Containers: Reopen in Container` を選択し、Dev Container 環境をビルド・起動します。
     (初回ビルドには時間がかかる場合があります)
 
 ### 日常的な開発フロー
 
-1.  **Dev Container の起動:** VS Code でプロジェクトを開くと、自動的に Dev Container が起動します。
-2.  **開発用サービスの起動:** Dev Container 内の VS Code ターミナルで、必要なサービスを起動します。
+1. **Dev Container の起動:** VS Code でプロジェクトを開くと、自動的に Dev Container が起動します。
+2. **開発用サービスの起動:** Dev Container 内の VS Code ターミナルで、必要なサービスを起動します。
+
     ```bash
     # データベース、バックエンド、フロントエンド、Storybook を起動
     docker compose up -d db backend frontend storybook
     ```
-3.  **データベースマイグレーション (初回またはスキーマ変更時):**
+
+3. **データベースマイグレーション (初回またはスキーマ変更時):**
     `db` サービスが起動している状態で、以下のスクリプトを実行してデータベースのテーブルを作成・更新します。
+
     ```bash
     # 実行権限を付与 (初回のみ)
     chmod +x migrate-db.sh
     # マイグレーション実行
     ./migrate-db.sh
     ```
-4.  **SQLx オフラインデータの準備 (SQL クエリ変更時):**
+
+4. **SQLx オフラインデータの準備 (SQL クエリ変更時):**
     バックエンドの Rust コード内で `sqlx::query!` マクロを使用する SQL を変更した場合、`rust-analyzer` のチェック用にオフラインデータを更新する必要があります。
     `db` サービスが起動している状態で、以下のスクリプトを実行します。
+
     ```bash
     # 実行権限を付与 (初回のみ)
     chmod +x prepare-sqlx.sh
     # SQLx データ準備実行
     ./prepare-sqlx.sh
     ```
+
     これにより `backend/.sqlx` ディレクトリ内のデータが更新されます。変更は Git にコミットしてください。
-5.  **アプリケーションへのアクセス:**
+5. **アプリケーションへのアクセス:**
     - フロントエンド: `http://localhost:3000`
     - バックエンド API ドキュメント (Swagger UI): `http://localhost:8080/swagger-ui/`
     - Storybook: `http://localhost:6006`
-6.  **ホットリロード:**
+6. **ホットリロード:**
     - **バックエンド:** `/workspace/backend/src` 以下の Rust コードを変更すると、`backend` コンテナ内で自動で再コンパイル・再起動されます (反映にはコンパイル時間分のラグがあります)。Swagger UI などは手動でリロードが必要です。
     - **フロントエンド:** `/workspace/frontend/src` 以下のコードを変更すると、ブラウザ上で自動で変更が反映されます (HMR)。
     - **Storybook:** `/workspace/frontend/src` 以下のコンポーネントやストーリーを変更すると、ブラウザ (`localhost:6006`) 上で自動で変更が反映されます (HMR)。
-7.  **ログの確認:**
+7. **ログの確認:**
+
     ```bash
     docker compose logs -f backend
     docker compose logs -f frontend
     # 他のサービスも同様
     ```
-8.  **サービスの停止:**
+
+8. **サービスの停止:**
+
     ```bash
     docker compose down
     # または docker compose stop <サービス名>
@@ -232,6 +243,16 @@ docker compose exec backend cargo test
 │   ├── Dockerfile      # フロントエンド用 Dockerfile
 │   ├── package.json    # 依存関係、スクリプト等
 │   └── src/            # ソースコード (App Router ベース)
+│       ├── app/        # Next.js App Router (ページ、レイアウト)
+│       ├── components/ # UIコンポーネント (汎用、機能別)
+│       │   ├── features/ # 特定機能に関連するコンポーネント群 (例: HealthCheck)
+│       │   └── ui/     # 汎用的なUI部品 (shadcn/ui等)
+│       ├── hooks/      # カスタム Reactフック
+│       ├── lib/        # ライブラリ、ユーティリティ (APIクライアント等)
+│       │   └── api/
+│       │       └── generated/ # OpenAPIから自動生成されたAPIクライアントと型定義
+│       ├── providers/  # React Context Provider等
+│       └── styles/     # グローバルCSS等
 ├── docs/               # ドキュメントルート
 │   ├── product/        # プロダクト定義
 │   ├── requirements/   # 要求/仕様
@@ -245,12 +266,12 @@ docker compose exec backend cargo test
 
 このサンプルプロジェクトは、以下の複数の目的を持っています。
 
-1.  **Rust による実践的な DDD の実装例:**
+1. **Rust による実践的な DDD の実装例:**
 
     - Rust を用いてドメイン駆動設計 (DDD) の原則（特に日本語ユビキタス言語、オニオンアーキテクチャ）を適用する具体的な方法を示すこと。
     - 関数型プログラミングのスタイル（純粋関数中心のロジック、Railway Oriented Programming によるエラー処理）を Rust で実践する例を示すこと。
 
-2.  **軽量なプロダクト開発プロセスの提示:**
+2. **軽量なプロダクト開発プロセスの提示:**
     - プロダクトの「Why」（ビジョン、戦略）から「What」（要求定義）、そして「How」（設計、実装）までを、ドキュメント（Markdown, Mermaid 等）を活用して一貫して繋げる、軽量な開発プロセスの一例を示すこと。
     - DDD のプラクティス（ユビキタス言語、ドメインモデリング）を、技術実装だけでなく要求定義やプロダクト定義の段階から活用するアプローチを示すこと。
 

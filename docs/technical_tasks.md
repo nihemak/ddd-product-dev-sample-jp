@@ -34,15 +34,11 @@
 - [x] chore(ci): backend ディレクトリ配下の変更時のみ CI を実行するようトリガーを最適化する #ci-cd #monorepo
 - [ ] chore(devops): コンテナ起動時に DB マイグレーションを自動実行する仕組みを検討・導入する #dev-env #db #docker
 - [x] chore(devops): Dev Container 内から Docker Compose を操作可能にする (Docker Socket マウント検討) #dev-env #docker #ux
-- [ ] chore(dev-env): Dev Container 内共有ボリューム (`backend_target`, `develop_node_modules`) の権限問題を調査し恒久対策を行う #dev-env #docker #ux #tech-debt
-  - **現象**: Dev Container 内で `cargo check`, `rust-analyzer`, または `npm install` 等を実行すると、共有ボリューム (`/workspace/backend/target` や `/workspace/frontend/node_modules`) への書き込み権限エラーが発生する場合がある。
-  - **原因(推測)**: ホスト OS (macOS 等) とコンテナ (Linux) 間でのユーザー ID/グループ ID の不一致、または Docker のボリュームマウント時の権限設定。
-  - **一時的ワークアラウンド**: エラー発生時に Dev Container 内のターミナルで `sudo chown -R vscode:vscode /workspace/backend/target` や `sudo chown -R vscode:vscode /workspace/frontend/node_modules` を実行する。
-  - **恒久対策(検討)**: Dockerfile 内でのユーザー/グループ作成と権限設定、`docker-compose.yml` の `user` や `group_add` ディレクティブ、ボリュームマウントオプション (`:delegated` など) の見直し。
-- [ ] chore(dev-env): Dev Container 内での `cargo clean` 失敗問題を調査する (許容中) #dev-env #docker #ux #tech-debt
-  - **現象**: Dev Container 内で `cargo clean` を実行すると "Device or resource busy" エラーで失敗する。
-  - **原因(推測)**: `backend/target` が共有ボリュームのマウントポイントであるため、`cargo clean` がマウントポイント自体を削除しようとして失敗する。
-  - **現状の判断**: `cargo build`/`check` は問題なく実行できるため、当面は `cargo clean` の失敗を許容する。根本解決が難しい場合は、特定のサブディレクトリのみ削除するスクリプト等で代替することも検討。
+- [ ] chore(dev-env): DevContainer 及び Docker-out-of-Docker (DooD) 環境の安定性とパフォーマンスを向上させる (権限問題、cargo clean 問題含む) #dev-env #docker #ux #tech-debt #performance
+  - **現象**:
+    - Dev Container 内で `cargo check`, `rust-analyzer`, または `npm install` 等を実行すると、共有ボリューム (`/workspace/backend/target` や `/workspace/frontend/node_modules`) への書き込み権限エラーが発生する場合がある。
+    - Dev Container 内で `cargo clean` を実行すると "Device or resource busy" エラーで失敗する。
+    - Docker Compose でのサービス起動・停止やログ表示が遅い、または不安定になることがある。
 
 ## 開発プロセス・ドキュメント (Process & Docs)
 
@@ -51,8 +47,8 @@
 - [ ] docs(ui): 主要画面の仕様（画面定義・遷移）をドキュメント化する (Storybook+MD) #documentation #ui
 - [x] docs(process): 開発サイクルの計画・管理方法を定義する (イテレーション計画ドキュメント?) #process
 - [x] docs(process): テーブル設計（データモデリング）の記録方法を決定する #process
-- [ ] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Jest/RTL?) #testing #frontend #process
-- [ ] docs(testing): フロントエンドの E2E テスト戦略・ツールを選定する (Playwright/Cypress?) #testing #frontend #process
+- [x] docs(testing): フロントエンドのユニットテスト戦略・ツールを決定する (Vitest/RTL + Storybook Interaction Tests) #testing #frontend #process
+- [x] docs(testing): フロントエンドの E2E テスト戦略・ツールを選定する (Playwright) #testing #frontend #process
 - [ ] docs(testing): バックエンドの結合テスト戦略を決定する #testing #backend #process
 - [x] docs(adr): ADR 0001 (オニオンアーキテクチャ) の内容を現状に合わせて見直す #documentation
 - [x] docs(adr): ADR 0002 (mockall 採用) の内容を現状に合わせて見直す #documentation
@@ -102,6 +98,11 @@
     - ブラウザ開発者ツールでの詳細なスタイル調査。
     - Tailwind CSS, PostCSS, Next.js, Storybook の設定ファイルの再確認と修正。
     - 必要であれば、フロントエンド環境のクリーンな状態からの再構築（Next.js, Tailwind, shadcn/ui, Storybook の再セットアップ）。
+- [x] chore(frontend): APIクライアント生成ツール (openapi-typescript-codegen) を導入・設定する #frontend #api #dev-env
+- [x] chore(frontend): React Query を導入・設定し、非同期状態管理の基本を整備する #frontend #state-management #dev-env
+- [ ] feat(testing): フロントエンドテストツール (Vitest, RTL, Storybook Interaction Tests, Playwright) の導入と初期テスト作成 #testing #frontend #dev-env #e2e
+- [ ] feat(frontend): Storybook Interaction Tests をセットアップし、UIコンポーネントのインタラクションテストを作成する #testing #frontend #storybook #dev-env
+- [ ] feat(frontend): Playwright をセットアップし、基本的なE2Eテスト（例: ヘルスチェックページ表示）を作成する #testing #frontend #e2e #dev-env
 
 ## いつかやる (優先度 低)
 
@@ -111,3 +112,5 @@
 - [ ] refactor(db): イミュータブルデータモデリング（履歴テーブル等）の導入を検討・実施する (Ref: ADR 0018) #tech-debt #architecture
 - [ ] chore(frontend): Shadcn/ui (Tailwind CSS, Radix UI) をセットアップする (React 18 を使用中) #frontend #dev-env #ui
 - [ ] chore(frontend): Shadcn/ui が React 19 に対応したら React を 19 にアップグレードする #frontend #deps #tech-debt
+- [ ] chore(dev-env): Markdown/Rust の lint/format 環境を整備する (Husky 等の git hooks 導入検討) #dev-env #linting #quality
+- [ ] chore(frontend): フロントエンド開発環境の全体的なクリーンアップを実施する (依存関係整理、不要な設定削除など) #frontend #dev-env #tech-debt
