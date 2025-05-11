@@ -1,0 +1,10 @@
+# Dependencies
+node_modules
+
+# Build artifacts
+.next
+out
+
+# Other
+.env*
+coverage 
