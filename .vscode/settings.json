@@ -21,5 +21,12 @@
     // Add other rules to disable as needed, e.g., MD033 (inline HTML) if necessary
   },
   // Rust Analyzer settings (already present in devcontainer.json)
-  "rust-analyzer.check.command": "clippy"
+  "rust-analyzer.check.command": "clippy",
+  // Tailwind CSS specific settings
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false
 }

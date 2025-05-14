@@ -1,9 +1,7 @@
 {
   "name": "DDD Product Dev Sample JP",
   // docker-compose.yml を利用する設定
-  "dockerComposeFile": [
-    "../docker-compose.yml"
-  ], // devcontainer.json から見た相対パス
+  "dockerComposeFile": ["../docker-compose.yml"], // devcontainer.json から見た相対パス
   // 新しく追加した develop サービスを指定
   "service": "develop",
   // develop サービス内のマウントポイントを指定
@@ -31,7 +29,8 @@
         "DavidAnson.vscode-markdownlint",
         "ms-azuretools.vscode-docker",
         "eamodio.gitlens",
-        "bungcip.better-toml"
+        "bungcip.better-toml",
+        "bradlc.vscode-tailwindcss"
       ],
       "settings": {
         // コンテナ内のターミナル設定など
@@ -62,9 +61,7 @@
   ],
   // Dev Container 起動時に develop を起動 (dbは別途起動)
   // 他のサービスは develop コンテナ内のターミナルから手動で起動
-  "runServices": [
-    "develop"
-  ],
+  "runServices": ["develop"],
   // ポートフォワーディング設定を削除 (DB依存削除のため)
   // "forwardPorts": [
   //   "5433:5432"
@@ -79,7 +76,7 @@
   "remoteUser": "vscode",
   // --- ★ 接続するネットワークを指定（改善版） ---
   "initializeCommand": "docker network inspect myapp_network >/dev/null 2>&1 || docker network create myapp_network", // 存在しない場合のみ作成
-  // --- ★ remoteEnv を追加 --- 
+  // --- ★ remoteEnv を追加 ---
   "remoteEnv": {
     "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
   }

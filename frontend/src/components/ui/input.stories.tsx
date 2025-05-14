@@ -43,7 +43,7 @@ export const ProductNameInput: Story = {
     <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label htmlFor="product-name">プレゼント情報 (品名/内容)</Label>
       <Input {...args} id="product-name" />
-      <p className="text-muted-foreground text-sm">
+      <p className="text-sm text-muted-foreground">
         運営がプレゼントを識別できる内容を入力してください。
       </p>
     </div>

@@ -60,7 +60,7 @@ const PresentReservationShippingProxyPageLayout = () => {
             発送代行プレゼント情報 (品名/内容)
           </Label>
           <Input id="product-name" placeholder="例: 手編みのマフラー" />
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="mt-1 text-sm text-muted-foreground">
             運営がプレゼントを識別できる内容を入力してください。
           </p>
         </div>

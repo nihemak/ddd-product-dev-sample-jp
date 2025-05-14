@@ -14,7 +14,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-// Props 型定義を更新
+// Props 型定義を元に戻す
 export interface DatePickerProps {
   value?: Date;
   onValueChange?: (date: Date | undefined) => void;
@@ -24,20 +24,20 @@ export interface DatePickerProps {
 }
 
 export function DatePicker({
-  // Props を受け取るように変更
+  // Props を再度受け取るように変更
   value,
   onValueChange,
   disabled,
   isError,
-  placeholder = '日付を選択', // デフォルトプレースホルダーを日本語に変更
+  placeholder = '日付を選択', // デフォルトプレースホルダーを日本語に戻す
 }: DatePickerProps) {
-  // 内部状態は持たず、Props で制御する
-  // const [date, setDate] = React.useState<Date>();
+  // 内部状態は持たない形に戻す
+  // const [date, setDate] = React.useState<Date | undefined>(undefined);
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        {/* isError に応じてスタイルを変更 */}
+        {/* isError に応じたスタイルを元に戻す */}
         <Button
           variant={'outline'}
           className={cn(
@@ -57,6 +57,7 @@ export function DatePicker({
           )}
         </Button>
       </PopoverTrigger>
+      {/* PopoverContent の className を元の状態に戻す */}
       <PopoverContent className="w-auto border bg-popover">
         <Calendar
           mode="single"
@@ -64,7 +65,7 @@ export function DatePicker({
           selected={value} // value Prop を使用
           onSelect={onValueChange} // onValueChange Prop を使用
           disabled={disabled} // disabled Prop を使用
-          initialFocus
+          autoFocus // autoFocus に戻す
         />
       </PopoverContent>
     </Popover>
