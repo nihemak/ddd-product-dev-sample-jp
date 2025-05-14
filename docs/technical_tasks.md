@@ -87,17 +87,22 @@
     - 代替のESLint設定 (例: `eslint-plugin-react` 等の手動設定) を導入する。
 - [ ] fix(frontend): Storybook/アプリで shadcn/ui コンポーネントのスタイルが正しく適用されない問題を調査・修正する #tech-debt #frontend #ui-styling
   - **現象**:
-    - `DatePicker` のカレンダーや `Select` のドロップダウンで背景が透過してしまう。
-    - その他、コンポーネントの枠線や背景色が意図通りに表示されない場合がある。
+    - その他、コンポーネントの枠線や背景色が意図通りに表示されない場合がある。(DatePickerの件は別途記載あり)
+    - `DatePicker` の年月表示が中央揃えにならない、月変更ボタンが左に寄る、曜日ヘッダーとカレンダー本体の配置が崩れる問題も発生していた (2025-W20 イテレーションで詳細調査、暫定対応済み)。
   - **原因(推測)**:
     - Tailwind CSS の設定またはビルドプロセスの不備。
     - グローバルなCSSの競合、詳細度の問題。
     - Next.js または Storybook 環境における特有のスタイル適用の問題。
     - 依存パッケージ間のバージョン不整合。
+    - `DatePicker` に関しては、`react-day-picker` が生成するHTML構造と、`classNames` prop経由で適用しようとしたTailwind CSSクラス（shadcn/uiデフォルトやカスタムスタイル）との間に不整合があった。特に、ナビゲーションボタンとキャプション（年月表示）のコンテナ構造が想定と異なっていたことが判明 (2025-W20 イテレーションでの調査結果)。
   - **対応方針(検討)**:
     - ブラウザ開発者ツールでの詳細なスタイル調査。
     - Tailwind CSS, PostCSS, Next.js, Storybook の設定ファイルの再確認と修正。
     - 必要であれば、フロントエンド環境のクリーンな状態からの再構築（Next.js, Tailwind, shadcn/ui, Storybook の再セットアップ）。
+    - `DatePicker` に関する2025-W20イテレーションでの暫定対応: `frontend/src/components/ui/calendar.tsx` 内の `DayPicker` コンポーネントの `classNames` propを空オブジェクト `{}` に設定。これにより、`react-day-picker/dist/style.css` によるデフォルトの基本的なスタイリングが適用され、デザインの洗練度は低いものの、主要コンポーネントの配置（年月とボタンが上部、曜日と日付の整合性）は確保された。
+    - `DatePicker` の将来的な改善点:
+      - `shadcn/ui` の `Calendar` コンポーネントとして期待される、より洗練されたデザインとTailwind CSSによるスタイリングに戻すための再調査と修正。
+      - `react-day-picker` のバージョンや `shadcn/ui` の `Calendar` コンポーネントの更新状況を注視し、公式の推奨するHTML構造や `classNames` の使い方に追従する。
 - [x] chore(frontend): APIクライアント生成ツール (openapi-typescript-codegen) を導入・設定する #frontend #api #dev-env
 - [x] chore(frontend): React Query を導入・設定し、非同期状態管理の基本を整備する #frontend #state-management #dev-env
 - [ ] feat(testing): フロントエンドテストツール (Vitest, RTL, Storybook Interaction Tests, Playwright) の導入と初期テスト作成 #testing #frontend #dev-env #e2e

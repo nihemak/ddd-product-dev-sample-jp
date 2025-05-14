@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
-import { GeistSans, GeistMono } from 'geist/font';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 import { QueryClientProviderComponent } from '@/providers/QueryClientProviderComponent';
+import { ThemeProvider } from '@/components/providers/theme-provider';
 
 const geistSans = GeistSans;
 
@@ -18,11 +20,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryClientProviderComponent>{children}</QueryClientProviderComponent>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryClientProviderComponent>
+            {children}
+          </QueryClientProviderComponent>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -31,7 +31,8 @@ const meta: Meta<typeof DatePicker> = {
       control: 'text',
     },
   },
-  args: { // デフォルトの args (モック関数など)
+  args: {
+    // デフォルトの args (モック関数など)
     onValueChange: fn(),
     isError: false,
     placeholder: '日付を選択', // デフォルトプレースホルダーを日本語に合わせる
@@ -87,4 +88,4 @@ export const WithError: Story = {
 //   args: {
 //     error: true,
 //   },
-// }; 
+// };
