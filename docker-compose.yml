@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # develop サービスを追加
   develop:
@@ -130,12 +128,14 @@ volumes:
   frontend_next:
   develop_node_modules: # develop 用 node_modules ボリューム
     name: myapp_shared_node_modules # ★ プロジェクト名プレフィックスがつかない固定名を指定
+    external: true # <--- 追加
   backend_target: # backend 用 target ボリューム
     name: myapp_shared_backend_target # ★ 固定名を追加
-# frontend_node_modules: # ← この行を削除 
+    external: true # <--- 追加
+# frontend_node_modules: # ← この行を削除
 
 # ★ ネットワークを明示的に定義
 networks:
   default:
     name: myapp_network # 固定のネットワーク名を指定
-    external: true     # <--- ここに追加します 
+    external: true # <--- ここに追加します

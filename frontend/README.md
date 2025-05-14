@@ -117,7 +117,7 @@ frontend/
 │   ├── store/           # (状態管理ストア - React Query や Zustand 等の置き場、hooks で対応できる場合は不要)
 │   ├── styles/          # グローバルスタイル、テーマなど (globals.css)
 │   └── types/           # (グローバルな型定義 - APIクライアントや各コンポーネントで型定義する方針)
-├── .eslintrc.json       # ESLint 設定
+├── eslint.config.mjs    # ESLint 設定
 ├── .gitignore           # Git 無視リスト
 ├── .prettierignore      # Prettier 無視リスト
 ├── .prettierrc.json     # Prettier 設定
