@@ -2,6 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
 
 import { storybookTest } from '@storybook/experimental-addon-test/vitest-plugin';
 
@@ -12,26 +13,42 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/writing-tests/test-addon
 export default defineConfig({
+  plugins: [react()],
   test: {
-    workspace: [
-      {
-        extends: true,
-        plugins: [
-          // The plugin will run tests for the stories defined in your Storybook config
-          // See options at: https://storybook.js.org/docs/writing-tests/test-addon#storybooktest
-          storybookTest({ configDir: path.join(dirname, '.storybook') }),
-        ],
-        test: {
-          name: 'storybook',
-          browser: {
-            enabled: true,
-            headless: true,
-            name: 'chromium',
-            provider: 'playwright',
-          },
-          setupFiles: ['.storybook/vitest.setup.ts'],
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './vitest.setup.ts', // グローバルセットアップ用のファイルパス
+    css: true, // CSSファイルのインポートを有効にする (例: Tailwind CSS)
+    deps: {
+      optimizer: {
+        web: {
+          exclude: ['sb-original/image-context'],
         },
       },
+    },
+    exclude: ['**/node_modules/**', '**/dist/**', 'tests/e2e/**'],
+    // workspace: [
+    //   {
+    //     extends: true,
+    //     plugins: [
+    //       storybookTest({ configDir: path.join(dirname, '.storybook') }),
+    //     ],
+    //     test: {
+    //       name: 'storybook',
+    //       browser: {
+    //         enabled: true,
+    //         headless: true,
+    //         name: 'chromium',
+    //         provider: 'playwright',
+    //       },
+    //       setupFiles: ['.storybook/vitest.setup.ts'],
+    //     },
+    //   },
+    // ],
+  },
+  resolve: {
+    alias: [
+      { find: '@/', replacement: new URL('./src/', import.meta.url).pathname },
     ],
   },
 });

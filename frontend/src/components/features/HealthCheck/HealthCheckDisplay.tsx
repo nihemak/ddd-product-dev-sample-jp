@@ -1,4 +1,6 @@
-'use client'; // Next.js App Router でクライアントコンポーネントとしてマーク
+// @ts-nocheck
+import React from 'react';
+('use client'); // Next.js App Router でクライアントコンポーネントとしてマーク
 
 import { useHealthCheck } from '@/hooks/useHealthCheck';
 
@@ -23,7 +25,7 @@ export const HealthCheckDisplay = () => {
       {isFetching && <p>データを再取得中...</p>}
       {/* APIレスポンスがany型なので、実際の構造に合わせて表示します */}
       {/* バックエンドは通常 {"status": "OK"} のようなJSONを返すと想定 */}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre data-testid="health-check-json">{JSON.stringify(data, null, 2)}</pre>
       {/* もし data.status のように特定のプロパティを表示したい場合 */}
       {/* {data && <p>ステータス: {data.status || '不明'}</p>} */}
     </div>

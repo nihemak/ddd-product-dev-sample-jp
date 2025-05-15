@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Loader2 } from 'lucide-react';
+import { within, userEvent, expect } from '@storybook/test';
 
 import { Button } from './button';
 
@@ -47,6 +48,19 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: 'デフォルトボタン',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button', { name: /デフォルトボタン/i });
+
+    // ボタンがドキュメント内に存在することを確認 (基本的なアサーション)
+    await expect(button).toBeInTheDocument();
+
+    // ボタンをクリック
+    await userEvent.click(button);
+
+    // クリック後の状態変化をアサートすることも可能 (例: ボタンのテキストが変わる、など)
+    // この例では単純なクリックのみ
   },
 };
 

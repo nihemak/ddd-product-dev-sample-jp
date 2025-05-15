@@ -147,3 +147,43 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## テスト
+
+このフロントエンドプロジェクトでは、以下のテストを実行できます。
+
+### ユニット/コンポーネントテスト (Vitest + React Testing Library)
+
+Reactコンポーネントやカスタムフックの単体テストおよび結合テストには、VitestとReact Testing Libraryを使用しています。
+
+- **設定ファイル**:
+  - `vitest.config.ts`: Vitestの設定ファイルです。テスト環境、カバレッジ設定などが含まれます。
+  - `vitest.setup.ts`: Jest DOMのようなカスタムマッチャーをグローバルにセットアップします。
+- **テストファイルの配置**:
+  テスト対象となるコンポーネントやフックと同じディレクトリ階層に `*.test.tsx` (または `*.test.ts`) という命名規則で配置します。
+- **実行コマンド**:
+  - `npm run test:unit`: 全てのユニット/コンポーネントテストを実行します。
+  - `npm run test:unit:ui`: Vitest UI を起動し、ブラウザ上でインタラクティブにテストの実行やデバッグができます。
+  - `npm run test:unit:coverage`: テストを実行し、カバレッジレポートをコンソールと `coverage/` ディレクトリに出力します。
+  - `npm run test:unit:ci`: CI環境でユニット/コンポーネントテストを実行するためのコマンドです（カバレッジレポート生成を含む）。
+
+### Storybook Interaction Tests
+
+Storybookを使用してUIコンポーネントのインタラクションをテストします。
+
+- **設定**:
+  `@storybook/test` パッケージが導入されており、各コンポーネントのストーリーファイル (`*.stories.tsx`) 内で `play` 関数を用いてインタラクションを記述します。
+- **テストの実行**:
+  Storybookを起動 (`npm run storybook`) し、ブラウザで各コンポーネントの「Interactions」タブを開くとテストが実行され、結果を確認できます。
+- **CIでの実行 (注意点)**:
+  現在、Vitest経由でのStorybookインタラクションテストの自動実行（`@storybook/experimental-addon-test/vitest-plugin` を使用）は、依存関係解決の問題で一時的に無効化されています。将来的にはCIでも実行できるように改善予定です。
+
+### E2Eテスト (Playwright)
+
+エンドツーエンドテストにはPlaywrightを使用する予定です。
+
+- **現状**: セットアップ途中です。詳細はプロジェクトルートの `docs/technical_tasks.md` の関連タスクを参照してください。
+- **実行コマンド (予定)**:
+  - `npm run test:e2e`: ヘッドレスブラウザでE2Eテストを実行します。
+  - `npm run test:e2e:ui`: Playwright UI Modeを起動し、インタラクティブにテストを作成・デバッグできます。
+  - `npm run test:e2e:headed`: ヘッダー付きブラウザでE2Eテストを実行します。

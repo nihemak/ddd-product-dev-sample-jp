@@ -70,6 +70,9 @@
 - [ ] refactor(functions): 引数が多い関数をリファクタリングする (コマンドオブジェクト等, clippy::too_many_arguments) #tech-debt #architecture
 - [ ] refactor(infra): PgRepository の DB エラーマッピングを改善する (sqlx::Error -> DomainError/InfrastructureError) #tech-debt #quality #backend
 - [ ] test(infra): PgRepository のテストケースを拡充する (異常系、境界値など) #testing #quality #backend
+- [ ] chore(frontend): HealthCheckDisplay.test.tsx の Linter エラー (@typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any) を修正する #tech-debt #frontend #lint #testing
+- [ ] chore(frontend): playwright.config.ts の型定義エラーを解消する #tech-debt #quality #frontend #testing
+- [ ] chore(frontend): Vitest環境におけるパスエイリアス (@/) の型解決エラーを解消する #tech-debt #quality #frontend #testing
 - [ ] chore(deps): バックエンドの依存クレート(Rust)のバージョンを定期的に確認・更新する #tech-debt #quality #backend
 - [ ] chore(deps): フロントエンドの依存パッケージ(npm)のバージョンを定期的に確認・更新する #tech-debt #quality #frontend
 - [ ] chore(deps): 依存クレートのバージョンを定期的に確認・更新する #tech-debt #quality
@@ -107,7 +110,30 @@
 - [x] chore(frontend): React Query を導入・設定し、非同期状態管理の基本を整備する #frontend #state-management #dev-env
 - [ ] feat(testing): フロントエンドテストツール (Vitest, RTL, Storybook Interaction Tests, Playwright) の導入と初期テスト作成 #testing #frontend #dev-env #e2e
 - [ ] feat(frontend): Storybook Interaction Tests をセットアップし、UIコンポーネントのインタラクションテストを作成する #testing #frontend #storybook #dev-env
-- [ ] feat(frontend): Playwright をセットアップし、基本的なE2Eテスト（例: ヘルスチェックページ表示）を作成する #testing #frontend #e2e #dev-env
+- [ ] feat(frontend): Playwright をセットアップし、基本的なE2Eテスト（例: ヘルスチェックページ表示）を作成する #testing #frontend #e2e #dev-env #pending
+  - **現状 (2025-W20 イテレーション終了時):** セットアップ未完了。テスト実行時に `Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@playwright/test' imported from /workspace/frontend/playwright.config.ts` が発生。
+  - **背景・試行錯誤:**
+    - `frontend/playwright.config.ts` およびテストファイル (`frontend/tests/e2e/health.spec.ts`) で `@playwright/test` の型定義が見つからないLinterエラーが発生し、`// @ts-nocheck` で一時的に抑制。
+    - `playwright.config.ts` をCommonJS形式 (`require`) に変更したが `ReferenceError: require is not defined in ES module scope` が発生。
+    - 設定ファイルを `playwright.config.mjs` にリネーム（中身はESM）しても `ERR_MODULE_NOT_FOUND` は解消せず。
+  - **考えられる原因・調査ポイント:**
+    - Node.jsのモジュール解決 (ESM vs CommonJS、`frontend/package.json` の `"type": "module"` との関連)。
+    - `tsconfig.json` の `compilerOptions` (`module`, `moduleResolution` など) の設定。
+    - Playwrightが内部的に設定ファイルやテストファイルをどのようにトランスパイル/ロードしているか。
+    - Monorepo構成特有の問題の可能性。
+  - **参考情報:**
+    - [Cucumber+Playwright+Bunでフロントエンドのe2eテストを行ったメモ (Qiita)](https://qiita.com/hibohiboo/items/3b83c70abdc7e8d46d0e) - Bun + Vite + Monorepo環境でのESM/TSConfig設定の試行錯誤例。
+- [ ] chore(frontend): playwright.config.ts の型定義エラーを解消する (`feat(frontend): Playwright をセットアップし...` タスクに詳細統合) #tech-debt #quality #frontend #testing #pending
+- [ ] chore(frontend): Vitest と Storybook Interaction Test (`@storybook/experimental-addon-test/vitest-plugin`) の連携問題を解消する #tech-debt #testing #frontend #storybook #vitest
+  - **現象 (2025-W20 イテレーション時):** `vitest run` 実行時に `@storybook/experimental-nextjs-vite` 内部で `Could not resolve "sb-original/image-context"` エラーが発生する。
+  - **試したこと:**
+    - `vitest.config.ts` の `test.deps.external` に `sb-original/image-context` を追加。
+    - `vitest.config.ts` の `test.deps.optimizer.web.exclude` に `sb-original/image-context` を追加。
+  - **一時的な対処:** `vitest.config.ts` で Storybook テスト用の `workspace` 設定をコメントアウトし、Vitest による Storybook テストの実行を無効化。
+  - **調査の方向性:**
+    - `@storybook/experimental-nextjs-vite` および関連する `@storybook/*` パッケージのバージョン確認・更新。
+    - Storybook の設定ファイル (`.storybook/main.ts` 等) と `@storybook/experimental-nextjs-vite` の推奨設定との整合性確認。
+    - Storybook / Vitest の GitHub Issue 等での類似問題の検索。
 
 ## いつかやる (優先度 低)
 
