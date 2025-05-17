@@ -198,12 +198,17 @@ graph TD
 * **目的**: 設計や仕様に基づき、テストファーストで動作するコードを記述する。**コード内の命名（変数、関数、型など）はユビキタス言語に従う。**
 * **インプット**: 計画されたタスク、アーキテクチャ設計（もしあれば）、ユビキタス言語 ([`docs/domain/ubiquitous-language.md`](./domain/ubiquitous-language.md))、ドメインモデル ([`docs/domain/domain-model.md`](./domain/domain-model.md))。
 * **アクティビティ**:
-  * **Domain層**: ドメインロジックを純粋関数として実装し、単体テストで検証する。**ドメインモデルを直接的にコードに反映させる。**
-  * **Application層**: ユースケース（ストーリーに対応）を実装する。リポジトリ等の依存性はモック化し、テストする (`mockall` 活用)。
-  * **Infrastructure層**: リポジトリインターフェースなどを実装する。必要に応じて結合テストを行う。**データベースアクセスが伴う場合は、`sqlx` とマイグレーションツール (`sqlx-cli` など) を使用する。**
-* **該当コード**: `src/` 以下。
-* **テスト**: 各モジュール内の `#[cfg(test)] mod tests { ... }`。**テストケースの記述もユビキタス言語で行う。**
-* **完了の定義 (DoD)**: 実装が完了したとみなされる基準。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) の「完了の定義」を参照。**CIでのテストパスを含む。データベーススキーマの変更が伴う場合は、対応するマイグレーションファイルが作成・適用され、`docs/db/schema.sql` が更新されていること。**
+  * **Domain層 (バックエンド)**: ドメインロジックを純粋関数として実装し、単体テストで検証する。**ドメインモデルを直接的にコードに反映させる。**
+  * **Application層 (バックエンド)**: ユースケース（ストーリーに対応）を実装する。リポジトリ等の依存性はモック化し、テストする (`mockall` 活用)。
+  * **Infrastructure層 (バックエンド)**: リポジトリインターフェースなどを実装する。必要に応じて結合テストを行う。**データベースアクセスが伴う場合は、`sqlx` とマイグレーションツール (`sqlx-cli` など) を使用する。**
+  * **フロントエンド**:
+    * ユニット/コンポーネントテスト: Vitest と React Testing Library を用いて、Reactコンポーネントやカスタムフックのテストを作成する。Storybook Interaction Tests も補完的に使用する。詳細は [ADR 0020](./architecture/adr/0020-use-vitest-rtl-storybook-for-frontend-unit-testing.md) を参照。
+    * E2Eテスト: Playwright を用いて、主要なユーザージャーニーをテストする。詳細は [ADR 0021](./architecture/adr/0021-use-playwright-for-frontend-e2e-testing.md) を参照。
+* **該当コード**: `backend/src/` (バックエンド)、`frontend/src/` (フロントエンド)。
+* **テスト**:
+  * **バックエンド**: 各モジュール内の `#[cfg(test)] mod tests { ... }`。**テストケースの記述もユビキタス言語で行う。**
+  * **フロントエンド**: コンポーネントやフックに対応する `*.test.tsx` ファイルや、E2Eテスト用の `*.spec.ts` ファイルなど。テストの実行方法や詳細については [`frontend/README.md`](../frontend/README.md) を参照。
+* **完了の定義 (DoD)**: 実装が完了したとみなされる基準。詳細は [`docs/process/iteration_planning.md`](./process/iteration_planning.md) の「完了の定義」を参照。**CIでのテストパスを含む。データベーススキーマの変更が伴う場合は、対応するマイグレーションファイルが作成・適用され、`docs/db/schema.sql` が更新されていること。フロントエンドにおいては、関連するユニット/コンポーネントテスト、およびE2Eテスト（該当する場合）がパスすること。**
 
 ### 4. レビューとフィードバック
 
@@ -309,7 +314,13 @@ graph LR
   * マイグレーションファイルは `backend/migrations` ディレクトリ (仮) に保存されます。
   * **マイグレーション適用後の最新スキーマは `docs/db/schema.sql` に反映させます。**
   * ローカル開発環境やCIでマイグレーションを実行するために使用します。
-* **`cargo test`**: 実装したコードが仕様（テストケース）を満たしているかを確認します。**CI環境でも自動実行されることを目指します。** コミット前には必ずローカルでも実行します。
+* **`cargo test` (バックエンド)**: 実装したコードが仕様（テストケース）を満たしているかを確認します。**CI環境でも自動実行されることを目指します。** コミット前には必ずローカルでも実行します。
+* **`Vitest` (フロントエンド - ユニット/コンポーネントテスト)**: Reactコンポーネントやカスタムフックのテストを実行します。
+  * 実行例: `npm run test:unit` (全テスト実行), `npm run test:unit:ui` (UIモードで実行)
+  * 詳細は [`frontend/README.md`](../frontend/README.md) を参照。
+* **`Playwright` (フロントエンド - E2Eテスト)**: 主要なユーザージャーニーのエンドツーエンドテストを実行します。
+  * 実行例 (予定): `npm run test:e2e` (ヘッドレス実行), `npm run test:e2e:ui` (UIモードで実行)
+  * 詳細は [`frontend/README.md`](../frontend/README.md) および [`docs/technical_tasks.md`](./technical_tasks.md) の関連タスクを参照。
 * **`cargo fmt`**: コードスタイルを統一します。コミット前に実行します。
 * **`cargo clippy`**: 静的解析により、潜在的な問題や改善点を指摘します。定期的に実行します。
 * **`cargo doc`**: ソースコード中のドキュメントコメントからHTMLドキュメントを生成します。

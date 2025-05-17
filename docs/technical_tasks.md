@@ -110,20 +110,27 @@
 - [x] chore(frontend): React Query を導入・設定し、非同期状態管理の基本を整備する #frontend #state-management #dev-env
 - [ ] feat(testing): フロントエンドテストツール (Vitest, RTL, Storybook Interaction Tests, Playwright) の導入と初期テスト作成 #testing #frontend #dev-env #e2e
 - [ ] feat(frontend): Storybook Interaction Tests をセットアップし、UIコンポーネントのインタラクションテストを作成する #testing #frontend #storybook #dev-env
-- [ ] feat(frontend): Playwright をセットアップし、基本的なE2Eテスト（例: ヘルスチェックページ表示）を作成する #testing #frontend #e2e #dev-env #pending
-  - **現状 (2025-W20 イテレーション終了時):** セットアップ未完了。テスト実行時に `Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@playwright/test' imported from /workspace/frontend/playwright.config.ts` が発生。
-  - **背景・試行錯誤:**
+- [ ] feat(frontend): Playwright をセットアップし、基本的なE2Eテスト（例: ヘルスチェックページ表示）を作成する #testing #frontend #e2e #dev-env
+  - **サブタスク:**
+    - [x] `@playwright/test` の依存関係を `package.json` に追加する。
+    - [x] DevContainer内で `npx playwright install --with-deps` を実行し、ブラウザバイナリとOS依存関係をインストールする。
+    - [x] `playwright.config.ts` を作成・設定し、基本的なプロジェクト設定を行う。
+    - [x] ヘルスチェックページ (`/health`) を表示し、特定のテキストが存在することを確認する簡単なE2Eテスト (`*.spec.ts`) を作成する。
+    - [ ] テスト実行用のnpmスクリプト (例: `test:e2e`, `test:e2e:ui`) を `package.json` に追加する。
+    - [ ] ローカルでテストが実行でき、Playwright UI Mode (`--ui`) やTrace Viewerが利用できることを確認する。
+  - **現状 (2025-W20 イテレーション終了時):** 上記サブタスクの途中まで完了。npmスクリプトの追加とローカルでの詳細な実行確認（UI Mode, Trace Viewer）が未了。テスト実行時に `Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@playwright/test' imported from /workspace/frontend/playwright.config.ts` が発生する問題が残っている。
+  - **背景・試行錯誤 (既存の記述を維持、または必要に応じて更新):**
     - `frontend/playwright.config.ts` およびテストファイル (`frontend/tests/e2e/health.spec.ts`) で `@playwright/test` の型定義が見つからないLinterエラーが発生し、`// @ts-nocheck` で一時的に抑制。
     - `playwright.config.ts` をCommonJS形式 (`require`) に変更したが `ReferenceError: require is not defined in ES module scope` が発生。
     - 設定ファイルを `playwright.config.mjs` にリネーム（中身はESM）しても `ERR_MODULE_NOT_FOUND` は解消せず。
-  - **考えられる原因・調査ポイント:**
+  - **考えられる原因・調査ポイント (既存の記述を維持、または必要に応じて更新):**
     - Node.jsのモジュール解決 (ESM vs CommonJS、`frontend/package.json` の `"type": "module"` との関連)。
     - `tsconfig.json` の `compilerOptions` (`module`, `moduleResolution` など) の設定。
     - Playwrightが内部的に設定ファイルやテストファイルをどのようにトランスパイル/ロードしているか。
     - Monorepo構成特有の問題の可能性。
-  - **参考情報:**
+  - **参考情報 (既存の記述を維持、または必要に応じて更新):**
     - [Cucumber+Playwright+Bunでフロントエンドのe2eテストを行ったメモ (Qiita)](https://qiita.com/hibohiboo/items/3b83c70abdc7e8d46d0e) - Bun + Vite + Monorepo環境でのESM/TSConfig設定の試行錯誤例。
-- [ ] chore(frontend): playwright.config.ts の型定義エラーを解消する (`feat(frontend): Playwright をセットアップし...` タスクに詳細統合) #tech-debt #quality #frontend #testing #pending
+- [ ] chore(frontend): playwright.config.ts の型定義エラーを解消する (`feat(frontend): Playwright をセットアップし...` タスクに詳細統合) #tech-debt #quality #frontend #testing
 - [ ] chore(frontend): Vitest と Storybook Interaction Test (`@storybook/experimental-addon-test/vitest-plugin`) の連携問題を解消する #tech-debt #testing #frontend #storybook #vitest
   - **現象 (2025-W20 イテレーション時):** `vitest run` 実行時に `@storybook/experimental-nextjs-vite` 内部で `Could not resolve "sb-original/image-context"` エラーが発生する。
   - **試したこと:**

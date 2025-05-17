@@ -33,10 +33,20 @@ alwaysApply: true
 *   **テスト実行**: `docker compose exec backend cargo test` を使用します。
 *   **フロントエンド ユニット/コンポーネントテスト**:
     *   戦略: Vitest + React Testing Library (RTL) を主軸とし、Storybook Interaction Tests を補完的に使用します。
+        *   **ツールスタック**: Vitest, React Testing Library (RTL), Storybook Interaction Tests (`@storybook/test`)。
+        *   **基本方針**: ユーザーの視点に近いテスト記述を心がけ (RTLの原則)、主にReactコンポーネントのレンダリング結果とインタラクション、および再利用可能なカスタムフックやユーティリティ関数内のロジックをテストします。
+        *   **テストファイルの配置・命名**: テスト対象と同じディレクトリ階層に `*.test.tsx` (または `*.test.ts`) で配置します。詳細は [`frontend/README.md`](mdc:frontend/README.md#テスト) を参照してください。
     *   詳細は [ADR 0020: フロントエンドのユニットテスト戦略・ツールの選定](mdc:docs/architecture/adr/0020-use-vitest-rtl-storybook-for-frontend-unit-testing.md) を参照してください。
 *   **フロントエンド E2Eテスト**:
     *   戦略: Playwright を使用し、主要なユーザージャーニーのテストに限定します。CIではスケジュール実行を基本とします。
+        *   **ツールスタック**: Playwright (`@playwright/test`)。
+        *   **基本方針**: アプリケーションのクリティカルなユーザージャーニー（ユーザー登録、ログイン、主要機能利用など）のテストに限定します。セレクタは `data-testid` 属性などを優先します。
+        *   **テストファイルの配置・命名**: `frontend/tests/e2e/` ディレクトリ配下に `*.spec.ts` で配置します。詳細は [`frontend/README.md`](mdc:frontend/README.md#テスト) を参照してください。
     *   詳細は [ADR 0021: フロントエンドのE2Eテスト戦略・ツールの選定](mdc:docs/architecture/adr/0021-use-playwright-for-frontend-e2e-testing.md) を参照してください。
+*   **AIアシスタントによるテストコード提案時の考慮事項 (フロントエンド)**:
+    *   上記ツールスタックとテスト方針、ファイル配置・命名規則を遵守すること。
+    *   ADR 0020 および ADR 0021 で示されたテスト設計の原則（ユーザー中心、主要ジャーニー限定など）を考慮すること。
+    *   具体的なコマンドや設定については、まず [`frontend/README.md`](mdc:frontend/README.md#テスト) および関連する設定ファイル ([`frontend-dev-env.mdc`](mdc:.cursor/rules/frontend-dev-env.mdc) 参照) を確認すること。
 
 ## コミット
 

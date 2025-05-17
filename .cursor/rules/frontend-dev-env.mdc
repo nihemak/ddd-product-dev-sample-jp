@@ -59,3 +59,23 @@ frontend/
 ├── package.json
 └── tsconfig.json
 ```
+
+## フロントエンドテスト
+
+フロントエンドのテスト戦略と導入ツールについては、以下のドキュメントを参照してください。
+
+*   **テスト戦略の全体像と各テストの役割:**
+    *   ユニット/コンポーネントテスト戦略: [ADR 0020: フロントエンドのユニットテスト戦略・ツールの選定](mdc:docs/architecture/adr/0020-use-vitest-rtl-storybook-for-frontend-unit-testing.md)
+    *   E2Eテスト戦略: [ADR 0021: フロントエンドのE2Eテスト戦略・ツールの選定](mdc:docs/architecture/adr/0021-use-playwright-for-frontend-e2e-testing.md)
+*   **テストの実行方法、設定ファイル、具体的なコマンド例:**
+    *   [frontend/README.md の「テスト」セクション](mdc:frontend/README.md#テスト)
+*   **主要なテストツールの設定ファイル:**
+    *   Vitest (ユニット/コンポーネントテスト):
+        *   `frontend/vitest.config.ts`
+        *   `frontend/vitest.setup.ts` (グローバルセットアップ)
+    *   Playwright (E2Eテスト):
+        *   `frontend/playwright.config.ts`
+*   **Playwright のセットアップに関する詳細な経緯や課題:**
+    *   [docs/technical_tasks.md 内の関連タスク](mdc:docs/technical_tasks.md#feat-testing-フロントエンドテストツール-vitest-rtl-storybook-interaction-tests-playwright-の導入と初期テスト作成) (特に `feat(frontend): Playwright をセットアップし...` の項目)
+
+これらのドキュメントを参照することで、フロントエンドのテストに関する最新情報や決定事項、具体的な設定内容を把握できます。
