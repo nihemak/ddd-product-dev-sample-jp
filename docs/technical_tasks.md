@@ -152,3 +152,22 @@
 - [ ] chore(frontend): Shadcn/ui が React 19 に対応したら React を 19 にアップグレードする #frontend #deps #tech-debt
 - [ ] chore(dev-env): Markdown/Rust の lint/format 環境を整備する (Husky 等の git hooks 導入検討) #dev-env #linting #quality
 - [ ] chore(frontend): フロントエンド開発環境の全体的なクリーンアップを実施する (依存関係整理、不要な設定削除など) #frontend #dev-env #tech-debt
+
+- **[調査・対応] フロントエンド: `npm install` 後の `npm audit` で報告される脆弱性の確認と対応**
+  - 優先度: 中
+  - 内容: `npm install` 後に `1 critical severity vulnerability` が報告されている。`npm audit fix --force` の実行と、その影響範囲の確認、対応を行う。
+  - 担当: (ユーザー名)
+  - 期限: 次イテレーション
+- **[バグ修正] フロントエンド: Storybook 起動時のモジュール解決エラー修正**
+  - 優先度: 高
+  - 内容: `docker compose up storybook` で起動した際に `ERROR in ./src/app/(unauthenticated)/page.tsx Module not found: Error: Can't resolve '@/components/features/Auth/index.tsx'` が発生する。パスエイリアス (`@/`) の設定、`tsconfig.json`、Storybook の Webpack 設定などを確認し、修正する。
+  - 担当: (ユーザー名)
+  - 期限: 次イテレーションの早い段階
+- **[改善] 開発環境: モノレポ管理ツール (Nx) の導入検討と初期セットアップ**
+  - 優先度: 高 (次イテレーションの主要技術タスク)
+  - 内容: 現在のフロントエンド開発環境の不安定さ（依存関係、ビルド、エイリアスパス設定など）を解消し、今後の拡張性やCI/CD連携も見据え、Nxの導入を検討・実施する。
+    - Nxの学習、プロジェクトへの適用方法の調査。
+    - 既存の `frontend` アプリケーションをNxワークスペースに移行する計画と手順の策定。
+    - 可能であれば、次イテレーションで基本的なNxワークスペースの構築と、既存フロントエンドコードの移行に着手する。
+  - 担当: (ユーザー名)
+  - 期限: 次イテレーション

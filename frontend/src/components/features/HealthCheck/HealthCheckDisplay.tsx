@@ -1,6 +1,7 @@
-// @ts-nocheck
+// prettier-ignore
+'use client'; // Next.js App Router でクライアントコンポーネントとしてマーク
+
 import React from 'react';
-('use client'); // Next.js App Router でクライアントコンポーネントとしてマーク
 
 import { useHealthCheck } from '@/hooks/useHealthCheck';
 
